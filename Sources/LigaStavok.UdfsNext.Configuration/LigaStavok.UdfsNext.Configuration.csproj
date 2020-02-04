@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Configurations>Debug;Release;BetRadar</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Clustering.csproj" />
+  </ItemGroup>
+
+</Project>

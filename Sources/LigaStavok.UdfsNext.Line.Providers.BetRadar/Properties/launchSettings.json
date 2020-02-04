@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "LigaStavok.UdfsNext.Line.Providers.BetRadar": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

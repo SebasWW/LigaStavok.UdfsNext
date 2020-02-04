@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8B37A67E-CFF5-4363-84C9-16B5A9173327}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Line", "Line", "{C4E55EE9-3B2E-41CF-A319-FB1EA5424968}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trader", "Trader", "{180D2EE7-28F0-4FBC-AFD2-F45520C38004}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bettor", "Bettor", "{7324C8BD-8EF9-486B-8B68-E0EC153BB51A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Configuration", "LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Configuration.csproj", "{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Clustering", "LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Clustering.csproj", "{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Interfaces", "LigaStavok.UdfsNext.Inferfaces\LigaStavok.UdfsNext.Line.Interfaces.csproj", "{6D7889AF-A79C-4834-87A8-6F5F5F050E59}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.RunTime", "LigaStavok.UdfsNext.Line.Runtime\LigaStavok.UdfsNext.Line.RunTime.csproj", "{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Service", "LigaStavok.UdfsNext.Line.Service\LigaStavok.UdfsNext.Line.Service.csproj", "{0D4A24A4-E668-4166-9791-42B29F32289A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Abstractions", "LigaStavok.UdfsNext.Line.Abstractions\LigaStavok.UdfsNext.Line.Abstractions.csproj", "{74AF9C12-7259-4F6F-8833-DDDCE31B528D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Abstractions", "LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Abstractions.csproj", "{2416F82F-6B5E-4F22-8624-6963E7EA0D48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7889AF-A79C-4834-87A8-6F5F5F050E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7889AF-A79C-4834-87A8-6F5F5F050E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7889AF-A79C-4834-87A8-6F5F5F050E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7889AF-A79C-4834-87A8-6F5F5F050E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4A24A4-E668-4166-9791-42B29F32289A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4A24A4-E668-4166-9791-42B29F32289A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4A24A4-E668-4166-9791-42B29F32289A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4A24A4-E668-4166-9791-42B29F32289A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74AF9C12-7259-4F6F-8833-DDDCE31B528D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74AF9C12-7259-4F6F-8833-DDDCE31B528D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74AF9C12-7259-4F6F-8833-DDDCE31B528D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74AF9C12-7259-4F6F-8833-DDDCE31B528D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2416F82F-6B5E-4F22-8624-6963E7EA0D48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2416F82F-6B5E-4F22-8624-6963E7EA0D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2416F82F-6B5E-4F22-8624-6963E7EA0D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2416F82F-6B5E-4F22-8624-6963E7EA0D48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+		{6D7889AF-A79C-4834-87A8-6F5F5F050E59} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
+		{AAE634E3-BA44-4A6B-8E80-BFCD9B25542B} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
+		{0D4A24A4-E668-4166-9791-42B29F32289A} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
+		{74AF9C12-7259-4F6F-8833-DDDCE31B528D} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
+		{2416F82F-6B5E-4F22-8624-6963E7EA0D48} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}
+	EndGlobalSection
+EndGlobal
