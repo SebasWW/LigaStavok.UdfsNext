@@ -3,9 +3,9 @@ using LigaStavok.UdfsNext.Line;
 using LigaStavok.UdfsNext.Remoting;
 using Orleans;
 
-namespace LigaStavok.UdfsNext.Line
+namespace LigaStavok.UdfsNext.Line.Provider
 {
-	public interface IUdfsLineEventGrain : IGrainWithIntegerKey
+	public interface IUdfsLineProviderGrain : IGrainWithIntegerKey
 	{
 		Task<UdfsResponse<LineEvent>> GetAsync(UdfsRequest request);
 	}

@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using LigaStavok.UdfsNext.Configuration;
-using LigaStavok.UdfsNext.Line.Providers.BetRadar;
+using LigaStavok.UdfsNext.Line;
+using LigaStavok.UdfsNext.Line.Grains;
 
 namespace LigaStavok.UdfsNext.Clustering
 {
@@ -41,7 +42,6 @@ namespace LigaStavok.UdfsNext.Clustering
 			// The socket used by the gateway will bind to this endpoint
 			if (configuration.Endpoint.SiloListeningPort > 0 && IPAddress.TryParse(configuration.Endpoint.SiloListeningIP, out var siloIPAddress))
 				options.EndPoint.SiloListeningEndpoint = new IPEndPoint(siloIPAddress, configuration.Endpoint.SiloListeningPort);
-
 		}
 	}
 }

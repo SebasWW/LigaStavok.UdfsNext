@@ -5,10 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Clustering.Client;
 using LigaStavok.UdfsNext.Line.Clustering;
+using LigaStavok.UdfsNext.Remoting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LigaStavok.UdfsNext.Line.Providers.BetRadar
+namespace LigaStavok.UdfsNext.Line.Provider.BetRadar
 {
 	public class Worker : BackgroundService
 	{
@@ -29,7 +30,7 @@ namespace LigaStavok.UdfsNext.Line.Providers.BetRadar
 				var g = udfsClusterClient.ClusterClient;
 					var x = g.GetGrain<IUdfsLineEventGrain>(i);
 
-				var c = await x.GetLineEvent(10);
+				var c = await x.GetAsync(UdfsRequest.Create("Betradar"));
 
 				_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 				await Task.Delay(1000, stoppingToken);

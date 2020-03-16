@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace LigaStavok.UdfsNext.Line.Providers.BetRadar
+namespace LigaStavok.UdfsNext.Line.Provider.BetRadar
 {
 	public class Program
 	{

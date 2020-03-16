@@ -1,10 +1,7 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Clustering;
 using LigaStavok.UdfsNext.Clustering.Client;
 using LigaStavok.UdfsNext.Configuration;
 using LigaStavok.UdfsNext.Line;
-using LigaStavok.UdfsNext.Line.Clustering;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.Hosting

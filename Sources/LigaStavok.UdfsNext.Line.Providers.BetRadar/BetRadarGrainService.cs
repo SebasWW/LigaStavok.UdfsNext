@@ -1,6 +1,6 @@
 ﻿using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.Line.Providers.BetRadar
+namespace LigaStavok.UdfsNext.Line.Provider.BetRadar
 {
 	public class BetRadarGrainService : GrainService, IUdfsLineProviderGrainService
 	{

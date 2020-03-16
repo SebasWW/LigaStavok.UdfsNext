@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Clustering.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Configuration.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Inferfaces\LigaStavok.UdfsNext.Line.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

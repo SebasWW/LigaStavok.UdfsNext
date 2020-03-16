@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>LigaStavok.UdfsNext</RootNamespace>
+    <Configurations>Debug;Release;BetRadar</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Primitives.csproj" />
+  </ItemGroup>
+
+</Project>

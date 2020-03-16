@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.Orleans.Reminders.AdoNet" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.HealthCheck\LigaStavok.UdfsNext.HealthCheck.csproj" />
+  </ItemGroup>
+
 </Project>

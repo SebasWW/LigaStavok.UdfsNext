@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>LigaStavok.UdfsNext.Line</RootNamespace>
+    <RootNamespace>LigaStavok.UdfsNext.Line.Runtime</RootNamespace>
     <Configurations>Debug;Release;BetRadar</Configurations>
   </PropertyGroup>
 
@@ -13,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Orleans.Core" Version="3.0.2" />
     <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="3.0.2" />
     <PackageReference Include="Microsoft.Orleans.Persistence.AdoNet" Version="3.0.2" />
     <PackageReference Include="Microsoft.Orleans.Reminders.AdoNet" Version="3.0.2" />
@@ -21,14 +22,15 @@
 	<PropertyGroup>
 		<ServerGarbageCollection>true</ServerGarbageCollection>
 		<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+		<AssemblyName>LigaStavok.UdfsNext.Line.Runtime</AssemblyName>
 	</PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Abstractions.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Primitives.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Clustering.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Inferfaces\LigaStavok.UdfsNext.Line.Interfaces.csproj" />
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Abstractions\LigaStavok.UdfsNext.Line.Abstractions.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Abstractions\LigaStavok.UdfsNext.Line.Primitives.csproj" />
   </ItemGroup>
 
 </Project>

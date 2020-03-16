@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Runtime\LigaStavok.UdfsNext.Line.RunTime.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Clustering\LigaStavok.UdfsNext.Line.Clustering.csproj" />
   </ItemGroup>
 </Project>

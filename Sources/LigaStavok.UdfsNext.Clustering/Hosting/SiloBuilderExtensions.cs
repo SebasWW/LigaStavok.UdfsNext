@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Net;
+using LigaStavok.UdfsNext.HealthCheck;
+using LigaStavok.UdfsNext.HealthCheck.Hosting;
+using LigaStavok.UdfsNext.HealthCheck.Orleans;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using Orleans.Runtime;
 
 namespace LigaStavok.UdfsNext.Clustering.Hosting
 {
     public static class SiloBuilderExtensions
 	{
+
         public static void ConfigureUdfs(this ISiloBuilder siloBuilder, UdfsClusterOptions udfsClusterOptions)
 		{
             // Local or distribute cluster
@@ -38,31 +44,27 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
                     options.ServiceId = udfsClusterOptions.ClusterService.ServiceId;
                 });
 
-            // Interfaces
-            foreach (var item in udfsClusterOptions.GrainAssemblies)
-                siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(item).WithReferences());
+            // siloBuilder
+            //.ConfigureLogging((hostingContext, logging) =>
+            //{
+            //    //TODO: Logging slows down testing a bit.
+            //    //logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+            //    logging.AddConsole();
+            //              logging.AddDebug();
+            //          })
+            //.UsePerfCounterEnvironmentStatistics()
+            //.Configure<SiloMessagingOptions>(options =>
+            //{
+            //    options.ResponseTimeout = TimeSpan.FromSeconds(5);
+            //})
+            //.Configure<GrainCollectionOptions>(options =>
+            //{
+            //    // Set the value of CollectionAge to 10 minutes for all grain
+            //    options.CollectionAge = TimeSpan.FromMinutes(10);
 
-           // siloBuilder
-                //.ConfigureLogging((hostingContext, logging) =>
-                //{
-                //    //TODO: Logging slows down testing a bit.
-                //    //logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                //    logging.AddConsole();
-                //              logging.AddDebug();
-                //          })
-                //.UsePerfCounterEnvironmentStatistics()
-                //.Configure<SiloMessagingOptions>(options =>
-                //{
-                //    options.ResponseTimeout = TimeSpan.FromSeconds(5);
-                //})
-                //.Configure<GrainCollectionOptions>(options =>
-                //{
-                //    // Set the value of CollectionAge to 10 minutes for all grain
-                //    options.CollectionAge = TimeSpan.FromMinutes(10);
-
-                //    // Override the value of CollectionAge to 5 minutes for MyGrainImplementation
-                //    // options.ClassSpecificCollectionAge[typeof(AdoNetClusteringSiloOptions).FullName] = TimeSpan.FromMinutes(5);
-                //});
+            //    // Override the value of CollectionAge to 5 minutes for MyGrainImplementation
+            //    // options.ClassSpecificCollectionAge[typeof(AdoNetClusteringSiloOptions).FullName] = TimeSpan.FromMinutes(5);
+            //});
 
             // Reminder
             if (udfsClusterOptions.Reminder.Enabled)
@@ -72,18 +74,26 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
                         options.Invariant = udfsClusterOptions.Reminder.Provider;
                         options.ConnectionString = udfsClusterOptions.Reminder.ConnectionString;
                     });
+            else
+                siloBuilder
+                    .UseInMemoryReminderService();
 
             // Storage
             if (udfsClusterOptions.Storage.Enabled)
                 siloBuilder
-                    .AddAdoNetGrainStorage("UdfsGrainStorage", options =>
+                    .AddAdoNetGrainStorage(UdfsGrainStorages.UDFS_GRAIN_STORAGE, options =>
                     {
                         options.Invariant = udfsClusterOptions.Storage.Provider;
                         options.ConnectionString = udfsClusterOptions.Storage.ConnectionString;
                     });
+            else
+                siloBuilder.AddMemoryGrainStorage(UdfsGrainStorages.UDFS_GRAIN_STORAGE);
 
             //if (context.HostingEnvironment.IsDevelopment())
             //    builder.UseDevelopmentClustering(new IPEndPoint(6, 11111));
+
+            //
+            siloBuilder.UseUdfsClusterHealthChecks();
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Microsoft.Extensions.Hosting
 		public static IHostBuilder UseUdfsLineClusterClient(this IHostBuilder hostBuilder)
 		{
 			ServiceConfiguration configuration = null;
-
 			hostBuilder.ConfigureServices((hostContext, servicesCollection) =>
 				 {
 					 configuration = hostContext.Configuration.Get<ServiceConfiguration>();

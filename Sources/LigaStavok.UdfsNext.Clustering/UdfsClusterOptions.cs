@@ -30,10 +30,5 @@ namespace LigaStavok.UdfsNext.Clustering
         /// The persistent reminder configuration.
         /// </summary>
         public DbConnectionOptions Reminder { get; set; } = new DbConnectionOptions();
-
-        /// <summary>
-        /// Assemblies with grains
-        /// </summary>
-        public List<Assembly> GrainAssemblies { get; } = new List<Assembly>();
     }
 }
