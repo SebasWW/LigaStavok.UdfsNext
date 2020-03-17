@@ -1,17 +1,17 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LigaStavok.UdfsNext.HealthCheck.Orleans.Grains;
+using LigaStavok.UdfsNext.HealthCheck.Clustering.Grains;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
 
-namespace LigaStavok.UdfsNext.HealthCheck.Orleans
+namespace LigaStavok.UdfsNext.HealthCheck.Clustering
 {
-    public class StorageHealthCheck : IHealthCheck
+    public class GrainHealthCheck : IHealthCheck
     {
         private readonly IClusterClient client;
 
-        public StorageHealthCheck(IClusterClient client)
+        public GrainHealthCheck(IClusterClient client)
         {
             this.client = client;
         }
@@ -20,11 +20,11 @@ namespace LigaStavok.UdfsNext.HealthCheck.Orleans
         {
             try
             {
-                await client.GetGrain<IStorageHealthCheckGrain>(Guid.NewGuid()).CheckAsync();
+                await client.GetGrain<ILocalHealthCheckGrain>(Guid.Empty).PingAsync();
             }
             catch (Exception error)
             {
-                return HealthCheckResult.Unhealthy("Failed to ping the storage health check grain.", error);
+                return HealthCheckResult.Unhealthy("Failed to ping the local health check grain.", error);
             }
             return HealthCheckResult.Healthy();
         }

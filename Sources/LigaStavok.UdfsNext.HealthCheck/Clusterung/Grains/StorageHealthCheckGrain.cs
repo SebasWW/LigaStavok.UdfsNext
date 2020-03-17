@@ -4,7 +4,7 @@ using Orleans;
 using Orleans.Placement;
 using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.HealthCheck.Orleans.Grains
+namespace LigaStavok.UdfsNext.HealthCheck.Clustering.Grains
 {
     [PreferLocalPlacement]
     public class StorageHealthCheckGrain : Grain, IStorageHealthCheckGrain

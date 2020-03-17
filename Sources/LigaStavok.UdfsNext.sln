@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Ru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Service", "LigaStavok.UdfsNext.Line.Service\LigaStavok.UdfsNext.Line.Service.csproj", "{0D4A24A4-E668-4166-9791-42B29F32289A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Primitives", "LigaStavok.UdfsNext.Line.Abstractions\LigaStavok.UdfsNext.Line.Primitives.csproj", "{74AF9C12-7259-4F6F-8833-DDDCE31B528D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Primitives", "LigaStavok.UdfsNext.Line.Primitives\LigaStavok.UdfsNext.Line.Primitives.csproj", "{74AF9C12-7259-4F6F-8833-DDDCE31B528D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Primitives", "LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Primitives.csproj", "{2416F82F-6B5E-4F22-8624-6963E7EA0D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Primitives", "LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj", "{2416F82F-6B5E-4F22-8624-6963E7EA0D48}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Provider.BetRadar", "LigaStavok.UdfsNext.Line.Providers.BetRadar\LigaStavok.UdfsNext.Line.Provider.BetRadar.csproj", "{341BD3EC-59E7-4FFF-AA09-ADC6AD1CB346}"
 EndProject

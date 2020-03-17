@@ -6,7 +6,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
 using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.HealthCheck.Orleans
+namespace LigaStavok.UdfsNext.HealthCheck.Clustering
 {
     public class ClusterHealthCheck : IHealthCheck
     {

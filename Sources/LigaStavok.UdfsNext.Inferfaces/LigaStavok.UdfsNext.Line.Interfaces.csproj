@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Abstractions\LigaStavok.UdfsNext.Primitives.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Clustering.csproj" />
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Abstractions\LigaStavok.UdfsNext.Line.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Primitives\LigaStavok.UdfsNext.Line.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
   </ItemGroup>
 
 </Project>

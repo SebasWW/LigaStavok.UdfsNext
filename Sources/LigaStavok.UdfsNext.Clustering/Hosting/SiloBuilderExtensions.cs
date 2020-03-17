@@ -2,7 +2,7 @@
 using System.Net;
 using LigaStavok.UdfsNext.HealthCheck;
 using LigaStavok.UdfsNext.HealthCheck.Hosting;
-using LigaStavok.UdfsNext.HealthCheck.Orleans;
+using LigaStavok.UdfsNext.HealthCheck.Clustering;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
