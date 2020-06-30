@@ -1,4 +1,4 @@
-﻿using LigaStavok.UdfsNext.HealthCheck.Clustering;
+﻿using LigaStavok.UdfsNext.HealthCheck.Orleans;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans.Hosting;

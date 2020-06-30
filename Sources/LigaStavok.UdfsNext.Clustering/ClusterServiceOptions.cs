@@ -1,6 +1,6 @@
-﻿namespace LigaStavok.UdfsNext.Clustering
+﻿namespace LigaStavok.UdfsNext.Orleans
 {
-    public class ClusterServiceOptions : IClusterServiceOptions
+    public class ClusterServiceOptions
     {
         /// <summary>
         /// Gets or sets the cluster identity.

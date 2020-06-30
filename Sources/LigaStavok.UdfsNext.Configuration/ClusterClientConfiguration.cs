@@ -1,4 +1,4 @@
-﻿using LigaStavok.UdfsNext.Clustering;
+﻿using LigaStavok.UdfsNext.Orleans;
 
 namespace LigaStavok.UdfsNext.Configuration
 {

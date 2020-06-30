@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,12 +12,12 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Clustering\LigaStavok.UdfsNext.Line.Clustering.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Line.Orleans\LigaStavok.UdfsNext.Line.Orleans.csproj" />
   </ItemGroup>
 </Project>

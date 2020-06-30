@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LigaStavok.UdfsNext.Clustering.Grains
+namespace LigaStavok.UdfsNext.Orleans.Grains
 {
 	public abstract class AsyncGrain : RecoverableGrain<RecoverableState>
 	{

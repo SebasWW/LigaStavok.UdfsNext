@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using LigaStavok.UdfsNext.Clustering;
-using LigaStavok.UdfsNext.Clustering.Grains;
+using LigaStavok.UdfsNext.Orleans;
+using LigaStavok.UdfsNext.Orleans.Grains;
 using LigaStavok.UdfsNext.Remoting;
 using Orleans.Runtime;
 

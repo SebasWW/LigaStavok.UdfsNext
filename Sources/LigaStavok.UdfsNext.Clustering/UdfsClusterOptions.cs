@@ -2,7 +2,7 @@
 using System.Reflection;
 using Orleans.Configuration;
 
-namespace LigaStavok.UdfsNext.Clustering
+namespace LigaStavok.UdfsNext.Orleans
 {
 	public class UdfsClusterOptions
 	{

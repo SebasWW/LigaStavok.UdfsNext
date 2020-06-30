@@ -1,5 +1,5 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Clustering.Client;
+using LigaStavok.UdfsNext.Orleans.Client;
 using LigaStavok.UdfsNext.Configuration;
 using LigaStavok.UdfsNext.Line;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,18 +8,17 @@ namespace Microsoft.Extensions.Hosting
 {
 	public static class HostBuilderExtensions
 	{
-		public static IHostBuilder UseUdfsLineClusterClient<TCluster>(this IHostBuilder hostBuilder, Func<ClusterClientConfiguration> configurationFunc)
+		public static IHostBuilder UseUdfsLineClusterClient(
+			this IHostBuilder hostBuilder, 
+			Func<ClusterClientConfiguration> configurationFunc)
 		{
-			hostBuilder.UseUdfsClusterClient<TCluster>(
+			hostBuilder.UseUdfsLineClusterClient(
 				options =>
 				{
 					var configuration = configurationFunc.Invoke();
 
-					// Clustering information
+					// Orleans information
 					options.Configure(configuration);
-
-					// Grains interfaces
-					options.GrainAssemblies.Add(typeof(IUdfsLineEventGrain).Assembly);
 
 				}
 			);
@@ -27,12 +26,16 @@ namespace Microsoft.Extensions.Hosting
 			return hostBuilder;
 		}
 
-		public static IHostBuilder UseUdfsLineClusterClient<TCluster>(
+		public static IHostBuilder UseUdfsLineClusterClient(
 			this IHostBuilder hostBuilder,
-			Action<UdfsClusterClientOptions<TCluster>> configureDelegate
+			Action<UdfsClusterClientOptions> configureDelegate
 		)
 		{
-			hostBuilder.ConfigureServices((context, service) => service.AddUdfsClusterClient(configureDelegate));
+			hostBuilder.ConfigureServices(
+				(context, service) => 
+					service.AddUdfsLineClusterClient(configureDelegate)
+			);
+
 			return hostBuilder;
 		}
 	}

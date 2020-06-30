@@ -2,7 +2,7 @@
 using System.Net;
 using LigaStavok.UdfsNext.HealthCheck;
 using LigaStavok.UdfsNext.HealthCheck.Hosting;
-using LigaStavok.UdfsNext.HealthCheck.Clustering;
+using LigaStavok.UdfsNext.HealthCheck.Orleans;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
@@ -10,7 +10,7 @@ using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.Clustering.Hosting
+namespace LigaStavok.UdfsNext.Orleans.Hosting
 {
     public static class SiloBuilderExtensions
 	{
@@ -20,7 +20,7 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
             // Local or distribute cluster
             if (udfsClusterOptions.Membership.Enabled)
                 siloBuilder
-                    .UseAdoNetClustering(options =>
+                    .UseAdoNetOrleans(options =>
                     {
                         options.Invariant = udfsClusterOptions.Membership.Provider;
                         options.ConnectionString = udfsClusterOptions.Membership.ConnectionString;
@@ -34,7 +34,7 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
                         options.SiloPort = udfsClusterOptions.EndPoint.SiloPort;
                     });
             else
-                siloBuilder.UseLocalhostClustering();
+                siloBuilder.UseLocalhostOrleans();
 
             // Cluster identity
             siloBuilder
@@ -63,7 +63,7 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
             //    options.CollectionAge = TimeSpan.FromMinutes(10);
 
             //    // Override the value of CollectionAge to 5 minutes for MyGrainImplementation
-            //    // options.ClassSpecificCollectionAge[typeof(AdoNetClusteringSiloOptions).FullName] = TimeSpan.FromMinutes(5);
+            //    // options.ClassSpecificCollectionAge[typeof(AdoNetOrleansSiloOptions).FullName] = TimeSpan.FromMinutes(5);
             //});
 
             // Reminder
@@ -90,7 +90,7 @@ namespace LigaStavok.UdfsNext.Clustering.Hosting
                 siloBuilder.AddMemoryGrainStorage(UdfsGrainStorages.UDFS_GRAIN_STORAGE);
 
             //if (context.HostingEnvironment.IsDevelopment())
-            //    builder.UseDevelopmentClustering(new IPEndPoint(6, 11111));
+            //    builder.UseDevelopmentOrleans(new IPEndPoint(6, 11111));
 
             //
             siloBuilder.UseUdfsClusterHealthChecks();

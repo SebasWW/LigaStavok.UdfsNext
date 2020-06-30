@@ -1,8 +1,8 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Clustering;
-using LigaStavok.UdfsNext.Clustering.Client;
+using LigaStavok.UdfsNext.Orleans;
+using LigaStavok.UdfsNext.Orleans.Client;
 using LigaStavok.UdfsNext.Line;
-using LigaStavok.UdfsNext.Line.Clustering;
+using LigaStavok.UdfsNext.Line.Orleans;
 using LigaStavok.UdfsNext.Line.Providers.BetRadar.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

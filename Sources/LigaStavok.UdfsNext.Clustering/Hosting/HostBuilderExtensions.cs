@@ -1,7 +1,7 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Clustering;
-using LigaStavok.UdfsNext.Clustering.Client;
-using LigaStavok.UdfsNext.Clustering.Hosting;
+using LigaStavok.UdfsNext.Orleans;
+using LigaStavok.UdfsNext.Orleans.Client;
+using LigaStavok.UdfsNext.Orleans.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans.Hosting;
 
@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Hosting
 		public static IHostBuilder UseUdfsCluster(this IHostBuilder hostBuilder, Action<UdfsClusterOptions> configureDelegate, Action<ISiloBuilder> builderDelegate)
 		{
 			hostBuilder.UseOrleans(
-				(context, builder) =>
+				(context, siloBuilder) =>
 				{
 
 					// Requesting options
@@ -26,8 +26,8 @@ namespace Microsoft.Extensions.Hosting
 					configureDelegate?.Invoke(udfsOptions);
 
 					// Configure builder
-					builder.ConfigureUdfs(udfsOptions);
-					builderDelegate?.Invoke(builder);
+					siloBuilder.ConfigureUdfs(udfsOptions);
+					builderDelegate?.Invoke(siloBuilder);
 				}
 			);
 
@@ -39,7 +39,10 @@ namespace Microsoft.Extensions.Hosting
 			Action<UdfsClusterClientOptions<TCluster>> configureDelegate
 		)
 		{
-			hostBuilder.ConfigureServices((context, service) => service.AddUdfsClusterClient(configureDelegate));
+			hostBuilder.ConfigureServices(
+				(context, services) => 
+					services.AddUdfsClusterClient(configureDelegate)
+			);
 			return hostBuilder;
 		}
 	}

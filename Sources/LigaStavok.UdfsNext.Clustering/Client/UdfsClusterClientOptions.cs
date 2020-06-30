@@ -4,17 +4,17 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Orleans.Configuration;
 
-namespace LigaStavok.UdfsNext.Clustering.Client
+namespace LigaStavok.UdfsNext.Orleans.Client
 {
     /// <summary>
     /// The cluster client builder configuration information.
     /// </summary>
-    public class UdfsClusterClientOptions<TCluster> 
-    //    : UdfsClusterClientOptions
-    //{
+    public class UdfsClusterClientOptions<TCluster>
+        : UdfsClusterClientOptions
+    {
 
-    //}
-    //public class UdfsClusterClientOptions
+    }
+    public class UdfsClusterClientOptions
     {
         /// <summary>
         /// The cluster configuration information.
@@ -36,6 +36,8 @@ namespace LigaStavok.UdfsNext.Clustering.Client
         /// </summary>
         public List<Assembly> GrainAssemblies { get; } = new List<Assembly>();
 
-        public int ConnectionRetryCount { get; set; } 
-    }
+        public int ConnectionRetryCount { get; set; }
+
+		public TimeSpan ConnectionRetryDelay { get; set; }
+	}
 }

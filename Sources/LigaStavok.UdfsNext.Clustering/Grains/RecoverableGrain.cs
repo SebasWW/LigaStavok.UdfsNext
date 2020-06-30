@@ -2,7 +2,7 @@
 using Orleans.Runtime;
 using System.Threading.Tasks;
 
-namespace LigaStavok.UdfsNext.Clustering.Grains
+namespace LigaStavok.UdfsNext.Orleans.Grains
 {
 	public abstract class RecoverableGrain<TState> : Grain
 		where TState : IRecoverableState, new()

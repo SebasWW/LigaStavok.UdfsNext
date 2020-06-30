@@ -2,17 +2,17 @@
 using LigaStavok.UdfsNext.Configuration;
 using LigaStavok.UdfsNext.Line.Providers.BetRadar;
 
-namespace LigaStavok.UdfsNext.Clustering
+namespace LigaStavok.UdfsNext.Orleans
 {
 	public static class UdfsClusterOptionsExtension
 	{
 		public static void Configure(this UdfsClusterOptions options, ClusterConfiguration configuration)
 		{
-			// Clustering information
+			// Orleans information
 			options.ClusterService.ClusterId = configuration.ClusterId;
 			options.ClusterService.ServiceId = configuration.ServiceId;
 
-			// Clustering provider
+			// Orleans provider
 			options.Membership.Enabled = configuration.Membership.Enabled;
 			options.Membership.ConnectionString = configuration.Membership.ConnectionString;
 			options.Membership.Provider = configuration.Membership.Provider;

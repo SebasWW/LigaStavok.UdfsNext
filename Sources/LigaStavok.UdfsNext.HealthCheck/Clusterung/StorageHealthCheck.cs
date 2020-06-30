@@ -1,11 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LigaStavok.UdfsNext.HealthCheck.Clustering.Grains;
+using LigaStavok.UdfsNext.HealthCheck.Orleans.Grains;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
 
-namespace LigaStavok.UdfsNext.HealthCheck.Clustering
+namespace LigaStavok.UdfsNext.HealthCheck.Orleans
 {
     public class StorageHealthCheck : IHealthCheck
     {

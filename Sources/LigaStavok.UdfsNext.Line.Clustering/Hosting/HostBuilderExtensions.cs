@@ -1,6 +1,6 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Configuration;
-using LigaStavok.UdfsNext.Clustering;
+using LigaStavok.UdfsNext.Orleans;
 using Microsoft.Extensions.Configuration;
 using Orleans.Hosting;
 using LigaStavok.UdfsNext.Line.Configuration;

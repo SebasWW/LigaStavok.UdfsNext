@@ -7,7 +7,7 @@
 		public const int DEFAULT_GATEWAY_PORT = 30000;
 
 		/// <summary>
-		/// The IP address used for clustering.
+		/// The IP address used for Orleans.
 		/// </summary>
 		public string AdvertisedIPAddress { get; set; }
 

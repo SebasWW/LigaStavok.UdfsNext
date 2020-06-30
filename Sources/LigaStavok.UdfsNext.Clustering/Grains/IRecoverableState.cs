@@ -1,4 +1,4 @@
-﻿namespace LigaStavok.UdfsNext.Clustering.Grains
+﻿namespace LigaStavok.UdfsNext.Orleans.Grains
 {
 	public interface IRecoverableState
 	{

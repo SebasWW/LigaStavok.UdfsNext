@@ -1,4 +1,4 @@
-﻿using LigaStavok.UdfsNext.Clustering.Grains;
+﻿using LigaStavok.UdfsNext.Orleans.Grains;
 
 namespace LigaStavok.UdfsNext.Line.Grains
 {

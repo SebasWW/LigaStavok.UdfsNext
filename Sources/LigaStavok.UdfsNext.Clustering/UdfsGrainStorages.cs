@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LigaStavok.UdfsNext.Clustering
+namespace LigaStavok.UdfsNext.Orleans
 {
 	public static class UdfsGrainStorages
 	{

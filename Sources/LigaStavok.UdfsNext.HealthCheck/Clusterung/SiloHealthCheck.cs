@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.HealthCheck.Clustering
+namespace LigaStavok.UdfsNext.HealthCheck.Orleans
 {
     public class SiloHealthCheck : IHealthCheck
     {

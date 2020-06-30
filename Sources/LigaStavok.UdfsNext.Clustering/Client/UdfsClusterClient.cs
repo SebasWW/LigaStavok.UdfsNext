@@ -4,64 +4,26 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Orleans;
 
-namespace LigaStavok.UdfsNext.Clustering.Client
+namespace LigaStavok.UdfsNext.Orleans.Client
 {
-	public class UdfsClusterClient<TCluster> : IUdfsClusterClient<TCluster>
+	public class UdfsClusterClient : IUdfsClusterClient
 	{
-		public IClusterClient ClusterClient { get; }
-		private readonly UdfsClusterClientOptions<TCluster> options;
-		private readonly ILogger<UdfsClusterClientOptions<TCluster>> logger;
+		private readonly UdfsClusterClientOptions options;
 
-		public UdfsClusterClient(UdfsClusterClientOptions<TCluster> options, ILogger<UdfsClusterClientOptions<TCluster>> logger)
+		internal UdfsClusterClient(
+			UdfsClusterClientOptions options, 
+			IClusterClient clusterClient
+		)
 		{
 			this.options = options;
-			this.logger = logger;
-			ClusterClient = new ClusterClientBuilder<TCluster>(options).Build();
+			ClusterClient = clusterClient;
 		}
 
-		public async Task StartAsync(CancellationToken cancellationToken)
-		{
-			var attempt = 0;
-			var delay = TimeSpan.FromSeconds(1);
+		public IClusterClient ClusterClient { get; }
 
-			await ClusterClient.Connect(async error =>
-			{
-				if (cancellationToken.IsCancellationRequested)
-				{
-					return false;
-				}
+		public int ConnectionRetryCount => options.ConnectionRetryCount;
 
-				if (++attempt < options.ConnectionRetryCount)
-				{
-					logger.LogWarning(error,
-						"Failed to connect to UDFS cluster on attempt {@Attempt} of {@MaxAttempts}.",
-						attempt, options.ConnectionRetryCount);
+		public TimeSpan ConnectionRetryDelay => options.ConnectionRetryDelay;
 
-					try
-					{
-						await Task.Delay(delay, cancellationToken);
-					}
-					catch (OperationCanceledException)
-					{
-						return false;
-					}
-
-					return true;
-				}
-				else
-				{
-					logger.LogError(error,
-						"Failed to connect to UDFS cluster on attempt {@Attempt} of {@MaxAttempts}.",
-						attempt, options.ConnectionRetryCount);
-
-					return false;
-				}
-			});
-		}
-
-		public async Task StopAsync(CancellationToken cancellationToken)
-		{
-			await ClusterClient.AbortAsync();
-		}
 	}
 }

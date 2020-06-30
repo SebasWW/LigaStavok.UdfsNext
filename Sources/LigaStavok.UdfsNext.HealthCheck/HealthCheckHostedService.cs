@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using LigaStavok.UdfsNext.HealthCheck.Clustering;
+using LigaStavok.UdfsNext.HealthCheck.Orleans;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

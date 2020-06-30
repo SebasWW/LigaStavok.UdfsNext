@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LigaStavok.UdfsNext.Clustering.Grains
+namespace LigaStavok.UdfsNext.Orleans.Grains
 {
 	public class RecoverableState : IRecoverableState
 	{

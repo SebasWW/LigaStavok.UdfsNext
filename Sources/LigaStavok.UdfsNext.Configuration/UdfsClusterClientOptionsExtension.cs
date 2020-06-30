@@ -1,12 +1,12 @@
 ﻿using LigaStavok.UdfsNext.Configuration;
 
-namespace LigaStavok.UdfsNext.Clustering.Client
+namespace LigaStavok.UdfsNext.Orleans.Client
 {
 	public static class UdfsClusterClientOptionsExtension
 	{
-		public static void Configure<TCluster>(this UdfsClusterClientOptions<TCluster> options, ClusterClientConfiguration configuration)
+		public static void Configure(this UdfsClusterClientOptions options, ClusterClientConfiguration configuration)
 		{
-			// Clustering information
+			// Orleans information
 			options.ClusterService.ClusterId = configuration.ClusterId;
 			options.ClusterService.ServiceId = configuration.ServiceId;
 
