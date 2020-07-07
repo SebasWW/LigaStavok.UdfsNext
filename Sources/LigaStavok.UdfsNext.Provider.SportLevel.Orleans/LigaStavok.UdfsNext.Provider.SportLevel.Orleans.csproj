@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>LigaStavok.UdfsNext.Provider.SportLevel.Orleans</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Orleans.Runtime.Abstractions" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Orleans.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>LigaStavok.UdfsNext.Provider.SportLevel</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.Threading\LigaStavok.Threading.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.WebSocket\LigaStavok.Websocket.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataFlow\Streaming\" />
+    <Folder Include="DataFlow\Subscription\" />
+    <Folder Include="State\" />
+  </ItemGroup>
+
+</Project>
