@@ -6,26 +6,26 @@ namespace LigaStavok.WebSocket
 {
 	public class WebSocketClientService : IHostedService
 	{
-		private readonly IWebsocketClient webSocketClient;
-		private CancellationTokenSource CancellationTokenSource;
+		private readonly IWebSocketClient webSocketClient;
+		private CancellationTokenSource stoppingTokenSource;
 
-		public WebSocketClientService(IWebsocketClient webSocketClient)
+		public WebSocketClientService(IWebSocketClient webSocketClient)
 		{
 			this.webSocketClient = webSocketClient;
 		}
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			CancellationTokenSource?.Cancel();
-			CancellationTokenSource = new CancellationTokenSource();
+			stoppingTokenSource?.Cancel();
+			stoppingTokenSource = new CancellationTokenSource();
 
-			webSocketClient.Start(CancellationTokenSource.Token); 
+			webSocketClient.Start(stoppingTokenSource.Token); 
 			return Task.CompletedTask;
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			CancellationTokenSource.Cancel();
+			stoppingTokenSource.Cancel();
 			return Task.CompletedTask;
 		}
 	}

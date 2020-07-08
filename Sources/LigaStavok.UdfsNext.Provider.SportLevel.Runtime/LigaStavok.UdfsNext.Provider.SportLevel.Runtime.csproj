@@ -19,8 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataFlow\Streaming\" />
-    <Folder Include="DataFlow\Subscription\" />
     <Folder Include="State\" />
   </ItemGroup>
 

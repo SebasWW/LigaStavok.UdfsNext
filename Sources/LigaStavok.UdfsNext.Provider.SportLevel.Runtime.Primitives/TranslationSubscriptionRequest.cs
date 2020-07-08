@@ -6,8 +6,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 	{
 		public long Id { get; set; }
 
-		public TranslationSubscription Subscription { get; set; }
-
 		public TranslationState State { get; set; }
 	}
 }

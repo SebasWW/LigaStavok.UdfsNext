@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LigaStavok.UdfsNext.Provider.SportLevel.State;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	public class TranslationUnsubscriptionRequest
+	public class TranslationSubscriptionBooking
 	{
-		public long Id { get; set; }
+		public bool BookedMarket { get; set; }
+
+		public bool BookedData { get; set; }
 
 	}
 }

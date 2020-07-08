@@ -13,58 +13,45 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 	internal static class TranslationManagerExtensions
 	{
 
-        internal static Task SendSubscribeRequestAsync(
+        internal static Task SendMarketSubscribeRequestAsync(
+            this TranslationManager subscriptionManager,
+            MessageContext<TranslationSubscription> messageContext,
+            CancellationToken cancellationToken
+        )
+        {
+            var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
+            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+        }
+
+        internal static Task SendMarketSubscribeRequestAsync(
             this TranslationManager subscriptionManager,
             MessageContext<TranslationSubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
-        {
-            Task marketTask, dataTask;
-
-            // Market
-            if (messageContext.Message.Subscription.BookedMarket)
-            {
-                var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
-                marketTask = subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
-            }
-            else marketTask = Task.CompletedTask;
-
-            // Data
-            if (messageContext.Message.Subscription.BookedData)
-            {
-                var request = new DataSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastDataMessageId};
-                dataTask = subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
-            }
-            else dataTask = Task.CompletedTask;
-
-            return Task.WhenAll(dataTask, marketTask);
+        {         
+            var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
+            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
-        internal static Task SendUnsubscribeRequestAsync(
+        internal static Task SendMarketUnsubscribeRequestAsync(
             this TranslationManager subscriptionManager, 
             MessageContext<TranslationUnsubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
-        {            
-            Task marketTask, dataTask;
+        {                
+            var request = new MarketUnsubscribeRequest() { TranslationId = messageContext.Message.Id};
+            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+        }
 
-            // Market
-            if (messageContext.Message.Subscription.BookedMarket)
-            {
-                var request = new MarketUnsubscribeRequest() { TranslationId = messageContext.Message.Id};
-                marketTask = subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
-            }
-            else marketTask = Task.CompletedTask;
-
-            // Data
-            if (messageContext.Message.Subscription.BookedData)
-            {
-                var request = new DataUnsubscribeRequest() { TranslationId = messageContext.Message.Id};
-                dataTask = subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
-            }
-            else dataTask = Task.CompletedTask;
-
-            return Task.WhenAll(dataTask, marketTask);
+        internal static Task SendDataUnsubscribeRequestAsync(
+            this TranslationManager subscriptionManager,
+            MessageContext<TranslationUnsubscriptionRequest> messageContext,
+            CancellationToken cancellationToken
+        )
+        {
+            
+            var request = new DataUnsubscribeRequest() { TranslationId = messageContext.Message.Id };
+            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
         internal static async Task SendPongRequestAsync(this TranslationManager subscriptionManager, MessageContext<PingMessage> context)

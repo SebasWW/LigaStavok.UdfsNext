@@ -24,7 +24,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 		private readonly IParseTranslationsResponseProcessor parseTranslationsResponseProcessor;
 
 		private CancellationTokenSource cancellationTokenSource;
-		private IDictionary<long, TranslationSubscription> subscriptionDetails;
 
 		public ProviderManager(
 			ILogger<ProviderManager> logger,
@@ -70,11 +69,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
 				await Task.Delay(options.MetaRefreshFrequency, stoppingToken);
 			}
-		}
-
-		public Task<IDictionary<long, TranslationSubscription>> GetSubscriptionDetailsAsync()
-		{
-			return Task.FromResult(subscriptionDetails);
 		}
 
 		public Task StartAsync(CancellationToken cancellationToken)

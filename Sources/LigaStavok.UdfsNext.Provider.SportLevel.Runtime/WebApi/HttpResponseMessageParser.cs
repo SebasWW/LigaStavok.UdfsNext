@@ -20,6 +20,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi
 					break;
 
 				case TranslationsRequest.SourceValue:
+				case TranslationRequest.SourceValue:
 					response = JsonConvert.DeserializeObject<TranslationsResponse>(await httpResponseMessage.Content.ReadAsStringAsync());
 					break;
 

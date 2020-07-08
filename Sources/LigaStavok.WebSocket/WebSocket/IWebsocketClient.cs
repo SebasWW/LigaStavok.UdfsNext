@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace LigaStavok.WebSocket
 {
-	public interface IWebsocketClient : IDisposable
+	public interface IWebSocketClient : IDisposable
 	{
 		event EventHandler<TextMessageReceivedEventArgs> OnMessage;
 		event EventHandler<EventArgs> OnConnected;

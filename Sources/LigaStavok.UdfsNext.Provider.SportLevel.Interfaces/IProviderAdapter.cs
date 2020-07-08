@@ -8,6 +8,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
 	public interface IProviderAdapter
 	{
-		Task SendTranslationAsync(Translation translation);
+		Task SendTranslationAsync(MessageContext<Translation> translation);
 	}
 }

@@ -42,7 +42,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 				{
 					try
 					{
-						await GrainFactory.GetGrain<ITranslationManagerGrain>(messageContext.Message.Id).InitializeAsync(messageContext);
+						await GrainFactory.GetGrain<ITranslationSubscriberGrain>(messageContext.Message.Id).InitializeAsync(messageContext);
 					}
 					catch (Exception ex)
 					{

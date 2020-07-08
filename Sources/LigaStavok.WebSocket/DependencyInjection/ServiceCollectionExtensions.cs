@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     configureDelegate?.Invoke(options)
             );
 
-            services.AddSingleton<IWebsocketClient, WebSocketClient>();
+            services.AddSingleton<IWebSocketClient, WebSocketClient>();
             services.AddHostedService<WebSocketClientService>();
 
             return services;

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 {
-	public interface ITranslationManagerGrain : IGrainWithIntegerKey
+	public interface ITranslationSubscriberGrain : IGrainWithIntegerKey
 	{
-		Task InitializeAsync(MessageContext messageContext);
+		Task InitializeAsync();
 	}
 }

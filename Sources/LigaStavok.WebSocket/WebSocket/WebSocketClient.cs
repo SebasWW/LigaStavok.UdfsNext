@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace LigaStavok.WebSocket
 {
-	public class WebSocketClient : IDisposable, IWebsocketClient
+	public class WebSocketClient : IDisposable, IWebSocketClient
 	{
 		private ClientWebSocket clientWebSocket;
 
