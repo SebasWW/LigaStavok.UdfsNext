@@ -42,7 +42,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 				{
 					try
 					{
-						await GrainFactory.GetGrain<ITranslationSubscriberGrain>(messageContext.Message.Id).InitializeAsync(messageContext);
+						await GrainFactory.GetGrain<ITranslationSubscriberGrain>(messageContext.Message.Id).InitializeAsync();
 					}
 					catch (Exception ex)
 					{
@@ -60,7 +60,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		public override Task OnActivateAsync()
 		{
 			cancellationTokenSource = new CancellationTokenSource();
-			RegisterTimer(OnTimerTick, null, options.ActivatingProcessDelay, options.ActivatingProcessPeriod);
+
+			RegisterTimer(OnTimerTick, null, TimeSpan.Zero, TimeSpan.Zero);
 
 			var task = providerManager.StartAsync(CancellationToken.None);
 

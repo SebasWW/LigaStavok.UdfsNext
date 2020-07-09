@@ -17,7 +17,7 @@ namespace LigaStavok.UdfsNext.Orleans.Client
 
             // Local or distribute cluster
             if (clusterClientOptions.Membership.Enabled)
-                clientBuilder.UseAdoNetOrleans(
+                clientBuilder.UseAdoNetClustering(
                     options =>
                     {
                         options.Invariant = clusterClientOptions.Membership.Provider;
@@ -25,7 +25,7 @@ namespace LigaStavok.UdfsNext.Orleans.Client
                     }
                 );
             else
-                clientBuilder.UseLocalhostOrleans();
+                clientBuilder.UseLocalhostClustering();
 
             //.ConfigureLogging(logging => logging.AddConsole())
             //.UsePerfCounterEnvironmentStatistics()

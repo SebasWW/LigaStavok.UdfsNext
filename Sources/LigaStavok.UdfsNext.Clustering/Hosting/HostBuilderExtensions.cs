@@ -9,11 +9,11 @@ namespace Microsoft.Extensions.Hosting
 {
 	public static class HostBuilderExtensions
 	{
-		public static IHostBuilder UseUdfsCluster(this IHostBuilder hostBuilder, Action<UdfsClusterOptions> configureDelegate)
-		{
-			// Orleans configuration
-			return UseUdfsCluster(hostBuilder, configureDelegate, null);
-		}
+		//public static IHostBuilder UseUdfsCluster(this IHostBuilder hostBuilder, Action<UdfsClusterOptions> configureDelegate)
+		//{
+		//	// Orleans configuration
+		//	return UseUdfsCluster(hostBuilder, configureDelegate, null);
+		//}
 
 		public static IHostBuilder UseUdfsCluster(this IHostBuilder hostBuilder, Action<UdfsClusterOptions> configureDelegate, Action<ISiloBuilder> builderDelegate)
 		{
@@ -36,12 +36,12 @@ namespace Microsoft.Extensions.Hosting
 
 		public static IHostBuilder UseUdfsClusterClient<TCluster>(
 			this IHostBuilder hostBuilder,
-			Action<UdfsClusterClientOptions<TCluster>> configureDelegate
+			Action<UdfsClusterClientsLocatorOptions> configureDelegate
 		)
 		{
 			hostBuilder.ConfigureServices(
 				(context, services) => 
-					services.AddUdfsClusterClient(configureDelegate)
+					services.AddUdfsClusterClientsLocator(configureDelegate)
 			);
 			return hostBuilder;
 		}

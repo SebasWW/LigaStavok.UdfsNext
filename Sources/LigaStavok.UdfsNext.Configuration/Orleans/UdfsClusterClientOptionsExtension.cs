@@ -4,7 +4,7 @@ namespace LigaStavok.UdfsNext.Orleans.Client
 {
 	public static class UdfsClusterClientOptionsExtension
 	{
-		public static void Configure(this UdfsClusterClientOptions options, ClusterClientConfiguration configuration)
+		public static void ConfigureWith(this UdfsClusterClientOptions options, ClusterClientConfiguration configuration)
 		{
 			// Orleans information
 			options.ClusterService.ClusterId = configuration.ClusterId;

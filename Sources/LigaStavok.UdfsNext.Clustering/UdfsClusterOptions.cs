@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Orleans.Configuration;
 
@@ -30,5 +31,11 @@ namespace LigaStavok.UdfsNext.Orleans
         /// The persistent reminder configuration.
         /// </summary>
         public DbConnectionOptions Reminder { get; set; } = new DbConnectionOptions();
+
+        /// <summary>
+        /// Assemblies with grains interfaces
+        /// </summary>
+        public List<Assembly> GrainAssemblies { get; } = new List<Assembly>();
+
     }
 }

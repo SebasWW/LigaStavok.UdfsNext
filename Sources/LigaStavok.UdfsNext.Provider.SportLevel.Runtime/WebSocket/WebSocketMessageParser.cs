@@ -1,4 +1,5 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
+﻿using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using Newtonsoft.Json.Linq;
 using System;
 

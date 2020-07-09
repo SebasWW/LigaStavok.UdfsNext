@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bettor", "Bettor", "{7324C8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{4C7AAE14-8173-4191-A2C7-CACADB130ED0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Configuration", "LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Configuration.csproj", "{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans.Configuration", "LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj", "{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans", "LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Orleans.csproj", "{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}"
 EndProject
@@ -69,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provide
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.Threading", "LigaStavok.Threading\LigaStavok.Threading.csproj", "{EEAE81DA-3ADB-4E8D-AADB-77ADC48548CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Provider.SportLevel.Console", "LigaStavok.UdfsNext.Provider.SportLevel.Console\LigaStavok.UdfsNext.Provider.SportLevel.Console.csproj", "{4F39302C-CAFF-4001-BF7E-FA7201B98663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Console", "LigaStavok.UdfsNext.Provider.SportLevel.Console\LigaStavok.UdfsNext.Provider.SportLevel.Console.csproj", "{4F39302C-CAFF-4001-BF7E-FA7201B98663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

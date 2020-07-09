@@ -21,10 +21,10 @@ namespace Microsoft.Extensions.Hosting
 			);
 
 			// Cluster
-			hostBuilder.UseUdfsLineCluster(
-				() =>
+			hostBuilder.UseUdfsCluster(
+				options =>
 				{
-					return configuration.Cluster;
+					options.ConfigureWith(configuration.Cluster);
 				},
 				siloBuilder =>
 				{
@@ -39,18 +39,18 @@ namespace Microsoft.Extensions.Hosting
 			return hostBuilder;
 		}
 
-		public static IHostBuilder UseUdfsLineCluster(this IHostBuilder hostBuilder, Func<ClusterConfiguration> clusterConfigurationFunc, Action<ISiloBuilder> builderDelegate)
-		{
-			hostBuilder
-				.UseUdfsCluster(
-					options =>
-					{
-						options.Configure(clusterConfigurationFunc.Invoke());
-					},
-					builderDelegate
-				);
+		//public static IHostBuilder UseUdfsLineCluster(this IHostBuilder hostBuilder, Func<ClusterConfiguration> clusterConfigurationFunc, Action<ISiloBuilder> builderDelegate)
+		//{
+		//	hostBuilder
+		//		.UseUdfsCluster(
+		//			options =>
+		//			{
+		//				options.ConfigureWith(clusterConfigurationFunc.Invoke());
+		//			},
+		//			builderDelegate
+		//		);
 
-			return hostBuilder;
-		}
+		//	return hostBuilder;
+		//}
 	}
 }

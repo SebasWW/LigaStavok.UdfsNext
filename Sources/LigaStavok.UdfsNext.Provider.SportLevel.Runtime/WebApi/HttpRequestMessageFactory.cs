@@ -10,10 +10,10 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi
 {
 	public class HttpRequestMessageFactory : IHttpRequestMessageFactory
 	{
-		private readonly WebApiOptions options;
+		private readonly HttpClientManagerOptions options;
 
 		public HttpRequestMessageFactory(
-			IOptions<WebApiOptions> options
+			IOptions<HttpClientManagerOptions> options
 		)
 		{
 			this.options = options.Value;

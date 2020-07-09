@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Hosting
 					var configuration = configurationFunc.Invoke();
 
 					// Orleans information
-					options.Configure(configuration);
+					options.ConfigureWith(configuration);
 
 				}
 			);

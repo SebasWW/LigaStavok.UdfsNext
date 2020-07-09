@@ -1,16 +1,10 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel.Api;
-using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Translations;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Translations;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
@@ -67,7 +61,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 					logger.LogError(ex, "Sending TranslationsRequest error.");
 				}
 
-				await Task.Delay(options.MetaRefreshFrequency, stoppingToken);
+				await Task.Delay(options.MetaRefreshInterval, stoppingToken);
 			}
 		}
 

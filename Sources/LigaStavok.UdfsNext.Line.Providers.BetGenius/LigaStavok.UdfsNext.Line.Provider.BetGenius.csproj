@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Orleans.csproj" />
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Configuration.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Inferfaces\LigaStavok.UdfsNext.Line.Interfaces.csproj" />
   </ItemGroup>
 

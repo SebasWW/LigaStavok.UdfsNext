@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using LigaStavok.UdfsNext.Configuration;
 using LigaStavok.UdfsNext.HealthCheck;
 using LigaStavok.UdfsNext.HealthCheck.Hosting;
 using LigaStavok.UdfsNext.HealthCheck.Orleans;
@@ -10,28 +11,32 @@ using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Runtime;
 
-namespace LigaStavok.UdfsNext.Orleans.Hosting
+namespace LigaStavok.UdfsNext.Hosting
 {
     public static class SiloBuilderExtensions
 	{
-
-        public static void ConfigureUdfs(this ISiloBuilder siloBuilder, UdfsClusterOptions udfsClusterOptions)
+        public static void Configure(this ISiloBuilder siloBuilder, ClusterConfiguration configuration)
 		{
             // Local or distribute cluster
-            if (udfsClusterOptions.Membership.Enabled)
+            if (configuration.Membership.Enabled)
                 siloBuilder
                     .UseAdoNetClustering(options =>
                     {
-                        options.Invariant = udfsClusterOptions.Membership.Provider;
-                        options.ConnectionString = udfsClusterOptions.Membership.ConnectionString;
+                        options.Invariant = configuration.Membership.Provider;
+                        options.ConnectionString = configuration.Membership.ConnectionString;
                     })
                     .Configure<EndpointOptions>(options =>
                     {
-                        options.AdvertisedIPAddress = udfsClusterOptions.EndPoint.AdvertisedIPAddress ?? IPAddress.Loopback;
-                        options.GatewayListeningEndpoint = udfsClusterOptions.EndPoint.GatewayListeningEndpoint;
-                        options.GatewayPort = udfsClusterOptions.EndPoint.GatewayPort;
-                        options.SiloListeningEndpoint = udfsClusterOptions.EndPoint.SiloListeningEndpoint;
-                        options.SiloPort = udfsClusterOptions.EndPoint.SiloPort;
+                        // IP Address to advertise in the cluster
+                        if (IPAddress.TryParse(configuration.Endpoint.AdvertisedIPAddress, out var iPAddress)) options.AdvertisedIPAddress = iPAddress;
+
+                        // The socket used for silo-to-silo will bind to this endpoint
+                        if (configuration.Endpoint.GatewayListeningPort > 0 && IPAddress.TryParse(configuration.Endpoint.AdvertisedIPAddress, out var gatewayIPAddress))
+                            options.GatewayListeningEndpoint = new IPEndPoint(gatewayIPAddress, configuration.Endpoint.GatewayListeningPort);
+
+                        // The socket used by the gateway will bind to this endpoint
+                        if (configuration.Endpoint.SiloListeningPort > 0 && IPAddress.TryParse(configuration.Endpoint.SiloListeningIP, out var siloIPAddress))
+                            options.SiloListeningEndpoint = new IPEndPoint(siloIPAddress, configuration.Endpoint.SiloListeningPort);
                     });
             else
                 siloBuilder.UseLocalhostClustering();
@@ -40,8 +45,8 @@ namespace LigaStavok.UdfsNext.Orleans.Hosting
             siloBuilder
                 .Configure<ClusterOptions>(options =>
                 {
-                    options.ClusterId = udfsClusterOptions.ClusterService.ClusterId;
-                    options.ServiceId = udfsClusterOptions.ClusterService.ServiceId;
+                    options.ClusterId = configuration.ClusterId;
+                    options.ServiceId = configuration.ServiceId;
                 });
 
             // siloBuilder
@@ -67,34 +72,30 @@ namespace LigaStavok.UdfsNext.Orleans.Hosting
             //});
 
             // Reminder
-            if (udfsClusterOptions.Reminder.Enabled)
+            if (configuration.Reminder.Enabled)
                 siloBuilder
                     .UseAdoNetReminderService(options =>
                     {
-                        options.Invariant = udfsClusterOptions.Reminder.Provider;
-                        options.ConnectionString = udfsClusterOptions.Reminder.ConnectionString;
+                        options.Invariant = configuration.Reminder.Provider;
+                        options.ConnectionString = configuration.Reminder.ConnectionString;
                     });
             else
                 siloBuilder
                     .UseInMemoryReminderService();
 
             // Storage
-            if (udfsClusterOptions.Storage.Enabled)
+            if (configuration.Storage.Enabled)
                 siloBuilder
-                    .AddAdoNetGrainStorage(UdfsGrainStorages.UDFS_GRAIN_STORAGE, options =>
+                    .AddAdoNetGrainStorage(configuration.Storage.Name, options =>
                     {
-                        options.Invariant = udfsClusterOptions.Storage.Provider;
-                        options.ConnectionString = udfsClusterOptions.Storage.ConnectionString;
+                        options.Invariant = configuration.Storage.Provider;
+                        options.ConnectionString = configuration.Storage.ConnectionString;
                     });
             else
-                siloBuilder.AddMemoryGrainStorage(UdfsGrainStorages.UDFS_GRAIN_STORAGE);
+                siloBuilder.AddMemoryGrainStorage(configuration.Storage.Name);
 
             //if (context.HostingEnvironment.IsDevelopment())
             //    builder.UseDevelopmentOrleans(new IPEndPoint(6, 11111));
-
-            // Grains
-            foreach (var item in udfsClusterOptions.GrainAssemblies)
-                siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(item).WithReferences());
 
 
             // HealthChecks

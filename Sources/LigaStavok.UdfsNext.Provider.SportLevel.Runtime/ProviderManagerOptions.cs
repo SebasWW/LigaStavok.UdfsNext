@@ -6,6 +6,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
 	public class ProviderManagerOptions
 	{
-		public TimeSpan MetaRefreshFrequency { get; set; }
+		public TimeSpan MetaRefreshInterval { get; set; }
 	}
 }

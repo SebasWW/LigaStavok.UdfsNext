@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LigaStavok.UdfsNext.Orleans.Client
 {
-	public class UdfsClusterClientsLocator : IReadOnlyDictionary<string, UdfsClusterClient>
+	public class UdfsClusterClientsLocator : IReadOnlyDictionary<string, IUdfsClusterClient>
 	{
 		private readonly Dictionary<string, IUdfsClusterClient> clusterClients 
 			= new Dictionary<string, IUdfsClusterClient>();

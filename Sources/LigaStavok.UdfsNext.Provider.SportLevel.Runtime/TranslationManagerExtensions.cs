@@ -15,21 +15,21 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
         internal static Task SendMarketSubscribeRequestAsync(
             this TranslationManager subscriptionManager,
-            MessageContext<TranslationSubscription> messageContext,
-            CancellationToken cancellationToken
-        )
-        {
-            var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
-            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
-        }
-
-        internal static Task SendMarketSubscribeRequestAsync(
-            this TranslationManager subscriptionManager,
             MessageContext<TranslationSubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
         {         
             var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
+            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+        }
+
+        internal static Task SendDataSubscribeRequestAsync(
+            this TranslationManager subscriptionManager,
+            MessageContext<TranslationSubscriptionRequest> messageContext,
+            CancellationToken cancellationToken
+        )
+        {
+            var request = new DataSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastDataMessageId };
             return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 

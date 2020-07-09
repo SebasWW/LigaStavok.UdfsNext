@@ -7,6 +7,9 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 	{
 		Task StartAsync(CancellationToken cancellationToken);
 		Task StopAsync(CancellationToken cancellationToken);
+
+		Task ExecuteAsync(CancellationToken stoppingToken);
+
 		Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, CancellationToken cancellationToken);
 		Task UnsubscribeAsync(MessageContext<TranslationUnsubscriptionRequest> messageContext, CancellationToken cancellationToken);
 	}

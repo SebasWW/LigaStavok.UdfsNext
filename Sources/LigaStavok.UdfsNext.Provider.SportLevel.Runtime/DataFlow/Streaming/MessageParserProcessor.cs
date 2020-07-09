@@ -7,7 +7,7 @@ using LigaStavok.Threading.Processors;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Streaming
 {
-	public class MessageParserProcessor : AsyncQueueProcessor<MessageContext<string>>
+	public class MessageParserProcessor : AsyncQueueProcessor<MessageContext<string>>, IMessageParserProcessor
 	{
 		public MessageParserProcessor()
 		{

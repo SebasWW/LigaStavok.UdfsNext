@@ -10,11 +10,11 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi
 {
 	public class HttpClientManager
 	{
-		private readonly WebApiOptions options;
+		private readonly HttpClientManagerOptions options;
 		private readonly HttpClient httpClient;
 
 		public HttpClientManager(
-			IOptions<WebApiOptions> options,
+			IOptions<HttpClientManagerOptions> options,
 			HttpClient httpClient
 		)
 		{

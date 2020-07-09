@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi
 {
-	public class WebApiOptions
+	public class HttpClientManagerOptions
 	{
 		public Uri Uri { get; set; }
 
