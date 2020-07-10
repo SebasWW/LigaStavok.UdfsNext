@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>LigaStavok.UdfsNext.Provider.SportLevel</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives.csproj" />
+  </ItemGroup>
+
+</Project>
