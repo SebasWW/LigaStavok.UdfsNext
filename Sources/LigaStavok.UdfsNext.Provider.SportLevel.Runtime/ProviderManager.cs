@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Translations;
+using System.Threading.Tasks.Dataflow;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Responses;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -12,26 +18,41 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 	{
 		private readonly ProviderManagerOptions options;
 		private readonly ILogger<ProviderManager> logger;
-
-		private readonly ICreateTranslationsRequestProcessor createTranslationsRequestProcessor;
-		private readonly IExecuteTranslationsRequestProcessor executeTranslationsRequestProcessor;
-		private readonly IParseTranslationsResponseProcessor parseTranslationsResponseProcessor;
-
+		private readonly HttpClientManager httpClientManager;
+		private readonly IHttpRequestMessageFactory httpRequestMessageFactory;
+		private readonly IHttpResponseMessageParser httpResponseMessageParser;
 		private CancellationTokenSource cancellationTokenSource;
+
+		private readonly TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>> createHttpRequestBlock;
+		private readonly TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>> execHttpRequestBlock;
+		private readonly TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<Translation>> parseHttpRequestBlock;
 
 		public ProviderManager(
 			ILogger<ProviderManager> logger,
 			IOptions<ProviderManagerOptions> options,
-			ICreateTranslationsRequestProcessor createTranslationsRequestProcessor,
-			IExecuteTranslationsRequestProcessor executeTranslationsRequestProcessor,
-			IParseTranslationsResponseProcessor parseTranslationsResponseProcessor
+			
+			HttpClientManager httpClientManager,
+			IHttpRequestMessageFactory httpRequestMessageFactory,
+			IHttpResponseMessageParser httpResponseMessageParser
 		)
 		{
-			this.logger = logger;
-			this.createTranslationsRequestProcessor = createTranslationsRequestProcessor;
-			this.executeTranslationsRequestProcessor = executeTranslationsRequestProcessor;
-			this.parseTranslationsResponseProcessor = parseTranslationsResponseProcessor;
 			this.options = options.Value;
+			this.logger = logger;
+			this.httpClientManager = httpClientManager;
+			this.httpRequestMessageFactory = httpRequestMessageFactory;
+			this.httpResponseMessageParser = httpResponseMessageParser;
+
+			createHttpRequestBlock 
+				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(CreateHttpRequestBlock);
+
+			execHttpRequestBlock
+				= new TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>>(ExecHttpRequestBlock);
+
+			parseHttpRequestBlock
+				= new TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<Translation>>(ParseHttpRequestBlock);
+
+			createHttpRequestBlock.LinkTo(execHttpRequestBlock);
+			execHttpRequestBlock.LinkTo(parseHttpRequestBlock);
 		}
 
 		private async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,7 +65,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 				try
 				{
 					// Renewing translations metas
-					createTranslationsRequestProcessor.Enqueue(
+					createHttpRequestBlock.Post(
 						new MessageContext<TranslationsRequest>(
 							new TranslationsRequest()
 							{
@@ -70,22 +91,70 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			cancellationTokenSource?.Cancel();
 			cancellationTokenSource = new CancellationTokenSource();
 
-			createTranslationsRequestProcessor.StartAsync(cancellationToken);
-			executeTranslationsRequestProcessor.StartAsync(cancellationToken);
-			parseTranslationsResponseProcessor.StartAsync(cancellationToken);
-
 			Task.Run(() => ExecuteAsync(cancellationTokenSource.Token));
 			return Task.CompletedTask;
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			createTranslationsRequestProcessor.StopAsync(cancellationToken);
-			executeTranslationsRequestProcessor.StopAsync(cancellationToken);
-			parseTranslationsResponseProcessor.StopAsync(cancellationToken);
-
 			cancellationTokenSource?.Cancel();
 			return Task.CompletedTask;
+		}
+
+		IEnumerable<MessageContext<HttpRequestMessage>> CreateHttpRequestBlock(MessageContext<TranslationsRequest> messageContext)
+		{
+			try
+			{
+				return Enumerable.Repeat(new MessageContext<HttpRequestMessage>(httpRequestMessageFactory.Create(messageContext.Message)), 1);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "HttpRequestMessage building error.");
+				return Array.Empty<MessageContext<HttpRequestMessage>>();
+			}
+		}
+
+		async Task<IEnumerable<MessageContext<HttpResponseMessage>>> ExecHttpRequestBlock(MessageContext<HttpRequestMessage> messageContext)
+		{
+			try
+			{
+				return Enumerable.Repeat(messageContext.Next(await httpClientManager.SendAsync(messageContext.Message)), 1);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "HttpRequestMessage execution error.");
+
+				return Array.Empty<MessageContext<HttpResponseMessage>>();
+			}
+		}
+
+		private async Task<IEnumerable<MessageContext<Translation>>> ParseHttpRequestBlock(MessageContext<HttpResponseMessage> messageContext)
+		{
+			try
+			{
+				var response = await httpResponseMessageParser.ParseAsync(messageContext.Message) as TranslationsResponse;
+				if (response == null) throw new Exception("Empty response.");
+
+				return response
+					.Where(t => t.State != "finished" && t.State != "cancelled")
+					.Select(t => messageContext.Next(t));
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "HttpResponseMessage parsing error.");
+				return Array.Empty<MessageContext<Translation>>();
+			}
+		}
+
+		public async IAsyncEnumerator<MessageContext<Translation>> GetAsyncEnumerator(CancellationToken token = default)
+		{
+			// Return new elements until cancellationToken is triggered.
+			while (true)
+			{
+				// Make sure to throw on cancellation so the Task will transfer into a canceled state
+				token.ThrowIfCancellationRequested();
+				yield return await parseHttpRequestBlock.ReceiveAsync(token);
+			}
 		}
 
 		#region IDisposable Support

@@ -91,11 +91,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Subscription
 			{
 				if (translationSubscriptionCollection.TryGetValue(translation.Id, out var subscription))
 				{
-					subscription.Booking = new TranslationSubscriptionBooking()
-					{
-						BookedData = translation.BookedData.HasValue && translation.BookedData.Value,
-						BookedMarket = translation.BookedMarket.HasValue && translation.BookedMarket.Value
-					};
+					subscription.Booking.BookedData = translation.BookedData.HasValue && translation.BookedData.Value;
+					subscription.Booking.BookedMarket = translation.BookedMarket.HasValue && translation.BookedMarket.Value;
 				}
 			}
 			catch (Exception ex)

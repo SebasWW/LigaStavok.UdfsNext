@@ -52,10 +52,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow.Translations
 					.Where(t => t.State != "finished" && t.State != "cancelled")
 					.AsParallel().ForAll(translation => translationAsyncQueue.Enqueue(message.Next(translation)));
 
-				//foreach (var translation in response)
-				//{
-				//	translationAsyncQueue.Enqueue(message.Next(translation));
-				//}
 			}
 			catch (Exception ex)
 			{

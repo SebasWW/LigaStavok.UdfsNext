@@ -21,9 +21,9 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			services.Configure<ProviderManagerOptions>(action);
 		}
 
-		public void ConfigureTranslationManager(Action<TranslationManagerOptions> action)
+		public void ConfigureTranslationManager(Action<FeedManagerOptions> action)
 		{
-			services.Configure<TranslationManagerOptions>(action);
+			services.Configure<FeedManagerOptions>(action);
 		}
 		public void ConfigureHttpClientManager(Action<HttpClientManagerOptions> action)
 		{

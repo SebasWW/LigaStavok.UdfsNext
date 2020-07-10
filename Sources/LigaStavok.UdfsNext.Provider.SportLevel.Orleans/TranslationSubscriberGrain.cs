@@ -8,11 +8,11 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 	public class TranslationSubscriberGrain : Grain,  ITranslationSubscriberGrain
 	{
 		private readonly IPersistentState<TranslationSubscriberGrainState> state;
-		private readonly ITranslationManager translationManager;
+		private readonly IFeedManager translationManager;
 
 		public TranslationSubscriberGrain(
 			[PersistentState("translationGrainState", "stateStore")] IPersistentState<TranslationSubscriberGrainState> state,
-			ITranslationManager translationManager
+			IFeedManager translationManager
 		)
 		{
 			this.state = state;

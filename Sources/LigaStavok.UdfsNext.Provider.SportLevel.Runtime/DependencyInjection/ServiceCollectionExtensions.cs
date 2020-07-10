@@ -49,7 +49,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Runtime
             services.AddSingleton<IProviderManager, ProviderManager>();
-            services.AddSingleton<ITranslationManager, TranslationManager>();
+            services.AddSingleton<IFeedManager, FeedManager>();
 
             // Services
             services.AddHostedService<TranslationManagerService>();

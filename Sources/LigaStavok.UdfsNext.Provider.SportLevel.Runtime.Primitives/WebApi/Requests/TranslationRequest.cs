@@ -8,6 +8,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests
     {
         public const string SourceValue = "Translation";
 
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

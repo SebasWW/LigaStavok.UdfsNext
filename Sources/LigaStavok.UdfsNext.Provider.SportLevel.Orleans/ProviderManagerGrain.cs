@@ -15,7 +15,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 	{
 		private readonly Logger<ProviderManagerGrain> logger;
 		private readonly IProviderManager providerManager;
-		private readonly TranslationAsyncQueue translationAsyncQueue;
 		private readonly ProviderManagerGrainOptions options;
 		
 		private CancellationTokenSource cancellationTokenSource;
@@ -23,22 +22,19 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		public ProviderManagerGrain(
 			Logger<ProviderManagerGrain> logger,
 			IProviderManager providerManager,
-			IOptions<ProviderManagerGrainOptions> options,
-			TranslationAsyncQueue translationAsyncQueue
+			IOptions<ProviderManagerGrainOptions> options
 		)
 		{
 			this.logger = logger;
 			this.providerManager = providerManager;
-			this.translationAsyncQueue = translationAsyncQueue;
 			this.options = options.Value;
 		}
 
 		private async Task OnTimerTick(object obj)
 		{
-			
 			try
 			{
-				await foreach(var messageContext in translationAsyncQueue.WithCancellation(cancellationTokenSource.Token))
+				await foreach(var messageContext in providerManager.WithCancellation(cancellationTokenSource.Token))
 				{
 					try
 					{
