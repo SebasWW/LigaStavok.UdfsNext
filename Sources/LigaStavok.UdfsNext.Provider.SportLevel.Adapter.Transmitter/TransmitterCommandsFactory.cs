@@ -16,7 +16,7 @@
 //    public sealed class TransmitterCommandsFactory 
 //    {
 //        private readonly AdapterConfiguration adapterConfiguration;
-//		private readonly Logger<TransmitterCommandsFactory> logger;
+//		private readonly ILogger<TransmitterCommandsFactory> logger;
 //		private readonly IDataEventAdapter dataEventAdapter;
 //		private readonly IMarketEventAdapter marketEventAdapter;
 //		private readonly ITranslationAdapter translationAdapter;
@@ -26,7 +26,7 @@
 
 //		public TransmitterCommandsFactory(
 //            AdapterConfiguration adapterConfiguration,
-//            Logger<TransmitterCommandsFactory> logger,
+//            ILogger<TransmitterCommandsFactory> logger,
 
 //            IDataEventAdapter dataEventAdapter,
 //            IMarketEventAdapter marketEventAdapter,

@@ -32,7 +32,7 @@
 //        private readonly ICanTell _stateActor;
 //        private readonly ICanTell _failureActor;
 //        private readonly ICanTell _dumperActor;
-//        private readonly Logger _logger;
+//        private readonly ILogger _logger;
 
 //        public AdapterActor(
 //            IStateManager stateManager, 

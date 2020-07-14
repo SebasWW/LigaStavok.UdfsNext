@@ -44,11 +44,13 @@ namespace Microsoft.Extensions.DependencyInjection
                         .WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i*2))
                 );
 
+            // Primitives
+            services.AddSingleton<TranslationSubscriptionCollection>();
+
             // Flow
             services.AddSingleton<FeedListenerFlow>();
             services.AddSingleton<FeedSubscriberFlow>();
             services.AddSingleton<ProviderManagerFlow>();
-
 
             // Runtime
             services.AddSingleton<IProviderManager, ProviderManager>();

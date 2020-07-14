@@ -8,11 +8,11 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
 	public class FeedManager : IFeedManager
 	{
-		private readonly Logger<FeedManager> logger;
+		private readonly ILogger<FeedManager> logger;
 		private readonly IWebSocketClient webSocketClient;
 
 		public FeedManager(
-			Logger<FeedManager> logger,
+			ILogger<FeedManager> logger,
 			IWebSocketClient webSocketClient
 		)
 		{

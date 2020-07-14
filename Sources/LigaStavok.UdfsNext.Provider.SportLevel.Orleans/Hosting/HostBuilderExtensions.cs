@@ -46,7 +46,10 @@ namespace Microsoft.Extensions.Hosting
 					);
 
 					// Grains 
+					siloBuilder.ConfigureApplicationParts(parts => parts.AddFromAppDomain());
 					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(Assembly.GetExecutingAssembly()).WithReferences());
+					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(ProviderManagerGrain).Assembly).WithReferences());
+					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IProviderManagerGrain).Assembly).WithReferences());
 
 					// Tasks
 					siloBuilder.AddStartupTask<ProviderManagerStartupTask>();

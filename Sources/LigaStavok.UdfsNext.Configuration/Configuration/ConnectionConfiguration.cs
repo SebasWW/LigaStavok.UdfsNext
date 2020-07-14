@@ -18,9 +18,9 @@
         public string Provider { get; set; } = "System.Data.SqlClient";
 
 
-        /// <summary> 
-        /// Storage name.
-        /// </summary>
-		public string Name { get;  set; }
+  //      /// <summary> 
+  //      /// Storage name.
+  //      /// </summary>
+		//public string Name { get;  set; }
 	}
 }

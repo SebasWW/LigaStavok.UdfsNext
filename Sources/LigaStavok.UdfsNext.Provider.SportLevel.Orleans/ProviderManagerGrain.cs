@@ -13,14 +13,14 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 	[Reentrant]
 	public class ProviderManagerGrain : Grain, IProviderManagerGrain
 	{
-		private readonly Logger<ProviderManagerGrain> logger;
+		private readonly ILogger<ProviderManagerGrain> logger;
 		private readonly IProviderManager providerManager;
 		private readonly ProviderManagerGrainOptions options;
 		
 		private CancellationTokenSource cancellationTokenSource;
 
 		public ProviderManagerGrain(
-			Logger<ProviderManagerGrain> logger,
+			ILogger<ProviderManagerGrain> logger,
 			IProviderManager providerManager,
 			IOptions<ProviderManagerGrainOptions> options
 		)
@@ -57,7 +57,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		{
 			cancellationTokenSource = new CancellationTokenSource();
 
-			RegisterTimer(OnTimerTick, null, TimeSpan.Zero, TimeSpan.Zero);
+			RegisterTimer(OnTimerTick, null, options.ActivatingProcessDelay, options.ActivatingProcessPeriod);
 
 			var task = providerManager.StartAsync(CancellationToken.None);
 

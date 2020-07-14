@@ -16,7 +16,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
 	public class FeedSubscriberFlow
 	{
-		private readonly Logger<FeedManager> logger;
+		private readonly ILogger<FeedManager> logger;
 
 		private readonly TransformManyBlock<MessageContext<TranslationRequest, TranslationSubscription>,
 			MessageContext<HttpRequestMessage, TranslationSubscription>> translationCreateRequestBlock;
@@ -38,7 +38,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private readonly IFeedManager feedManager;
 
 		public FeedSubscriberFlow(
-			Logger<FeedManager> logger,
+			ILogger<FeedManager> logger,
 			TranslationSubscriptionCollection subscriptions,
 
 			HttpClientManager httpClientManager,

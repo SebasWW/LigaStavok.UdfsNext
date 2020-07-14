@@ -178,11 +178,15 @@ namespace LigaStavok.WebSocket
 				if (disposing)
 				{
 					// TODO: dispose managed state (managed objects).
-					cancellationTokenSource.Cancel();
+					cancellationTokenSource?.Cancel();
 
-					if (clientWebSocket.State == WebSocketState.Open)
-						clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Bye", CancellationToken.None).GetAwaiter().GetResult();
-					clientWebSocket.Dispose();
+					if (clientWebSocket != null)
+					{
+						if (clientWebSocket.State == WebSocketState.Open)
+							clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Bye", CancellationToken.None).GetAwaiter().GetResult();
+
+						clientWebSocket.Dispose();
+					}
 				}
 
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

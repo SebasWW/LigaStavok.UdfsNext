@@ -86,20 +86,20 @@ namespace LigaStavok.UdfsNext.Hosting
             // Storage
             if (configuration.Storage.Enabled)
                 siloBuilder
-                    .AddAdoNetGrainStorage(configuration.Storage.Name, options =>
+                    .AddAdoNetGrainStorage("stateStore", options =>
                     {
                         options.Invariant = configuration.Storage.Provider;
                         options.ConnectionString = configuration.Storage.ConnectionString;
                     });
             else
-                siloBuilder.AddMemoryGrainStorage(configuration.Storage.Name);
+                siloBuilder.AddMemoryGrainStorage("stateStore");
 
             //if (context.HostingEnvironment.IsDevelopment())
             //    builder.UseDevelopmentOrleans(new IPEndPoint(6, 11111));
 
 
             // HealthChecks
-            siloBuilder.UseUdfsClusterHealthChecks();
+            //siloBuilder.UseUdfsClusterHealthChecks();
         }
     }
 }

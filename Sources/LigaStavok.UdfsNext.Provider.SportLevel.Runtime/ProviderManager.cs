@@ -42,7 +42,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 						new MessageContext<TranslationsRequest>(
 							new TranslationsRequest()
 							{
-								Booking = "booked",
+								//Booking = "booked",
 								FromISO8601 = DateTimeOffset.UtcNow.AddHours(-3),
 								SportId = 6 // Tennis
 							}

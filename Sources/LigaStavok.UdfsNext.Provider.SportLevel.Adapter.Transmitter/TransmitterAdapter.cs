@@ -12,10 +12,10 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
 {
 	public class TransmitterAdapter : IProviderAdapter
 	{
-		private readonly Logger<TransmitterAdapter> logger;
+		private readonly ILogger<TransmitterAdapter> logger;
 
 		public TransmitterAdapter(
-			Logger<TransmitterAdapter> logger
+			ILogger<TransmitterAdapter> logger
 
 		)
 		{

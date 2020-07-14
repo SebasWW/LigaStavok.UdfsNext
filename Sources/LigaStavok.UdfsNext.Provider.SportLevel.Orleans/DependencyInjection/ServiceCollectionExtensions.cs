@@ -1,21 +1,29 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel;
+﻿using System;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
-using LigaStavok.WebSocket;
-using System;
-using System.Security;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSportLevelProviderOrleans(
             this IServiceCollection services, 
             ServiceConfiguration configuration
         ) 
         {
+            // Logging
+            services
+                //.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"))
+                .AddLogging(
+                    configure =>
+                    {
+                        configure.AddProvider(new NLogLoggerProvider());
+                    }
+                );
 
-			services.Configure<ProviderManagerGrainOptions>(
+            services.Configure<ProviderManagerGrainOptions>(
 				options =>
 				{
 				}

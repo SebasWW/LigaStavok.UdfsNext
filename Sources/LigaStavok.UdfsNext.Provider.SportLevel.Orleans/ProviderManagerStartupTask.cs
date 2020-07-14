@@ -1,4 +1,5 @@
-﻿using Orleans;
+﻿using Microsoft.Extensions.Logging;
+using Orleans;
 using Orleans.Runtime;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,31 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 	public class ProviderManagerStartupTask : IStartupTask
     {
         private readonly IGrainFactory grainFactory;
+		private readonly ILogger<ProviderManagerStartupTask> logger;
 
-        public ProviderManagerStartupTask(IGrainFactory grainFactory)
+		public ProviderManagerStartupTask(IGrainFactory grainFactory, ILogger<ProviderManagerStartupTask> logger)
         {
             this.grainFactory = grainFactory;
-        }
+			this.logger = logger;
+		}
 
         public async Task Execute(CancellationToken cancellationToken)
         {
-            var grain = this.grainFactory.GetGrain<IProviderManagerGrain>(0);
-            await grain.InitializeAsync();
+			while (!cancellationToken.IsCancellationRequested)
+			{
+                var grain = this.grainFactory.GetGrain<IProviderManagerGrain>(0);
+
+				try
+				{
+                    await grain.InitializeAsync();
+                }
+				catch (Exception ex)
+				{
+					logger.LogError(ex, "ProviderManagerGrain calling error.");
+				}
+
+                await Task.Delay(TimeSpan.FromSeconds(20), cancellationToken);
+            }
         }
     }
 }

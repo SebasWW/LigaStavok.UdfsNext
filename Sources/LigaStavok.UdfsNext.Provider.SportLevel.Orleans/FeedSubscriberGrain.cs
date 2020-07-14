@@ -10,8 +10,10 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		private readonly IPersistentState<FeedSubscriberGrainState> state;
 		private readonly IFeedSubscriber feedSubscriber;
 
+		public const string STORAGE_NAME = "stateStore";
+
 		public FeedSubscriberGrain(
-			[PersistentState("translationGrainState", "stateStore")] IPersistentState<FeedSubscriberGrainState> state,
+			[PersistentState("translationGrainState", STORAGE_NAME)] IPersistentState<FeedSubscriberGrainState> state,
 			IFeedSubscriber feedSubscriber
 		)
 		{
@@ -27,6 +29,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		public override async Task OnActivateAsync()
 		{
 			await state.ReadStateAsync();
+
+			if (state.State == null) state.State = new FeedSubscriberGrainState();
 
 			await feedSubscriber.SubscribeAsync(
 				new MessageContext<TranslationSubscriptionRequest>(
