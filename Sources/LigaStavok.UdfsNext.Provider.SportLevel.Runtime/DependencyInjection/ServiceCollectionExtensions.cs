@@ -1,4 +1,5 @@
 ﻿using LigaStavok.UdfsNext.Provider.SportLevel;
+using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.WebSocket;
@@ -42,17 +43,21 @@ namespace Microsoft.Extensions.DependencyInjection
                         .HandleTransientHttpError()
                         .WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i*2))
                 );
-            
-            // Flow
 
+            // Flow
+            services.AddSingleton<FeedListenerFlow>();
+            services.AddSingleton<FeedSubscriberFlow>();
+            services.AddSingleton<ProviderManagerFlow>();
 
 
             // Runtime
             services.AddSingleton<IProviderManager, ProviderManager>();
             services.AddSingleton<IFeedManager, FeedManager>();
+            services.AddSingleton<IFeedListener, FeedListener>();
+            services.AddSingleton<IFeedSubscriber, FeedSubscriber>();
 
             // Services
-            services.AddHostedService<TranslationManagerService>();
+            services.AddHostedService<FeedListenerService>();
 
             return services;
         }

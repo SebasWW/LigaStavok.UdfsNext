@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	public class FeedManagerOptions
+	public class FeedListenerOptions
 	{
 		public string UserName { get; set; }
 

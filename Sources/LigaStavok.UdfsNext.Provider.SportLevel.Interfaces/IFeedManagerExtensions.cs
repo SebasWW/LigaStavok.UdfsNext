@@ -10,11 +10,11 @@ using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	internal static class FeedManagerExtensions
+	public static class IFeedManagerExtensions
 	{
 
-        internal static Task SendMarketSubscribeRequestAsync(
-            this FeedManager subscriptionManager,
+        public static Task SendMarketSubscribeRequestAsync(
+            this IFeedManager subscriptionManager,
             MessageContext<TranslationSubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
@@ -23,8 +23,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
             return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
-        internal static Task SendDataSubscribeRequestAsync(
-            this FeedManager subscriptionManager,
+        public static Task SendDataSubscribeRequestAsync(
+            this IFeedManager subscriptionManager,
             MessageContext<TranslationSubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
@@ -33,8 +33,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
             return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
-        internal static Task SendMarketUnsubscribeRequestAsync(
-            this FeedManager subscriptionManager, 
+        public static Task SendMarketUnsubscribeRequestAsync(
+            this IFeedManager subscriptionManager, 
             MessageContext<TranslationUnsubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
@@ -43,25 +43,23 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
             return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
-        internal static Task SendDataUnsubscribeRequestAsync(
-            this FeedManager subscriptionManager,
+        public static Task SendDataUnsubscribeRequestAsync(
+            this IFeedManager subscriptionManager,
             MessageContext<TranslationUnsubscriptionRequest> messageContext,
             CancellationToken cancellationToken
         )
         {
-            
             var request = new DataUnsubscribeRequest() { TranslationId = messageContext.Message.Id };
             return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
         }
 
-        internal static async Task SendPongRequestAsync(this FeedManager subscriptionManager, MessageContext<PingMessage> context)
+        public static async Task SendPongRequestAsync(this IFeedManager subscriptionManager, MessageContext<PingMessage> context)
         {
             var request = new PongRequest() { Timestamp = context.Message.Timestamp };
-
             await subscriptionManager.SendAsync(context.Next(JsonConvert.SerializeObject(request)), CancellationToken.None);
         }
 
-        internal static async Task LoginAsync(this FeedManager subscriptionManager, string userName, string password)
+        public static async Task LoginAsync(this IFeedManager subscriptionManager, string userName, string password)
         {
             using (var md5 = MD5.Create())
             {

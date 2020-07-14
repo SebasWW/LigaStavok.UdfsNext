@@ -6,7 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Adapters\**" />
+    <Compile Remove="Configuration\**" />
+    <EmbeddedResource Remove="Adapters\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <None Remove="Adapters\**" />
+    <None Remove="Configuration\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+    <PackageReference Include="Udfs.Transmitter" Version="2.0.0.30" />
   </ItemGroup>
 
   <ItemGroup>

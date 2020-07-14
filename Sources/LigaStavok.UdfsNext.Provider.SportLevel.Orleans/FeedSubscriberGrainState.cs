@@ -2,7 +2,7 @@
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 {
-	public class TranslationSubscriberGrainState
+	public class FeedSubscriberGrainState
 	{
 		public TranslationState Translation { get; set; }
 	}

@@ -19,10 +19,13 @@ namespace Microsoft.Extensions.DependencyInjection
 				options =>
 				{
 				}
-			);
+			)
 
-			// Runtime
-			services.AddSportLevel(
+            // Adapter
+            .AddSportLevelTransmitterAdapter()
+
+            // Runtime
+            .AddSportLevel(
                 builder =>
 				{
                     builder.ConfigureProviderManager(
@@ -32,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         }
                     );
 
-                    builder.ConfigureTranslationManager(
+                    builder.ConfigureFeedListener(
                         options =>
                         {
                             options.UserName = configuration.Provider.UserName;
