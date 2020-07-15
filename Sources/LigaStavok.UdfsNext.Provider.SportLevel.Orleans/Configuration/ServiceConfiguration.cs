@@ -1,4 +1,5 @@
 ﻿using LigaStavok.UdfsNext.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration
 {
@@ -7,5 +8,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration
 		public ClusterConfiguration Cluster { get; set; }
 
 		public ProviderConfiguration Provider { get; set; }
+
+		public AdapterConfiguration Adapter { get; set; }
 	}
 }

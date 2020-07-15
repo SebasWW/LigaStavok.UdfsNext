@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LigaStavok.Threading\LigaStavok.Threading.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.WebSocket\LigaStavok.Websocket.csproj" />
   </ItemGroup>
 

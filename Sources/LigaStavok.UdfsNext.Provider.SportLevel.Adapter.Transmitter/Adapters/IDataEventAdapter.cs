@@ -1,9 +1,13 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 {
 	public interface IDataEventAdapter
 	{
-		System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<ITransmitterCommand>> AdaptAsync(MessageContext<EventData> context);
+		IEnumerable<ITransmitterCommand> Adapt(MessageContext<EventData, TranslationSubscription> context);
 	}
 }

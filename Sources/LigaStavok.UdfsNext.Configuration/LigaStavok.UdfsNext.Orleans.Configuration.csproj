@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Orleans.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans\LigaStavok.UdfsNext.Orleans.csproj" />
   </ItemGroup>
 
 </Project>

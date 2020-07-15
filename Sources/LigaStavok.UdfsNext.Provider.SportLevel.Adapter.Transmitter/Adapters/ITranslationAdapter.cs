@@ -1,4 +1,5 @@
 ﻿using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 {

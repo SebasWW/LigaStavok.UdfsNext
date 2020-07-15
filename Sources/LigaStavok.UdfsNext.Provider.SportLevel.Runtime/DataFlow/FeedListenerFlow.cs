@@ -25,7 +25,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private readonly ActionBlock<MessageContext<EventsMessage>> eventsDataToAdapterActionBlock;
 		private readonly ActionBlock<MessageContext<PingMessage>> pingToAdapterActionBlock;
 
-		
 		public FeedListenerFlow(
 			ILogger<FeedListenerFlow> logger,
 
@@ -100,6 +99,13 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 					case EventsMessage msg:
 						eventsDataToAdapterActionBlock.Post(messageContext.Next(msg));
+						break;
+
+					case SubscribeResponseMessage msg:
+						if (msg.Status != "success") throw new Exception("Can't subrcribe translation.");
+						break;
+
+					case SubscribeHistorySentMessage msg:
 						break;
 
 					case Translation msg:

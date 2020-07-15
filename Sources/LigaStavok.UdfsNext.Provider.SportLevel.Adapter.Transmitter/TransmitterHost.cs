@@ -5,16 +5,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Udfs.Common.Messages;
 using Udfs.Transmitter;
+using Udfs.Transmitter.Messages;
+using Udfs.Transmitter.Messages.Interfaces;
 using Udfs.Transmitter.Plugin;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	public class TransmitterHostedService : IHostedService
+	public class TransmitterHost : ITransmitterHost
 	{
 		private readonly TransmitterService transmitterService;
 
-		public TransmitterHostedService()
+		public TransmitterHost()
 		{
 
 			var config = new ConfigurationBuilder()
@@ -23,32 +26,19 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 				.Build();
 
 			var serviceBuilder = new TransmitterServiceBuilder(config);
-				//.AddPlugin(new SportLevelPlugin(config, sportLevelPluginInjector));
+				//.AddPlugin(new SportLevelPlugin(config));
 
 			transmitterService = serviceBuilder.BuildService();
+		}
 
-			try
-			{
-
-				transmitterService.Start();
-			}
-			catch (Exception ex)
-			{
-
-				throw;
-			}
-
-			
-			var actor = transmitterService.GetUdfsActorSystem().ActorSelection(ActorPaths.Transmitter.Path);
+		public void SendCommand(ITransmitterCommand transmitterCommand)
+		{
+			transmitterService.SendCommand(transmitterCommand);
 		}
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			//transmitterService.Start();
-
-
-			//var actor = transmitterService.GetUdfsActorSystem().ActorSelection(ActorPaths.Transmitter.Path);
-
+			transmitterService.Start();
 			return Task.CompletedTask;
 		}
 

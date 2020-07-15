@@ -6,4 +6,8 @@
     <RootNamespace>LigaStavok.UdfsNext</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Dumps\" />
+  </ItemGroup>
+
 </Project>

@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans.Configuration", "LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj", "{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans", "LigaStavok.UdfsNext.Clustering\LigaStavok.UdfsNext.Orleans.csproj", "{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans", "LigaStavok.UdfsNext.Orleans\LigaStavok.UdfsNext.Orleans.csproj", "{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Provider.BetGenius", "LigaStavok.UdfsNext.Line.Providers.BetGenius\LigaStavok.UdfsNext.Line.Provider.BetGenius.csproj", "{568A81D7-62D8-4918-9029-8C48F6986808}"
 EndProject
@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provide
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.EntityFramework", "LigaStavok.UdfsNext.Line.EntityFramework\LigaStavok.UdfsNext.Line.EntityFramework.csproj", "{319C66E4-95A1-4119-A3A7-C98919905363}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Logging", "LigaStavok.UdfsNext.Logging\LigaStavok.UdfsNext.Logging.csproj", "{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.HealthCheck", "LigaStavok.UdfsNext.HealthCheck\LigaStavok.UdfsNext.HealthCheck.csproj", "{FFBBA1DC-A5BA-4A20-8E4C-DED9B0611D50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Clustering", "LigaStavok.UdfsNext.Line.Clustering\LigaStavok.UdfsNext.Line.Clustering.csproj", "{21CD5A14-94FF-42A0-8886-E7FE66B40A48}"
@@ -55,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SportLevel", "SportLevel", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Runtime", "LigaStavok.UdfsNext.Provider.SportLevel.Runtime\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.csproj", "{DC862790-FF1D-4DE0-B993-9E69A068864C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces", "LigaStavok.UdfsNext.Provider.SportLevel.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj", "{06A9321A-7367-4FA1-9B14-143802494996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces", "LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj", "{06A9321A-7367-4FA1-9B14-143802494996}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Orleans", "LigaStavok.UdfsNext.Provider.SportLevel.Orleans\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.csproj", "{850492D6-5813-43D7-95CF-EF321B1074AB}"
 EndProject
@@ -152,12 +150,6 @@ Global
 		{319C66E4-95A1-4119-A3A7-C98919905363}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{319C66E4-95A1-4119-A3A7-C98919905363}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{319C66E4-95A1-4119-A3A7-C98919905363}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.BetRadar|Any CPU.ActiveCfg = Release|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.BetRadar|Any CPU.Build.0 = Release|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFBBA1DC-A5BA-4A20-8E4C-DED9B0611D50}.BetRadar|Any CPU.ActiveCfg = Release|Any CPU
 		{FFBBA1DC-A5BA-4A20-8E4C-DED9B0611D50}.BetRadar|Any CPU.Build.0 = Release|Any CPU
 		{FFBBA1DC-A5BA-4A20-8E4C-DED9B0611D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -276,7 +268,6 @@ Global
 		{2416F82F-6B5E-4F22-8624-6963E7EA0D48} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{341BD3EC-59E7-4FFF-AA09-ADC6AD1CB346} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{319C66E4-95A1-4119-A3A7-C98919905363} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
-		{6BB3F699-495F-47A8-B6F6-0E54CFB8B24D} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{FFBBA1DC-A5BA-4A20-8E4C-DED9B0611D50} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{21CD5A14-94FF-42A0-8886-E7FE66B40A48} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
 		{D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0} = {4C7AAE14-8173-4191-A2C7-CACADB130ED0}

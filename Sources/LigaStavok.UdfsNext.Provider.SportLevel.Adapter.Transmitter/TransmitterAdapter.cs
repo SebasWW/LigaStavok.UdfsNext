@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using LigaStavok.UdfsNext.Provider.SportLevel;
-//using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters;
+﻿using System.Threading.Tasks;
+using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
 using Microsoft.Extensions.Logging;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
@@ -13,39 +9,33 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
 	public class TransmitterAdapter : IProviderAdapter
 	{
 		private readonly ILogger<TransmitterAdapter> logger;
+		private readonly AdapterDataFlow adapterDataFlow;
 
 		public TransmitterAdapter(
-			ILogger<TransmitterAdapter> logger
-
+			ILogger<TransmitterAdapter> logger,
+			AdapterDataFlow adapterDataFlow
 		)
 		{
 			this.logger = logger;
+			this.adapterDataFlow = adapterDataFlow;
 		}
 
 		public Task SendTranslationAsync(MessageContext<Translation> messageContext)
 		{
-		//	var (Ok, Reason) = ClientActor.CheckTranslation(ctx.Message, _adapterConfiguration);
-		//	if (!Ok)
-		//	{
-		//		logger.LogWarning($"Translation validation is failed. Id: {messageContext.Message.Id}, Reason: {Reason}");
-		//		return Array.Empty<ITransmitterCommand>();
-		//	}
-
-		//	var commands = translationAdapter.Adapt(messageContext);
-
+			adapterDataFlow.Post(messageContext);
 			return Task.CompletedTask;
 		}
 
 		public Task SendEventsAsync(MessageContext<EventsMessage> messageContext)
 		{
-			//var commands = betStartEventAdapter.Adapt(messageContext);
-
+			adapterDataFlow.Post(messageContext);
 			return Task.CompletedTask;
 		}
 
-		public Task SendPingAsync(MessageContext<PingMessage> msg)
+		public Task SendPingAsync(MessageContext<PingMessage> messageContext)
 		{
-			throw new NotImplementedException();
+			adapterDataFlow.Post(messageContext);
+			return Task.CompletedTask;
 		}
 	}
 }

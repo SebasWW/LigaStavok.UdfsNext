@@ -1,9 +1,11 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
+﻿using System.Collections.Generic;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 {
 	public interface IPingMessageAdapter
 	{
-		System.Collections.Generic.IEnumerable<ITransmitterCommand> Adapt(MessageContext<PingMessage> context);
+		IEnumerable<ITransmitterCommand> Adapt(MessageContext<PingMessage> context);
 	}
 }

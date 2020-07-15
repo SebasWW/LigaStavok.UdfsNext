@@ -4,28 +4,27 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Converters;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Extensions;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
+using Udfs.Transmitter.DSL.GameEventStateDescription;
+using Udfs.Transmitter.Messages;
+using Udfs.Transmitter.Messages.Identifiers;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 {
 	public class DataEventAdapter : IDataEventAdapter
 	{
-		public DataEventAdapter(IStateManager stateManager)
-		{
-		}
-
-		public async Task<IEnumerable<ITransmitterCommand>> AdaptAsync(MessageContext<EventData> context)
+		public IEnumerable<ITransmitterCommand> Adapt(MessageContext<EventData, TranslationSubscription> context)
 		{
 			var list = new List<ITransmitterCommand>();
-
+			var translationState = context.State.PersistableState;
 			var msg = context.Message;
-			var translationState = await stateManager.GetTranslationStateAsync(long.Parse(msg.TranslationId));
 
 			list.Add(
 				new UpdateGameEventStateCommand(
-					lineService: context.ProductType.ToLineService(),
+					lineService: LineService.SportLevel,
 					gameEventId: msg.TranslationId,
 					receivedOn: context.ReceivedOn,
 					incomingId: context.IncomingId,

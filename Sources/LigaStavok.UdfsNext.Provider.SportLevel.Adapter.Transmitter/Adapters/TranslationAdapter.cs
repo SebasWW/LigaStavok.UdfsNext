@@ -3,6 +3,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Converters;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
+using Udfs.Common.Primitives;
+using Udfs.Transmitter.DSL.Competitor;
+using Udfs.Transmitter.DSL.SpecifierDescription;
+using Udfs.Transmitter.Messages;
+using Udfs.Transmitter.Messages.Identifiers;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 {
@@ -22,7 +28,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 				sport: SportConverter.Convert(context.Message.SportId),
 				categoryId: context.Message.TournamentCountryTitle ?? context.Message.TournamentTitle,
 				topicId: context.Message.TournamentId.ToString(),
-				competitors: context.Message.GetCompetitors(),
+				competitors: GetCompetitors(context.Message),
 				extraAttributes: null
 			);
 
@@ -106,7 +112,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 			);
 		}
 
-		private ImmutableArray<Competitor> GetCompetitors(this Translation message)
+		private ImmutableArray<Competitor> GetCompetitors(Translation message)
 		{
 			return new Competitor[] {
 

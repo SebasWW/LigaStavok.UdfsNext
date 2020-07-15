@@ -21,9 +21,9 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
                         configure.AddProvider(new NLogLoggerProvider());
                     }
-                );
+                )
 
-            services.Configure<ProviderManagerGrainOptions>(
+            .Configure<ProviderManagerGrainOptions>(
 				options =>
 				{
 				}
@@ -31,6 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             // Adapter
             .AddSportLevelTransmitterAdapter()
+            .AddSingleton(configuration.Adapter) // Перепилить на Options
 
             // Runtime
             .AddSportLevel(

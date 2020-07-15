@@ -43,7 +43,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages
         [JsonProperty("key")]
         public string Key { get; set; }
 
-        [JsonProperty("title_ru")]
+		[JsonProperty("title_ru")]
         public string TitleRu { get; set; }
 
         [JsonProperty("title_en")]
