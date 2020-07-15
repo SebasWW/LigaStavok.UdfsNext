@@ -156,7 +156,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		{
 			try
 			{
-				if (messageContext.Message.Status != "Ok") throw new AuthenticationException();
+				if (messageContext.Message.Status != "success") throw new AuthenticationException();
 
 				feedSubscriber.StartAsync(CancellationToken.None);
 			}

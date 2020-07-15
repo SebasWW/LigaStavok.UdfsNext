@@ -11,8 +11,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.State
 
 		public long LastDataMessageId { get; set; }
 
-		public int MetaHash { get; set; }
-
 		public ConcurrentDictionary<int, Score> MatchScore { get; set; }
 
 		public ConcurrentDictionary<string, TranslationMarket> Markets { get; set; }

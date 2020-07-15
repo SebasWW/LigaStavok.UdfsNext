@@ -47,6 +47,10 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
 		private async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
+			// Reseting hash for first call
+			foreach (var subscription in subscriptions.ToArray())
+				subscription.Value.MetaHash = 0;
+
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				foreach (var subscription in subscriptions.ToArray())
@@ -76,7 +80,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
 		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, CancellationToken cancellationToken)
 		{
-			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription() { State = messageContext.Message.State });
+			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription() { PersistableState = messageContext.Message.State });
 			return Task.CompletedTask;
 		}
 

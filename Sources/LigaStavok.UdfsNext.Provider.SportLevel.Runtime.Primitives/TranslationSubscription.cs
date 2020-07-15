@@ -9,6 +9,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 	{
 		public TranslationSubscriptionBooking Booking { get; } = new TranslationSubscriptionBooking();
 		
-		public TranslationState State { get; set; }
+		public TranslationState PersistableState { get; set; }
+
+		public int MetaHash { get; set; }
 	}
 }

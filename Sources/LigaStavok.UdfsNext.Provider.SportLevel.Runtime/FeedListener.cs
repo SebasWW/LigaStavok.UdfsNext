@@ -32,7 +32,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			webSocketClient.OnDisconnected += WebSocketClient_OnConnected;
+			webSocketClient.OnConnected += WebSocketClient_OnConnected;
 			webSocketClient.OnDisconnected += WebSocketClient_OnDisconnected;
 			webSocketClient.OnMessage += WebSocketClient_OnMessage;
 

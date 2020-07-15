@@ -14,7 +14,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
 
             // Runtime
+            //services.AddSingleton<SportLevelPluginInjector>();
             services.AddSingleton<IProviderAdapter, TransmitterAdapter>();
+
+            // TransmitterHost
+            services.AddHostedService<TransmitterHostedService>();
+
             return services;
         }
     }

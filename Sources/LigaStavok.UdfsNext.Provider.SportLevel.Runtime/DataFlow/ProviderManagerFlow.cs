@@ -16,6 +16,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
 	public class ProviderManagerFlow : IAsyncEnumerable<MessageContext<Translation>>
 	{
+		int maxDegreeOfParallelism = 100;
+
 		private readonly ILogger<ProviderManagerFlow> logger;
 		private readonly HttpClientManager httpClientManager;
 		private readonly IHttpRequestMessageFactory httpRequestMessageFactory;
@@ -39,13 +41,22 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			this.httpResponseMessageParser = httpResponseMessageParser;
 
 			createHttpRequestBlock
-				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(CreateHttpRequestHandler);
+				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(
+					CreateHttpRequestHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			execHttpRequestBlock
-				= new TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>>(ExecHttpRequestHandler);
+				= new TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>>(
+					ExecHttpRequestHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			parseHttpResponseBlock
-				= new TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<Translation>>(ParseHttpResponseHandler);
+				= new TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<Translation>>(
+					ParseHttpResponseHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			createHttpRequestBlock.LinkTo(execHttpRequestBlock);
 			execHttpRequestBlock.LinkTo(parseHttpResponseBlock);

@@ -16,6 +16,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
 	public class FeedSubscriberFlow
 	{
+		int maxDegreeOfParallelism = 100;
+
 		private readonly ILogger<FeedManager> logger;
 
 		private readonly TransformManyBlock<MessageContext<TranslationRequest, TranslationSubscription>,
@@ -57,22 +59,34 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			// Flow 1
 			translationCreateRequestBlock
 				= new TransformManyBlock<MessageContext<TranslationRequest, TranslationSubscription>,
-				MessageContext<HttpRequestMessage, TranslationSubscription>>(TranslationCreateRequestHandler);
+				MessageContext<HttpRequestMessage, TranslationSubscription>>(
+					TranslationCreateRequestHandler, 
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			// Flow 2
 			translationExecRequestBlock
 				= new TransformManyBlock<MessageContext<HttpRequestMessage, TranslationSubscription>,
-				MessageContext<HttpResponseMessage, TranslationSubscription>>(TranslationExecRequestHandler);
+				MessageContext<HttpResponseMessage, TranslationSubscription>>(
+					TranslationExecRequestHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			// Flow 3
 			translationCheckHashBlock
 				= new TransformManyBlock<MessageContext<HttpResponseMessage, TranslationSubscription>,
-				MessageContext<string, TranslationSubscription>>(TranslationCheckHashHandler);
+				MessageContext<string, TranslationSubscription>>(
+					TranslationCheckHashHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			// Flow 4
 			translationParseResponseBlock
 				= new TransformManyBlock<MessageContext<string, TranslationSubscription>,
-				MessageContext<Translation, TranslationSubscription>>(TranslationMessageParseHandler);
+				MessageContext<Translation, TranslationSubscription>>(
+					TranslationMessageParseHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			// Flow 5
 			translationRouterBlock
@@ -80,11 +94,17 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 			// Flow 6-1
 			translationToAdapterBlock
-				= new ActionBlock<MessageContext<Translation>>(TranslationToAdapterHandler);
+				= new ActionBlock<MessageContext<Translation>>(
+					TranslationToAdapterHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			// Flow 6-2
 			translationSubscriptionBlock
-				= new ActionBlock<MessageContext<Translation>>(TranslationSubscriptionHandler);
+				= new ActionBlock<MessageContext<Translation>>(
+					TranslationSubscriptionHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
 
 			translationCreateRequestBlock.LinkTo(translationExecRequestBlock);
 			translationExecRequestBlock.LinkTo(translationCheckHashBlock);
@@ -137,8 +157,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				var newHash = message.GetHashCode();
 
 				// it has not changes.
-				if (newHash == messageContext.State.State.MetaHash) return Array.Empty<MessageContext<string, TranslationSubscription>>();
-				messageContext.State.State.MetaHash = newHash;
+				if (newHash == messageContext.State.MetaHash) return Array.Empty<MessageContext<string, TranslationSubscription>>();
+				messageContext.State.MetaHash = newHash;
 
 				return Enumerable.Repeat(messageContext.NextWithState(message), 1);
 			}
@@ -158,7 +178,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				if (translations == null) throw new Exception("Empty response.");
 
 				return translations
-					.Where(t => t.State != "finished" && t.State != "cancelled")
+					//.Where(t => t.State != "finished" && t.State != "cancelled")
 					.Select(t => messageContext.NextWithState(t));
 			}
 			catch (Exception ex)
@@ -181,13 +201,13 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 					if (state.Booking.BookedData)
 						feedManager.SendDataSubscribeRequestAsync(
-							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.State }),
+							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.PersistableState }),
 							CancellationToken.None
 						);
 
 					if (state.Booking.BookedMarket)
 						feedManager.SendMarketSubscribeRequestAsync(
-							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.State }),
+							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.PersistableState }),
 							CancellationToken.None
 						);
 				}

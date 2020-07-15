@@ -71,9 +71,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.Threading", "Lig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Console", "LigaStavok.UdfsNext.Provider.SportLevel.Console\LigaStavok.UdfsNext.Provider.SportLevel.Console.csproj", "{4F39302C-CAFF-4001-BF7E-FA7201B98663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter", "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.csproj", "{66D77A24-ACE6-4A06-9A7E-85452BDD274E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter", "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.csproj", "{66D77A24-ACE6-4A06-9A7E-85452BDD274E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.Processors", "LigaStavok.Processors\LigaStavok.Processors.csproj", "{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.Processors", "LigaStavok.Processors\LigaStavok.Processors.csproj", "{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Udfs.Transmitter", "..\..\..\Git\udfstransmitter222\Udfs.Transmitter\Udfs.Transmitter.csproj", "{5A644BED-CFC6-4426-BDAE-3A31D577C12A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Udfs.Common", "..\..\..\Git\udfstransmitter222\Udfs.Common\Udfs.Common.csproj", "{157A9351-13B8-4E73-919B-38C727E429F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +248,18 @@ Global
 		{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157A9351-13B8-4E73-919B-38C727E429F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -279,6 +295,8 @@ Global
 		{4F39302C-CAFF-4001-BF7E-FA7201B98663} = {32221FEF-E53D-4BCB-B865-5009F5A6A0E8}
 		{66D77A24-ACE6-4A06-9A7E-85452BDD274E} = {32221FEF-E53D-4BCB-B865-5009F5A6A0E8}
 		{E3E7AF48-EAE2-42C0-A147-4DAF144B7D01} = {DD1D0D24-C27B-4CB5-9DAA-67688C93E06A}
+		{5A644BED-CFC6-4426-BDAE-3A31D577C12A} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+		{157A9351-13B8-4E73-919B-38C727E429F4} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}
