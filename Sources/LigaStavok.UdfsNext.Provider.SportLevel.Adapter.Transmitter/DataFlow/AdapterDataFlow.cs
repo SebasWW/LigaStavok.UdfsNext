@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks.Dataflow;
+using LigaStavok.UdfsNext.Dumps;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
-using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
@@ -19,6 +19,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private const int maxDegreeOfParallelism = 100;
 
 		private readonly ILogger<AdapterDataFlow> logger;
+		private readonly IMessageDumper messageDumper;
 		private readonly ITransmitterHost transmitterHost;
 		private readonly TranslationSubscriptionCollection subscriptions;
 		private readonly ITransmitterCommandsFactory transmitterCommandsFactory;
@@ -26,13 +27,15 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 		private readonly TransformManyBlock<MessageContext<Translation>, MessageContext<Translation>> translationCheckBlock;
 		private readonly TransformManyBlock<MessageContext<EventsMessage>, MessageContext<EventData, TranslationSubscription>> eventMessageTransformBlock;
-		private readonly TransformManyBlock<MessageContext<Translation>, MessageContext<ITransmitterCommand>> translationCreateCommandBlock;
-		private readonly TransformManyBlock<MessageContext<EventData,TranslationSubscription>, MessageContext<ITransmitterCommand>> eventDataCreateCommandBlock;
-		private readonly TransformManyBlock<MessageContext<PingMessage>, MessageContext<ITransmitterCommand>> pingMessageCreateCommandBlock;
-		private readonly ActionBlock<MessageContext<ITransmitterCommand>> sendCommandBlock;
+		private readonly TransformManyBlock<MessageContext<Translation>, MessageContext<ITransmitterCommand, string>> translationCreateCommandBlock;
+		private readonly TransformManyBlock<MessageContext<EventData, TranslationSubscription>, MessageContext<ITransmitterCommand, string>> eventDataCreateCommandBlock;
+		private readonly TransformManyBlock<MessageContext<PingMessage>, MessageContext<ITransmitterCommand, string>> pingMessageCreateCommandBlock;
+		private readonly TransformManyBlock<MessageContext<ITransmitterCommand, string>, MessageContext<ITransmitterCommand, string>> sendCommandBlock;
+		private readonly ActionBlock<MessageContext<ITransmitterCommand, string>> writeDumpBlock;
 
 		public AdapterDataFlow(
 			ILogger<AdapterDataFlow> logger,
+			IMessageDumper messageDumper,
 			ITransmitterHost transmitterHost,
 			TranslationSubscriptionCollection subscriptions,
 			ITransmitterCommandsFactory transmitterCommandsFactory,
@@ -40,6 +43,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		)
 		{
 			this.logger = logger;
+			this.messageDumper = messageDumper;
 			this.transmitterHost = transmitterHost;
 			this.subscriptions = subscriptions;
 			this.transmitterCommandsFactory = transmitterCommandsFactory;
@@ -64,7 +68,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			// Flow 2-1
 			translationCreateCommandBlock
 				= new TransformManyBlock<MessageContext<Translation>,
-				MessageContext<ITransmitterCommand>>(
+				MessageContext<ITransmitterCommand, string>>(
 					TranslationCreateCommandHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
@@ -72,7 +76,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			// Flow 2-2
 			eventDataCreateCommandBlock
 				= new TransformManyBlock<MessageContext<EventData, TranslationSubscription>,
-				MessageContext<ITransmitterCommand>>(
+				MessageContext<ITransmitterCommand, string>>(
 					EventDataCreateCommandHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
@@ -80,15 +84,23 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			// Flow 2-3
 			pingMessageCreateCommandBlock
 				= new TransformManyBlock<MessageContext<PingMessage>,
-				MessageContext<ITransmitterCommand>>(
+				MessageContext<ITransmitterCommand, string>>(
 					PingMessageCreateCommandHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
 			// Flow 3
 			sendCommandBlock
-				= new ActionBlock<MessageContext<ITransmitterCommand>>(
+				= new TransformManyBlock<MessageContext<ITransmitterCommand, string>,
+				MessageContext<ITransmitterCommand, string>> (
 					SendCommandHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
+
+			// Flow 3
+			writeDumpBlock
+				= new ActionBlock<MessageContext<ITransmitterCommand, string>>(
+					WriteDumpHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
@@ -98,56 +110,85 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			translationCreateCommandBlock.LinkTo(sendCommandBlock);
 			eventDataCreateCommandBlock.LinkTo(sendCommandBlock);
 			pingMessageCreateCommandBlock.LinkTo(sendCommandBlock);
+
+			sendCommandBlock.LinkTo(writeDumpBlock);
 		}
 
-		private void SendCommandHandler(MessageContext<ITransmitterCommand> messageContext)
+		private void WriteDumpHandler(MessageContext<ITransmitterCommand, string> messageContext)
+		{
+			try
+			{
+				messageDumper.Write(
+					messageContext.Next(
+						new DumpMessage()
+						{
+							 SourceType = "ToTransmitter",
+							 MessageBody = JsonConvert.SerializeObject(messageContext.Message),
+							 MessageType = messageContext.Message.GetType().Name,
+							 EventId = messageContext.State
+						}
+					)
+				);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Dump sending error.");
+			}
+		}
+
+		private IEnumerable<MessageContext<ITransmitterCommand, string>> SendCommandHandler(MessageContext<ITransmitterCommand, string> messageContext)
 		{
 			try
 			{
 				transmitterHost.SendCommand(messageContext.Message);
+				return Enumerable.Repeat(messageContext, 1);
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Sending to transmitter error.");
+				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
 
-		private IEnumerable<MessageContext<ITransmitterCommand>> PingMessageCreateCommandHandler(MessageContext<PingMessage> messageContext)
+		private IEnumerable<MessageContext<ITransmitterCommand, string>> PingMessageCreateCommandHandler(MessageContext<PingMessage> messageContext)
 		{
 			try
 			{
-				return transmitterCommandsFactory.CreateFromPingMessage(messageContext).Select(t => messageContext.Next(t)).ToArray();
+				return transmitterCommandsFactory.CreateFromPingMessage(messageContext)
+					.Select(t => messageContext.NextWithState(t, "Line")).ToArray();
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Process ping message error.");
-				return Array.Empty< MessageContext<ITransmitterCommand>>();
+				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
 
-		private IEnumerable<MessageContext<ITransmitterCommand>> EventDataCreateCommandHandler(MessageContext<EventData, TranslationSubscription> messageContext)
+		private IEnumerable<MessageContext<ITransmitterCommand, string>> EventDataCreateCommandHandler(MessageContext<EventData, TranslationSubscription> messageContext)
 		{
 			try
 			{
-				return transmitterCommandsFactory.CreateFromEventData(messageContext).Select(t => messageContext.Next(t)).ToArray();
+				return transmitterCommandsFactory.CreateFromEventData(messageContext)
+					.Select(t => messageContext.NextWithState(t, messageContext.Message.TranslationId)).ToArray();
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Process event data message error.");
-				return Array.Empty< MessageContext<ITransmitterCommand>>();
+				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
 
-		private IEnumerable<MessageContext<ITransmitterCommand>> TranslationCreateCommandHandler(MessageContext<Translation> messageContext)
+		private IEnumerable<MessageContext<ITransmitterCommand, string>> TranslationCreateCommandHandler(MessageContext<Translation> messageContext)
 		{
 			try
 			{
-				return transmitterCommandsFactory.CreateFromTranslation(messageContext).Select(t => messageContext.Next(t)).ToArray();
+				return transmitterCommandsFactory.CreateFromTranslation(messageContext)
+					.Select(t => messageContext.NextWithState(t, messageContext.Message.Id.ToString())).ToArray();
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Process translation message error.");
-				return Array.Empty< MessageContext<ITransmitterCommand>>();
+				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
 

@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Git\udfstransmitter222\Udfs.Common\Udfs.Common.csproj" />
     <ProjectReference Include="..\..\..\..\Git\udfstransmitter222\Udfs.Transmitter\Udfs.Transmitter.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives.csproj" />
   </ItemGroup>

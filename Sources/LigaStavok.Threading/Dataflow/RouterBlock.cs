@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks.Dataflow;
 
@@ -21,9 +22,8 @@ namespace LigaStavok.Threading.Dataflow
         public ISourceBlock<TOutput2> Output2 => output2;
         public ISourceBlock<TOutput3> Output3 => output3;
 
-
         public RouterBlock(
-            Func<TInput, Tuple<TOutput1, TOutput2, TOutput3>> combinedTransform)
+            Func<TInput, Tuple<IEnumerable<TOutput1>, IEnumerable<TOutput2>, IEnumerable<TOutput3>>> combinedTransform)
         {
             input = new ActionBlock<TInput>(
                 value =>
@@ -31,11 +31,16 @@ namespace LigaStavok.Threading.Dataflow
                     var result = combinedTransform(value);
 
                     if (result.Item1 != null)
-                        output1.Post(result.Item1);
+						foreach (var item in result.Item1)
+
+                            output1.Post(item);
                     if (result.Item2 != null)
-                        output2.Post(result.Item2);
+                        foreach (var item in result.Item2)
+                            output2.Post(item);
+
                     if (result.Item3 != null)
-                        output3.Post(result.Item3);
+                        foreach (var item in result.Item3)
+                            output3.Post(item);
                 });
 
             output1 = new BufferBlock<TOutput1>();
@@ -53,9 +58,9 @@ namespace LigaStavok.Threading.Dataflow
         }
 
         public RouterBlock(
-            Func<TInput, TOutput1> transform1,
-            Func<TInput, TOutput2> transform2,
-            Func<TInput, TOutput3> transform3)
+            Func<TInput, IEnumerable<TOutput1>> transform1,
+            Func<TInput, IEnumerable<TOutput2>> transform2,
+            Func<TInput, IEnumerable<TOutput3>> transform3)
             : this(x => Tuple.Create(transform1(x), transform2(x), transform3(x)))
         { }
     }

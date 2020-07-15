@@ -47,7 +47,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket
 					break;
 
 				default:
-					throw new NotSupportedException($"Message of specified type ['{feedMessageType}'] can not be parsed.");
+					throw new NotSupportedException($"Message of specified type ['{feedMessageType ?? "Unknown"}'] can not be parsed.");
 			}
 
 			return feedMessage;

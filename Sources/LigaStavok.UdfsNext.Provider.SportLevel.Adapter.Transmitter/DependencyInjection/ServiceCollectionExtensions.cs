@@ -25,10 +25,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ITransmitterCommandsFactory, TransmitterCommandsFactory>();
             services.AddSingleton<AdapterDataFlow>();
             services.AddSingleton<IProviderAdapter, TransmitterAdapter>();
-            services.AddSingleton<ITransmitterHost, TransmitterHost>();
+            services.AddSingleton<ITransmitterHost, TransmitterAdapterHost>();
 
             // Service
-            services.AddHostedService<TransmitterHostService>();
+            services.AddHostedService<TransmitterAdapterHostService>();
 
             return services;
         }

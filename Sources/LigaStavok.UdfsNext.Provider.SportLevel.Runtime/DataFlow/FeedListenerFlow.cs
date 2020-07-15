@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks.Dataflow;
+using LigaStavok.UdfsNext.Dumps;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
@@ -15,11 +15,12 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 	public class FeedListenerFlow
 	{
 		private readonly ILogger<FeedListenerFlow> logger;
+		private readonly IMessageDumper messageDumper;
 		private readonly IWebSocketMessageParser webSocketMessageParser;
 		private readonly IProviderAdapter providerAdapter;
 		private readonly IFeedSubscriber feedSubscriber;
-		private readonly TransformManyBlock<MessageContext<string>, MessageContext<object>> parseFeedMessageTransformManyBlock;
-		private readonly ActionBlock<MessageContext<object>> messageRouterBlock;
+		private readonly TransformManyBlock<MessageContext<string>, MessageContext<object, string>> parseFeedMessageTransformManyBlock;
+		private readonly ActionBlock<MessageContext<object, string>> messageRouterBlock;
 		private readonly ActionBlock<MessageContext<LoginResponseMessage>> startSubscribingActionBlock;
 		private readonly ActionBlock<MessageContext<Translation>> translationToAdapterActionBlock;
 		private readonly ActionBlock<MessageContext<EventsMessage>> eventsDataToAdapterActionBlock;
@@ -27,23 +28,25 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 		public FeedListenerFlow(
 			ILogger<FeedListenerFlow> logger,
-
+			IMessageDumper messageDumper,
 			IWebSocketMessageParser webSocketMessageParser,
 			IProviderAdapter providerAdapter,
 			IFeedSubscriber feedSubscriber
 		)
 		{
 			this.logger = logger;
+			this.messageDumper = messageDumper;
 			this.webSocketMessageParser = webSocketMessageParser;
 			this.providerAdapter = providerAdapter;
 			this.feedSubscriber = feedSubscriber;
 
 			// 1
 			parseFeedMessageTransformManyBlock
-				= new TransformManyBlock<MessageContext<string>, MessageContext<object>>(ParseFeedMessageHandler);
+				= new TransformManyBlock<MessageContext<string>, MessageContext<object,string>>(ParseFeedMessageHandler);
 
 			// 2
-			messageRouterBlock = new ActionBlock<MessageContext<object>>(MessageRouterHandler);
+			messageRouterBlock 
+				= new ActionBlock<MessageContext<object, string>>(MessageRouterHandler);
 
 			// 3-1
 			startSubscribingActionBlock
@@ -70,49 +73,79 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			parseFeedMessageTransformManyBlock.Post(messageContext);
 		}
 
-		private IEnumerable<MessageContext<object>> ParseFeedMessageHandler(MessageContext<string> messageContext)
+		private IEnumerable<MessageContext<object, string>> ParseFeedMessageHandler(MessageContext<string> messageContext)
 		{
 			try
 			{
-				return Enumerable.Repeat(messageContext.Next(webSocketMessageParser.Parse(messageContext.Message)), 1);
+				return Enumerable.Repeat(messageContext.NextWithState(webSocketMessageParser.Parse(messageContext.Message), messageContext.Message), 1);
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "Parsing message error.");
-				return Array.Empty<MessageContext<object>>();
+
+				messageDumper.Write(
+					messageContext.Next(
+						new DumpMessage()
+						{
+							EventId = "Line",
+							SourceType = "FromFeed",
+							MessageBody = messageContext.Message,
+							MessageType = "Unkuown"
+						}
+					)
+				);
+
+				return Array.Empty<MessageContext<object, string>>();
 			}
 		}
 
-		private void MessageRouterHandler(MessageContext<object> messageContext)
+		private void MessageRouterHandler(MessageContext<object, string> messageContext)
 		{
 			try
 			{
+				var dumpMessage = new DumpMessage()
+				{
+					EventId = "Line",
+					SourceType = "FromFeed",
+					MessageBody = messageContext.State,
+					MessageType = messageContext.Message.GetType().Name
+				};
+
 				switch (messageContext.Message)
 				{
 					case LoginResponseMessage msg:
 						startSubscribingActionBlock.Post(messageContext.Next(msg));
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;
 
 					case PingMessage msg:
 						pingToAdapterActionBlock.Post(messageContext.Next(msg));
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;
 
 					case EventsMessage msg:
 						eventsDataToAdapterActionBlock.Post(messageContext.Next(msg));
+						messageDumper.Write(messageContext.Next(dumpMessage));
+
 						break;
 
 					case SubscribeResponseMessage msg:
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						if (msg.Status != "success") throw new Exception("Can't subrcribe translation.");
 						break;
 
 					case SubscribeHistorySentMessage msg:
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;
 
 					case Translation msg:
 						translationToAdapterActionBlock.Post(messageContext.Next(msg));
+						dumpMessage.EventId = msg.Id.ToString();
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;
 
 					default:
+						messageDumper.Write(messageContext.Next(dumpMessage));
 						throw new Exception($"Unknown message. {messageContext.Message.GetType().FullName}");
 				}
 			}

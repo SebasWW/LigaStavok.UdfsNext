@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using LigaStavok.UdfsNext.Dumps;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
@@ -19,7 +20,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		int maxDegreeOfParallelism = 100;
 
 		private readonly ILogger<FeedManager> logger;
-
+		private readonly IMessageDumper messageDumper;
 		private readonly TransformManyBlock<MessageContext<TranslationRequest, TranslationSubscription>,
 			MessageContext<HttpRequestMessage, TranslationSubscription>> translationCreateRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpRequestMessage, TranslationSubscription>,
@@ -28,7 +29,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			MessageContext<string, TranslationSubscription>> translationCheckHashBlock;
 		private readonly TransformManyBlock<MessageContext<string, TranslationSubscription>,
 			MessageContext<Translation, TranslationSubscription>> translationParseResponseBlock;
-
+		private readonly TransformManyBlock<MessageContext<Translation, TranslationSubscription>, MessageContext<Translation, TranslationSubscription>> translationDumpBlock;
 		private readonly BroadcastBlock<MessageContext<Translation>> translationRouterBlock;
 		private readonly ActionBlock<MessageContext<Translation>> translationToAdapterBlock;
 		private readonly ActionBlock<MessageContext<Translation>> translationSubscriptionBlock;
@@ -41,6 +42,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 		public FeedSubscriberFlow(
 			ILogger<FeedManager> logger,
+			IMessageDumper messageDumper,
 			TranslationSubscriptionCollection subscriptions,
 
 			HttpClientManager httpClientManager,
@@ -50,6 +52,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		)
 		{
 			this.logger = logger;
+			this.messageDumper = messageDumper;
 			this.subscriptions = subscriptions;
 			this.httpClientManager = httpClientManager;
 			this.httpRequestMessageFactory = httpRequestMessageFactory;
@@ -89,17 +92,25 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				);
 
 			// Flow 5
+			translationDumpBlock
+				= new TransformManyBlock<MessageContext<Translation, TranslationSubscription>,
+				MessageContext<Translation, TranslationSubscription>>(
+					TranslationDumpHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
+
+			// Flow 6
 			translationRouterBlock
 				= new BroadcastBlock<MessageContext<Translation>>(t => t);
 
-			// Flow 6-1
+			// Flow 7-1
 			translationToAdapterBlock
 				= new ActionBlock<MessageContext<Translation>>(
 					TranslationToAdapterHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
-			// Flow 6-2
+			// Flow 7-2
 			translationSubscriptionBlock
 				= new ActionBlock<MessageContext<Translation>>(
 					TranslationSubscriptionHandler,
@@ -109,9 +120,34 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			translationCreateRequestBlock.LinkTo(translationExecRequestBlock);
 			translationExecRequestBlock.LinkTo(translationCheckHashBlock);
 			translationCheckHashBlock.LinkTo(translationParseResponseBlock);
-			translationParseResponseBlock.LinkTo(translationRouterBlock);
+			translationParseResponseBlock.LinkTo(translationDumpBlock);
+			translationDumpBlock.LinkTo(translationRouterBlock);
 			translationRouterBlock.LinkTo(translationToAdapterBlock);
 			translationRouterBlock.LinkTo(translationSubscriptionBlock);
+		}
+
+		private IEnumerable<MessageContext<Translation, TranslationSubscription>> TranslationDumpHandler(MessageContext<Translation, TranslationSubscription> messageContext)
+		{
+			try
+			{
+				messageDumper.Write(
+					messageContext.Next(
+						new DumpMessage()
+						{
+							SourceType = "FromApi",
+							MessageBody = JsonConvert.SerializeObject(messageContext.Message),
+							MessageType = messageContext.Message.GetType().Name,
+							EventId = messageContext.Message.Id.ToString()
+						}
+					)
+				);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, "Dump sending error.");
+			}
+
+			return Enumerable.Repeat(messageContext, 1);
 		}
 
 		public  void Post(MessageContext<TranslationRequest, TranslationSubscription> messageContext)

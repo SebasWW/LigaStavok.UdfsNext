@@ -10,5 +10,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration
 		public ProviderConfiguration Provider { get; set; }
 
 		public AdapterConfiguration Adapter { get; set; }
+
+		public DumpConfiguration Dump { get; set; }
 	}
 }

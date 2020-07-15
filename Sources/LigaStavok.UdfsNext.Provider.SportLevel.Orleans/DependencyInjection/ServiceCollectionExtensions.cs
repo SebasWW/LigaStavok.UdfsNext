@@ -1,4 +1,6 @@
 ﻿using System;
+using LigaStavok.UdfsNext.Dumps;
+using LigaStavok.UdfsNext.Dumps.FileSystem;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
 using Microsoft.Extensions.Logging;
@@ -24,10 +26,20 @@ namespace Microsoft.Extensions.DependencyInjection
                 )
 
             .Configure<ProviderManagerGrainOptions>(
-				options =>
-				{
-				}
-			)
+                options =>
+                {
+                }
+            )
+
+            // Dumps
+            .AddSingleton<IMessageDumper, FileDumper>()
+			.Configure<FileDumperOptions>(
+               options =>
+			   {
+                   options.MaxDegreeOfParallelism = configuration.Dump.MaxDegreeOfParallelism;
+                   options.RootDirectory = configuration.Dump.RootDirectory;
+               } 
+            )
 
             // Adapter
             .AddSportLevelTransmitterAdapter()

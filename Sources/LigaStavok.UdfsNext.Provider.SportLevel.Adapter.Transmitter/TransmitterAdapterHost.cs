@@ -13,11 +13,11 @@ using Udfs.Transmitter.Plugin;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	public class TransmitterHost : ITransmitterHost
+	public class TransmitterAdapterHost : ITransmitterHost
 	{
 		private readonly TransmitterService transmitterService;
 
-		public TransmitterHost()
+		public TransmitterAdapterHost()
 		{
 
 			var config = new ConfigurationBuilder()
