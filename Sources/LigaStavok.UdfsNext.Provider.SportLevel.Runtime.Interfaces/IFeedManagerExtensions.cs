@@ -20,7 +20,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
         )
         {         
             var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
-            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+            return subscriptionManager.SendAsync(messageContext.Next<IWebSocketRequest>(request), cancellationToken);
         }
 
         public static Task SendDataSubscribeRequestAsync(
@@ -30,7 +30,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
         )
         {
             var request = new DataSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastDataMessageId };
-            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+            return subscriptionManager.SendAsync(messageContext.Next<IWebSocketRequest>(request), cancellationToken);
         }
 
         public static Task SendMarketUnsubscribeRequestAsync(
@@ -40,7 +40,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
         )
         {                
             var request = new MarketUnsubscribeRequest() { TranslationId = messageContext.Message.Id};
-            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+            return subscriptionManager.SendAsync(messageContext.Next<IWebSocketRequest>(request), cancellationToken);
         }
 
         public static Task SendDataUnsubscribeRequestAsync(
@@ -50,13 +50,13 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
         )
         {
             var request = new DataUnsubscribeRequest() { TranslationId = messageContext.Message.Id };
-            return subscriptionManager.SendAsync(messageContext.Next(JsonConvert.SerializeObject(request)), cancellationToken);
+            return subscriptionManager.SendAsync(messageContext.Next<IWebSocketRequest>(request), cancellationToken);
         }
 
         public static async Task SendPongRequestAsync(this IFeedManager subscriptionManager, MessageContext<PingMessage> context)
         {
             var request = new PongRequest() { Timestamp = context.Message.Timestamp };
-            await subscriptionManager.SendAsync(context.Next(JsonConvert.SerializeObject(request)), CancellationToken.None);
+            await subscriptionManager.SendAsync(context.Next<IWebSocketRequest>(request), CancellationToken.None);
         }
 
         public static async Task LoginAsync(this IFeedManager subscriptionManager, string userName, string password)
@@ -71,7 +71,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
                 var request = new LoginRequest() { UserName = userName, AuthKey = auth };
 
-                await subscriptionManager.SendAsync(new MessageContext<string>(JsonConvert.SerializeObject(request)), CancellationToken.None);
+                await subscriptionManager.SendAsync(new MessageContext<IWebSocketRequest>(request), CancellationToken.None);
             }
         }
 

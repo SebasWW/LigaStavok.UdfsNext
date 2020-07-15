@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Requests
 {
-	public class PongRequest
+	public class PongRequest : IWebSocketRequest
 	{
 		[JsonProperty("msg_id")]
 		public string MsgId { get; } = Guid.NewGuid().ToString();

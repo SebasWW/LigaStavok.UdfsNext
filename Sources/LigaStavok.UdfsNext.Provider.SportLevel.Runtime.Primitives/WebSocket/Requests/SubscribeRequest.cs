@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Requests
 {
-	public abstract class SubscribeRequest
+	public abstract class SubscribeRequest: ITranslationWebSocketRequest
 	{
 
 		[JsonProperty("msg_id")]

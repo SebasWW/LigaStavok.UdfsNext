@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bettor", "Bettor", "{7324C8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{4C7AAE14-8173-4191-A2C7-CACADB130ED0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans.Configuration", "LigaStavok.UdfsNext.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj", "{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans", "LigaStavok.UdfsNext.Orleans\LigaStavok.UdfsNext.Orleans.csproj", "{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Provider.BetGenius", "LigaStavok.UdfsNext.Line.Providers.BetGenius\LigaStavok.UdfsNext.Line.Provider.BetGenius.csproj", "{568A81D7-62D8-4918-9029-8C48F6986808}"
@@ -77,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Udfs.Common", "..\..\..\Git
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Dumps", "LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj", "{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans.Configuration", "LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj", "{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BetRadar|Any CPU = BetRadar|Any CPU
@@ -84,12 +84,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.BetRadar|Any CPU.ActiveCfg = BetRadar|Any CPU
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.BetRadar|Any CPU.Build.0 = BetRadar|Any CPU
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.BetRadar|Any CPU.ActiveCfg = BetRadar|Any CPU
 		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.BetRadar|Any CPU.Build.0 = BetRadar|Any CPU
 		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -252,12 +246,17 @@ Global
 		{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.BetRadar|Any CPU.ActiveCfg = BetRadar|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.BetRadar|Any CPU.Build.0 = BetRadar|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{21A06AE0-2A63-4E89-BC44-0E7DFA547F7E} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{A18BA83C-09A6-4A4C-91E3-1EE702B680CC} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{568A81D7-62D8-4918-9029-8C48F6986808} = {EC9FD526-B664-444E-A594-41AC653AE1F0}
 		{6D7889AF-A79C-4834-87A8-6F5F5F050E59} = {C4E55EE9-3B2E-41CF-A319-FB1EA5424968}
@@ -288,6 +287,7 @@ Global
 		{5A644BED-CFC6-4426-BDAE-3A31D577C12A} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{157A9351-13B8-4E73-919B-38C727E429F4} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}
