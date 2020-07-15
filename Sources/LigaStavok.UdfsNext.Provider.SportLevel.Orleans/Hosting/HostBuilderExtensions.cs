@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.StartupTasks;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -46,10 +47,10 @@ namespace Microsoft.Extensions.Hosting
 					);
 
 					// Grains 
-					siloBuilder.ConfigureApplicationParts(parts => parts.AddFromAppDomain());
-					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(Assembly.GetExecutingAssembly()).WithReferences());
+					//siloBuilder.ConfigureApplicationParts(parts => parts.AddFromAppDomain());
+					//siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(Assembly.GetExecutingAssembly()).WithReferences());
 					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(ProviderManagerGrain).Assembly).WithReferences());
-					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IProviderManagerGrain).Assembly).WithReferences());
+					//siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IProviderManagerGrain).Assembly));
 
 					// Tasks
 					siloBuilder.AddStartupTask<ProviderManagerStartupTask>();
