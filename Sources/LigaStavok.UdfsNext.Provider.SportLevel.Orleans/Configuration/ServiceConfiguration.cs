@@ -1,4 +1,5 @@
 ﻿using LigaStavok.UdfsNext.Configuration;
+using LigaStavok.UdfsNext.Dumps.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration

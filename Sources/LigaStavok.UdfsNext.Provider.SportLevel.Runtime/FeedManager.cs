@@ -36,7 +36,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 					new DumpMessage()
 					{
 						EventId = (messageContext.Message as ITranslationWebSocketRequest)?.TranslationId.ToString()  ?? "Line",
-						SourceType = "ToFeed",
+						Source = "ToFeed",
 						MessageType = messageContext.Message.GetType().Name,
 						MessageBody = message
 					}

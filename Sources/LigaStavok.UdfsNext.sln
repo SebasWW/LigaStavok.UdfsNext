@@ -77,6 +77,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Dumps",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Orleans.Configuration", "LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj", "{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Dumps.Configuration", "LigaStavok.UdfsNext.Dumps.Configuration\LigaStavok.UdfsNext.Dumps.Configuration.csproj", "{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BetRadar|Any CPU = BetRadar|Any CPU
@@ -252,6 +254,12 @@ Global
 		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,6 +296,7 @@ Global
 		{157A9351-13B8-4E73-919B-38C727E429F4} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{5EB93AF1-619C-4CE3-9D4A-8E62B02950B6} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 		{7F5B31BA-6A01-49CB-B07E-B8F54B5F1642} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
+		{A1FF6F19-AB2D-4C65-ADCC-1160930D135F} = {8B37A67E-CFF5-4363-84C9-16B5A9173327}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}

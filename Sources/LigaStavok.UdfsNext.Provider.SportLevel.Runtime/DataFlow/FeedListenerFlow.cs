@@ -88,7 +88,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 						new DumpMessage()
 						{
 							EventId = "Line",
-							SourceType = "FromFeed",
+							Source = "FromFeed",
 							MessageBody = messageContext.Message,
 							MessageType = "Unkuown"
 						}
@@ -106,7 +106,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				var dumpMessage = new DumpMessage()
 				{
 					EventId = "Line",
-					SourceType = "FromFeed",
+					Source = "FromFeed",
 					MessageBody = messageContext.State,
 					MessageType = messageContext.Message.GetType().Name
 				};
@@ -140,6 +140,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 					case Translation msg:
 						translationToAdapterActionBlock.Post(messageContext.Next(msg));
+
 						dumpMessage.EventId = msg.Id.ToString();
 						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;

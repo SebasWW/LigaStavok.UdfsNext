@@ -78,9 +78,9 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			}
 		}
 
-		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, CancellationToken cancellationToken)
+		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, Action saveStateAction, CancellationToken cancellationToken)
 		{
-			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription() { PersistableState = messageContext.Message.State });
+			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription(saveStateAction) { PersistableState = messageContext.Message.State });
 			return Task.CompletedTask;
 		}
 

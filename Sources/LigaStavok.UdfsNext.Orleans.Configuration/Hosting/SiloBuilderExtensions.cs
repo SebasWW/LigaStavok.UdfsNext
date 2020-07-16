@@ -27,6 +27,10 @@ namespace LigaStavok.UdfsNext.Hosting
                     })
                     .Configure<EndpointOptions>(options =>
                     {
+
+                        options.SiloPort = configuration.Endpoint.SiloPort;
+                        options.GatewayPort = configuration.Endpoint.GatewayPort;
+
                         // IP Address to advertise in the cluster
                         if (IPAddress.TryParse(configuration.Endpoint.AdvertisedIPAddress, out var iPAddress)) options.AdvertisedIPAddress = iPAddress;
 

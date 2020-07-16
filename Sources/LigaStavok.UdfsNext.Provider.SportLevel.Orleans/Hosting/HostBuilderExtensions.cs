@@ -1,13 +1,11 @@
-﻿using System;
-using LigaStavok.UdfsNext.Hosting;
-using Microsoft.Extensions.Configuration;
-using Orleans.Hosting;
-using Orleans;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+﻿using LigaStavok.UdfsNext.Hosting;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.StartupTasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Orleans;
+using Orleans.Hosting;
 
 namespace Microsoft.Extensions.Hosting
 {

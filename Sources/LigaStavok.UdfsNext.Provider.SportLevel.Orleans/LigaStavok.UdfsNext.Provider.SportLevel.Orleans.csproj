@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps.Configuration\LigaStavok.UdfsNext.Dumps.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.csproj" />

@@ -134,7 +134,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 					messageContext.Next(
 						new DumpMessage()
 						{
-							SourceType = "FromApi",
+							Source = "FromApi",
 							MessageBody = JsonConvert.SerializeObject(messageContext.Message),
 							MessageType = messageContext.Message.GetType().Name,
 							EventId = messageContext.Message.Id.ToString()

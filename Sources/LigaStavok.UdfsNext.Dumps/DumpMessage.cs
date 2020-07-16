@@ -2,7 +2,7 @@
 {
 	public class DumpMessage
 	{
-		public string SourceType { get; set; }
+		public string Source { get; set; }
 
 		public string MessageType { get; set; }
 

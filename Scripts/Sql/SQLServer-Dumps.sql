@@ -1,0 +1,41 @@
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Dumps](
+	[RowId] [bigint] IDENTITY(1,1) NOT NULL,
+	[ServiceId] [nvarchar](50) NOT NULL,
+	[Source] [nvarchar](50) NOT NULL,
+	[MessageType] [nvarchar](50) NOT NULL,
+	[EventId] [nvarchar](50) NULL,
+	[DateReceived] [datetimeoffset](7) NOT NULL,
+	[IncomingId] [nvarchar](50) NOT NULL,
+	[MessageBody] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Dumps] PRIMARY KEY CLUSTERED 
+(
+	[RowId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/****** Object:  Index [IX_Dumps_ServiceId]    Script Date: 7/16/2020 4:53:22 PM ******/
+CREATE NONCLUSTERED INDEX [IX_Dumps_ServiceId] ON [dbo].[Dumps]
+(
+	[ServiceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+/****** Object:  Index [IX_Dumps_EventId]    Script Date: 7/16/2020 4:53:58 PM ******/
+CREATE NONCLUSTERED INDEX [IX_Dumps_EventId] ON [dbo].[Dumps]
+(
+	[EventId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+/****** Object:  Index [IX_Dumps]    Script Date: 7/16/2020 4:54:18 PM ******/
+CREATE NONCLUSTERED INDEX [IX_Dumps_IncomingId] ON [dbo].[Dumps]
+(
+	[IncomingId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+

@@ -32,6 +32,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters
 				)
 			);
 
+			context.State.SaveState();
 			return list;
 
 			UpdateGameEventStateCommandDescription GetDescription()

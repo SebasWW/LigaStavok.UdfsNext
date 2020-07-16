@@ -24,8 +24,4 @@
     <ProjectReference Include="..\LigaStavok.WebSocket\LigaStavok.Websocket.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="State\" />
-  </ItemGroup>
-
 </Project>

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace LigaStavok.UdfsNext.Dumps.FileSystem
 {
-	public class FileDumperOptions
+	public class FileSystemDumperOptions
 	{
-		public int MaxDegreeOfParallelism { get; set; }
+		public int MaxDegreeOfParallelism { get; set; } = 100;
 
 		public string RootDirectory { get; set; }
 	}

@@ -72,7 +72,7 @@ namespace LigaStavok.WebSocket
 
 					try
 					{
-						logger.LogInformation($"Websocket initializeing ... {options.Uri}");
+						logger.LogInformation($"Websocket initializing ... {options.Uri}");
 
 						await clientWebSocket.ConnectAsync(options.Uri, cancellationToken);
 

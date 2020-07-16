@@ -7,25 +7,31 @@ using Microsoft.Extensions.Options;
 
 namespace LigaStavok.UdfsNext.Dumps.FileSystem
 {
-	public class FileDumper : IMessageDumper
+	public class FileSystemDumper : IMessageDumper
 	{
-		private readonly FileDumperOptions options;
+		private readonly FileSystemDumperOptions options;
 		private readonly ActionBlock<MessageContext<DumpMessage>> writeBlock;
-		private readonly ILogger<FileDumper> logger;
+		private readonly ILogger logger;
 
-		public FileDumper(
-			ILogger<FileDumper> logger,
-			IOptions<FileDumperOptions> options
+		public FileSystemDumper(
+			ILogger<FileSystemDumper> logger,
+			IOptions<FileSystemDumperOptions> options
+		) :this(logger, options.Value)
+		{}
+
+		internal FileSystemDumper(
+			ILogger logger,
+			FileSystemDumperOptions options
 		)
 		{
-			this.options = options.Value;
+			this.options = options;
 			this.logger = logger;
 
 			writeBlock = new ActionBlock<MessageContext<DumpMessage>>(
 				WriteMessage,
 				new ExecutionDataflowBlockOptions()
 				{
-					MaxDegreeOfParallelism = options.Value.MaxDegreeOfParallelism
+					MaxDegreeOfParallelism = options.MaxDegreeOfParallelism
 				}
 			);
 		}
@@ -36,7 +42,7 @@ namespace LigaStavok.UdfsNext.Dumps.FileSystem
 			{
 				var message = messageContext.Message;
 
-				var dumpDir = Path.Combine(options.RootDirectory, message.SourceType, message.EventId);
+				var dumpDir = Path.Combine(options.RootDirectory, message.Source, message.EventId);
 				Directory.CreateDirectory(dumpDir);
 
 				var dumpPath = Path.Combine(dumpDir,

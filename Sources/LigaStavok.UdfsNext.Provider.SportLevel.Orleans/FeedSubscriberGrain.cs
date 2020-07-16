@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using Orleans;
 using Orleans.Runtime;
@@ -10,6 +12,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 	{
 		private readonly IPersistentState<FeedSubscriberGrainState> state;
 		private readonly IFeedSubscriber feedSubscriber;
+		private bool needSaveState;
 
 		public const string STORAGE_NAME = "stateStore";
 
@@ -31,9 +34,11 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 		{
 			await state.ReadStateAsync();
 
-			if (state.State == null) state.State = new FeedSubscriberGrainState(); // { Translation = new State.TranslationState() };
-
+			if (state.State == null) state.State = new FeedSubscriberGrainState();
 			if (state.State.Translation == null) state.State.Translation = new TranslationState();
+
+			RegisterTimer(SaveStateTimer, null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(60));
+
 
 			await feedSubscriber.SubscribeAsync(
 				new MessageContext<TranslationSubscriptionRequest>(
@@ -43,8 +48,20 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 						State = state.State.Translation
 					}
 				),
+				() => needSaveState = true,
 				CancellationToken.None
 			);
+		}
+
+		private Task SaveStateTimer(object arg)
+		{
+			if (needSaveState)
+			{
+				needSaveState = false;
+				return state.WriteStateAsync();
+			}
+
+			return Task.CompletedTask;
 		}
 
 		public override async Task OnDeactivateAsync()
