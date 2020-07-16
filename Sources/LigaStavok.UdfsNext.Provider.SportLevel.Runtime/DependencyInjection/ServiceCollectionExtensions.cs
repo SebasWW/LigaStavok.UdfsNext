@@ -1,17 +1,14 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel;
+﻿using System;
+using LigaStavok.UdfsNext.Provider.SportLevel;
 using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
-using LigaStavok.WebSocket;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Polly;
 using Polly.Extensions.Http;
-using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSportLevel(
             this IServiceCollection services, 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using Orleans;
 using Orleans.Runtime;
@@ -37,9 +36,10 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 			if (state.State == null) state.State = new FeedSubscriberGrainState();
 			if (state.State.Translation == null) state.State.Translation = new TranslationState();
 
+			// Save state timer
 			RegisterTimer(SaveStateTimer, null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(60));
 
-
+			// Subscribe translation
 			await feedSubscriber.SubscribeAsync(
 				new MessageContext<TranslationSubscriptionRequest>(
 					new TranslationSubscriptionRequest() 
@@ -75,8 +75,16 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 				),
 				CancellationToken.None
 			);
+			try
+			{
 
-			await state.WriteStateAsync();
+				await state.WriteStateAsync();
+			}
+			catch (Exception ex)
+			{
+
+				throw;
+			}
 		}
 	}
 }

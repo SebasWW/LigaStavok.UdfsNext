@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Net;
 using LigaStavok.UdfsNext.Configuration;
-using LigaStavok.UdfsNext.HealthCheck;
-using LigaStavok.UdfsNext.HealthCheck.Hosting;
-using LigaStavok.UdfsNext.HealthCheck.Orleans;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Runtime;
 
 namespace LigaStavok.UdfsNext.Hosting
 {
-    public static class SiloBuilderExtensions
+	public static class SiloBuilderExtensions
 	{
         public static void Configure(this ISiloBuilder siloBuilder, ClusterConfiguration configuration)
 		{
@@ -51,29 +46,22 @@ namespace LigaStavok.UdfsNext.Hosting
                 {
                     options.ClusterId = configuration.ClusterId;
                     options.ServiceId = configuration.ServiceId;
+                })
+
+                .Configure<GrainCollectionOptions>(options =>
+                {
+                    // Set the value of CollectionAge to 3 minutes for all grain
+                    options.CollectionAge = TimeSpan.FromMinutes(3);
+
+                    // Override the value of CollectionAge to 5 minutes for MyGrainImplementation
+                    // options.ClassSpecificCollectionAge[typeof(FeedSubscriberGrain).FullName] = TimeSpan.FromMinutes(5);
                 });
 
-            // siloBuilder
-            //.ConfigureLogging((hostingContext, logging) =>
-            //{
-            //    //TODO: Logging slows down testing a bit.
-            //    //logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-            //    logging.AddConsole();
-            //              logging.AddDebug();
-            //          })
             //.UsePerfCounterEnvironmentStatistics()
             //.Configure<SiloMessagingOptions>(options =>
             //{
             //    options.ResponseTimeout = TimeSpan.FromSeconds(5);
             //})
-            //.Configure<GrainCollectionOptions>(options =>
-            //{
-            //    // Set the value of CollectionAge to 10 minutes for all grain
-            //    options.CollectionAge = TimeSpan.FromMinutes(10);
-
-            //    // Override the value of CollectionAge to 5 minutes for MyGrainImplementation
-            //    // options.ClassSpecificCollectionAge[typeof(AdoNetOrleansSiloOptions).FullName] = TimeSpan.FromMinutes(5);
-            //});
 
             // Reminder
             if (configuration.Reminder.Enabled)

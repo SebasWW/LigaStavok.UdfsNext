@@ -46,6 +46,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 					}
 				}
 			}
+			catch (OperationCanceledException) { }
 			catch (Exception ex)
 			{
 				logger.LogError(ex, "EventSubscriberGrain initializing error.");

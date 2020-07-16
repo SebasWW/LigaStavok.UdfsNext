@@ -9,6 +9,7 @@ using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
@@ -81,14 +82,14 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Parsing message error.");
+				logger.LogError(ex, $"Parsing message error. ContextId: {messageContext.IncomingId}");
 
 				messageDumper.Write(
 					messageContext.Next(
 						new DumpMessage()
 						{
 							EventId = "Line",
-							Source = "FromFeed",
+							Source = DumpSource.FROM_FEED,
 							MessageBody = messageContext.Message,
 							MessageType = "Unkuown"
 						}
@@ -106,7 +107,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				var dumpMessage = new DumpMessage()
 				{
 					EventId = "Line",
-					Source = "FromFeed",
+					Source = DumpSource.FROM_FEED,
 					MessageBody = messageContext.State,
 					MessageType = messageContext.Message.GetType().Name
 				};
@@ -125,7 +126,19 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 					case EventsMessage msg:
 						eventsDataToAdapterActionBlock.Post(messageContext.Next(msg));
-						messageDumper.Write(messageContext.Next(dumpMessage));
+
+						foreach (var item in msg.Events)
+						{
+							var dm = new DumpMessage()
+							{
+								EventId = item.TranslationId,
+								Source = DumpSource.FROM_FEED,
+								MessageType = item.EventCode,
+								MessageBody = JsonConvert.SerializeObject(item)
+							};
+
+							messageDumper.Write(messageContext.Next(dm));
+						}
 
 						break;
 
@@ -152,7 +165,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Message routing error.");
+				logger.LogError(ex, $"Message routing error. ContextId: {messageContext.IncomingId}");
 			}
 		}
 
@@ -164,7 +177,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Translation sending error.");
+				logger.LogError(ex, $"Translation sending error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 			}
 		}
 
@@ -176,7 +189,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Ping sending error.");
+				logger.LogError(ex, $"Ping sending error. ContextId: {messageContext.IncomingId}");
 			}
 		}
 
@@ -188,7 +201,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Events sending error.");
+				logger.LogError(ex, $"Events sending error. ContextId: {messageContext.IncomingId}");
 			}
 		}
 
@@ -202,7 +215,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Subscription starting error.");
+				logger.LogError(ex, $"Subscription starting error. ContextId: {messageContext.IncomingId}");
 			}
 
 		}

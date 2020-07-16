@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.WebSocket;
 using Microsoft.Extensions.DependencyInjection;

@@ -134,7 +134,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 					messageContext.Next(
 						new DumpMessage()
 						{
-							Source = "FromApi",
+							Source = DumpSource.FROM_API,
 							MessageBody = JsonConvert.SerializeObject(messageContext.Message),
 							MessageType = messageContext.Message.GetType().Name,
 							EventId = messageContext.Message.Id.ToString()
@@ -144,7 +144,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Dump sending error.");
+				logger.LogError(ex, $"Dump sending error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 			}
 
 			return Enumerable.Repeat(messageContext, 1);
@@ -165,7 +165,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "HttpRequestMessage building error.");
+				logger.LogError(ex, $"HttpRequestMessage building error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 				return Array.Empty<MessageContext<HttpRequestMessage, TranslationSubscription>>();
 			}
 		}
@@ -179,7 +179,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "HttpRequestMessage execution error.");
+				logger.LogError(ex, $"HttpRequestMessage execution error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<HttpResponseMessage, TranslationSubscription>>();
 			}
 		}
@@ -200,7 +200,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Translation httpResponseMessage parsing error.");
+				logger.LogError(ex, $"Translation httpResponseMessage parsing error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<string, TranslationSubscription>>();
 			}
 		}
@@ -219,7 +219,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "TranslationMessage parsing error.");
+				logger.LogError(ex, $"TranslationMessage parsing error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<Translation, TranslationSubscription>>();
 			}
 		}
@@ -250,7 +250,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Translation subscription error.");
+				logger.LogError(ex, $"Translation subscription error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 			}
 		}
 
@@ -262,7 +262,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Translation to adapter sending error.");
+				logger.LogError(ex, $"Translation to adapter sending error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 				return Task.CompletedTask;
 			}
 		}

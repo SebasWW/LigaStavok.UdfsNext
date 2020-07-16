@@ -75,7 +75,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "HttpRequestMessage building error.");
+				logger.LogError(ex, $"HttpRequestMessage building error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<HttpRequestMessage>>();
 			}
 		}
@@ -88,7 +88,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "HttpRequestMessage execution error.");
+				logger.LogError(ex, $"HttpRequestMessage execution error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<HttpResponseMessage>>();
 			}
 		}
@@ -105,7 +105,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "HttpResponseMessage parsing error.");
+				logger.LogError(ex, $"HttpResponseMessage parsing error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<Translation>>();
 			}
 		}

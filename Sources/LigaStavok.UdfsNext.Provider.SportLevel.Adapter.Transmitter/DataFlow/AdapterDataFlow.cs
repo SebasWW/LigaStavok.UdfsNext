@@ -122,7 +122,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 					messageContext.Next(
 						new DumpMessage()
 						{
-							 Source = "ToTransmitter",
+							 Source = DumpSource.TO_TRANSMITTER,
 							 MessageBody = JsonConvert.SerializeObject(messageContext.Message),
 							 MessageType = messageContext.Message.GetType().Name,
 							 EventId = messageContext.State
@@ -132,7 +132,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Dump sending error.");
+				logger.LogError(ex, $"Dump sending error. ContextId: {messageContext.IncomingId}");
 			}
 		}
 
@@ -145,7 +145,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Sending to transmitter error.");
+				logger.LogError(ex, $"Sending to transmitter error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
@@ -159,7 +159,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Process ping message error.");
+				logger.LogError(ex, $"Process ping message error. ContextId: {messageContext.IncomingId}");
 				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
@@ -173,7 +173,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Process event data message error.");
+				logger.LogError(ex, $"Process event data message error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.TranslationId}");
 				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
@@ -187,7 +187,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Process translation message error.");
+				logger.LogError(ex, $"Process translation message error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 				return Array.Empty<MessageContext<ITransmitterCommand, string>>();
 			}
 		}
@@ -217,7 +217,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Process event data error.");
+				logger.LogError(ex, $"Process event data error. ContextId: {messageContext.IncomingId}");
 			}
 
 			return list;
@@ -247,7 +247,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, "Translation checking error.");
+				logger.LogError(ex, $"Translation checking error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
 				return Enumerable.Empty<MessageContext<Translation>>();
 			}
 		}
