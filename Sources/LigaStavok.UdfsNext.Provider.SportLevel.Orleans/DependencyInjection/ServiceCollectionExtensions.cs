@@ -13,89 +13,12 @@ namespace Microsoft.Extensions.DependencyInjection
 	public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSportLevelProviderOrleans(
-            this IServiceCollection services, 
-            ServiceConfiguration configuration
+            this IServiceCollection services,
+            Action<ProviderManagerGrainOptions> optionHandler
         ) 
         {
-            // Logging
             services
-                //.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"))
-                .AddLogging(
-                    configure =>
-                    {
-                        configure.AddProvider(new NLogLoggerProvider());
-                    }
-                )
-
-            .Configure<ProviderManagerGrainOptions>(
-                options =>
-                {
-                }
-            )
-
-            // Dumps
-            .AddMessageDumping(
-                builder =>
-				{
-                    if (configuration.Dump.SqlServer.Enabled)
-                        builder.ConfigureSqlServerDumping(
-                            options =>
-                            {
-                                options.Configure(configuration.Dump.SqlServer);
-                            }
-                       );
-
-                    if (configuration.Dump.FileSystem.Enabled)
-                        builder.ConfigureFileSystemDumping(
-                            options =>
-                            {
-                                options.Configure(configuration.Dump.FileSystem);
-                            }
-                       );
-                }   
-             )
-
-            // Adapter
-            .AddSportLevelTransmitterAdapter()
-            .AddSingleton(configuration.Adapter) // Перепилить на Options
-
-            // Runtime
-            .AddSportLevelRunTime(
-                builder =>
-				{
-                    builder.ConfigureProviderManager(
-                        options =>
-                        {
-                            options.MetaRefreshInterval = configuration.Provider.MetaRefreshInterval;
-                        }
-                    );
-
-                    builder.ConfigureFeedListener(
-                        options =>
-                        {
-                            options.UserName = configuration.Provider.UserName;
-                            options.Password = configuration.Provider.Password;
-                        }
-                    );
-
-                    builder.ConfigureHttpClientManager(
-                        options =>
-                        {
-                            options.UserName = configuration.Provider.UserName;
-                            options.Password = configuration.Provider.Password;
-                            options.Uri = new Uri(configuration.Provider.WebApiUrl);
-                        }
-                    );
-
-                    builder.AddWebSocketClient(
-                        options =>
-                        {
-                            options.UseDefaultCredentials = true;
-                            options.Uri = new Uri(configuration.Provider.WebSocketUrl);
-                        }
-                    );
-                }
-            );
+                .Configure(optionHandler);
 
             return services;
         }

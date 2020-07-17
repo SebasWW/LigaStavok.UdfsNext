@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration
+namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
 {
 	public class ProviderConfiguration
 	{

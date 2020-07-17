@@ -10,7 +10,7 @@ namespace LigaStavok.UdfsNext.Hosting
 {
 	public static class SiloBuilderExtensions
 	{
-        public static void Configure(this ISiloBuilder siloBuilder, ClusterConfiguration configuration)
+        public static void Configure(this ISiloBuilder siloBuilder, OrleansClusterConfiguration configuration)
 		{
             // Local or distribute cluster
             if (configuration.Membership.Enabled)

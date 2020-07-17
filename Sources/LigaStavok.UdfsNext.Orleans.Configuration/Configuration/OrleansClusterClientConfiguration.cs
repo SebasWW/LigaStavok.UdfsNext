@@ -2,7 +2,7 @@
 
 namespace LigaStavok.UdfsNext.Configuration
 {
-	public class ClusterClientConfiguration
+	public class OrleansClusterClientConfiguration
 	{
 		public string ClusterId { get; set; }
 

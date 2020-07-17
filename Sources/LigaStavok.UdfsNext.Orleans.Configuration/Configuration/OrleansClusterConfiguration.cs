@@ -3,7 +3,7 @@
     /// <summary>
     /// The cluster configuration information.
     /// </summary>
-	public class ClusterConfiguration
+	public class OrleansClusterConfiguration
 	{
         /// <summary>
         /// Gets or sets the cluster identity.

@@ -16,11 +16,5 @@
         /// ADO.NET Provider path.
         /// </summary>
         public string Provider { get; set; } = "System.Data.SqlClient";
-
-
-  //      /// <summary> 
-  //      /// Storage name.
-  //      /// </summary>
-		//public string Name { get;  set; }
 	}
 }

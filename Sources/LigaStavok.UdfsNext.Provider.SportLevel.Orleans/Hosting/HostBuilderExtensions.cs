@@ -1,4 +1,5 @@
-﻿using LigaStavok.UdfsNext.Hosting;
+﻿using System;
+using LigaStavok.UdfsNext.Hosting;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.StartupTasks;
@@ -11,44 +12,29 @@ namespace Microsoft.Extensions.Hosting
 {
 	public static class HostBuilderExtensions
 	{
-		public static IHostBuilder UseSportLevelProviderOrleans(this IHostBuilder hostBuilder)
+		public static IHostBuilder UseSportLevelProviderOrleans(this IHostBuilder hostBuilder, Action<ISiloBuilder> configureHandler)
 		{
-			ServiceConfiguration configuration = null;
-			hostBuilder.ConfigureServices((context, services) =>
-				{
-					configuration = context.Configuration.Get<ServiceConfiguration>();
-				}
-			);
-
 			// Cluster
 			hostBuilder.UseOrleans(
 				siloBuilder =>
 				{
-					//ServiceConfiguration configuration = null;
-					//siloBuilder.ConfigureServices((context, services) =>
-					//	{
-					//		configuration = context.Configuration.Get<ServiceConfiguration>();
-					//	}
-					//);
-
-					siloBuilder.Configure(configuration.Cluster);
-
-					// Logging
-					//siloBuilder.ConfigureLogging();
+					configureHandler.Invoke(siloBuilder);
 
 					// Dependencies
 					siloBuilder.ConfigureServices(
 						services =>
 						{
-							services.AddSportLevelProviderOrleans(configuration);
+							services.AddSportLevelProviderOrleans(
+								options =>
+								{
+
+								}
+							);
 						}
 					);
 
 					// Grains 
-					//siloBuilder.ConfigureApplicationParts(parts => parts.AddFromAppDomain());
-					//siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(Assembly.GetExecutingAssembly()).WithReferences());
 					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(ProviderManagerGrain).Assembly).WithReferences());
-					//siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IProviderManagerGrain).Assembly));
 
 					// Tasks
 					siloBuilder.AddStartupTask<ProviderManagerStartupTask>();
