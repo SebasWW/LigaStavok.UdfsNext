@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LigaStavok.UdfsNext.Provider.SportingSolutions.Host.Console
+namespace LigaStavok.UdfsNext.Provider.BetRadar.Orleans.Console
 {
 	class Program
 	{
