@@ -1,13 +1,11 @@
 ﻿using LigaStavok.UdfsNext.Provider.SportLevel;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters;
-using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
-using System;
-using System.Security;
+using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.DataFlow;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSportLevelTransmitterAdapter(
             this IServiceCollection services
