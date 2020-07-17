@@ -13,11 +13,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.6" />
     <PackageReference Include="SimpleInjector" Version="4.7.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+    <PackageReference Include="Udfs.Transmitter" Version="20.7.17-76" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Git\udfstransmitter222\Udfs.Common\Udfs.Common.csproj" />
-    <ProjectReference Include="..\..\..\..\Git\udfstransmitter222\Udfs.Transmitter\Udfs.Transmitter.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives.csproj" />

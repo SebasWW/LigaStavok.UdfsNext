@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using NLog;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
-using Udfs.Transmitter.Messages.Interfaces;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
-using Microsoft.Extensions.Logging;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
-using LigaStavok.UdfsNext.Provider.SportLevel.State;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
 {
 	public sealed class TransmitterCommandsFactory : ITransmitterCommandsFactory
 	{
 		private readonly AdapterConfiguration adapterConfiguration;
-		private readonly ILogger<TransmitterCommandsFactory> logger;
 		private readonly IDataEventAdapter dataEventAdapter;
 		private readonly IMarketEventAdapter marketEventAdapter;
 		private readonly ITranslationAdapter translationAdapter;
@@ -27,7 +22,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
 
 		public TransmitterCommandsFactory(
 			AdapterConfiguration adapterConfiguration,
-			ILogger<TransmitterCommandsFactory> logger,
 
 			IDataEventAdapter dataEventAdapter,
 			IMarketEventAdapter marketEventAdapter,
@@ -38,7 +32,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
 		)
 		{
 			this.adapterConfiguration = adapterConfiguration;
-			this.logger = logger;
 			this.dataEventAdapter = dataEventAdapter;
 			this.marketEventAdapter = marketEventAdapter;
 			this.translationAdapter = translationAdapter;

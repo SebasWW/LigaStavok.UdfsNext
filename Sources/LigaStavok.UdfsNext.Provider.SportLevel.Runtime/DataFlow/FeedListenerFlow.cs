@@ -20,6 +20,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private readonly IWebSocketMessageParser webSocketMessageParser;
 		private readonly IProviderAdapter providerAdapter;
 		private readonly IFeedSubscriber feedSubscriber;
+		private readonly TranslationSubscriptionCollection subscriptions;
 		private readonly TransformManyBlock<MessageContext<string>, MessageContext<object, string>> parseFeedMessageTransformManyBlock;
 		private readonly ActionBlock<MessageContext<object, string>> messageRouterBlock;
 		private readonly ActionBlock<MessageContext<LoginResponseMessage>> startSubscribingActionBlock;
@@ -32,7 +33,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			IMessageDumper messageDumper,
 			IWebSocketMessageParser webSocketMessageParser,
 			IProviderAdapter providerAdapter,
-			IFeedSubscriber feedSubscriber
+			IFeedSubscriber feedSubscriber,
+			TranslationSubscriptionCollection subscriptions
 		)
 		{
 			this.logger = logger;
@@ -40,6 +42,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			this.webSocketMessageParser = webSocketMessageParser;
 			this.providerAdapter = providerAdapter;
 			this.feedSubscriber = feedSubscriber;
+			this.subscriptions = subscriptions;
 
 			// 1
 			parseFeedMessageTransformManyBlock
@@ -152,10 +155,15 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 						break;
 
 					case Translation msg:
+						// Begin emululator testing block ***************
+						subscriptions.GetOrAdd(msg.Id, id => new TranslationSubscription(() => { })); // add subscription
+
 						translationToAdapterActionBlock.Post(messageContext.Next(msg));
 
 						dumpMessage.EventId = msg.Id.ToString();
 						messageDumper.Write(messageContext.Next(dumpMessage));
+						// End emululator testing block ***************
+
 						break;
 
 					default:

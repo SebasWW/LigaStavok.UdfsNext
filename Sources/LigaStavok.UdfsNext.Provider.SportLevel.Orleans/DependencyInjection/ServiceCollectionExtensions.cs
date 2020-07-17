@@ -60,7 +60,7 @@ namespace Microsoft.Extensions.DependencyInjection
             .AddSingleton(configuration.Adapter) // Перепилить на Options
 
             // Runtime
-            .AddSportLevel(
+            .AddSportLevelRunTime(
                 builder =>
 				{
                     builder.ConfigureProviderManager(

@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
 	public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSportLevel(
+        public static IServiceCollection AddSportLevelRunTime(
             this IServiceCollection services, 
             Action<ProviderBuilder> configureDelegate
         ) 
