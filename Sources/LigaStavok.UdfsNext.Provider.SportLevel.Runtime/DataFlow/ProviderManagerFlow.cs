@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
-	public class ProviderManagerFlow : IAsyncEnumerable<MessageContext<Translation>>
+	public class ProviderManagerFlow //: IAsyncEnumerable<MessageContext<Translation>>
 	{
 		int maxDegreeOfParallelism = 100;
 
@@ -24,13 +24,14 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private readonly HttpClientManager httpClientManager;
 		private readonly IHttpRequestMessageFactory httpRequestMessageFactory;
 		private readonly IHttpResponseMessageParser httpResponseMessageParser;
-
+		private readonly ITranslationDistributer translationDistributer;
 		private readonly TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>> createHttpRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>> execHttpRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<string>> parseHttpResponseBlock;
 		private readonly BroadcastBlock<MessageContext<string>> broadcastResponseBlock;
 		private readonly ActionBlock<MessageContext<string>> dumpResponseBlock;
 		private readonly TransformManyBlock<MessageContext<string>, MessageContext<Translation>> deserializeResponseBlock;
+		private readonly ActionBlock<MessageContext<Translation>> translationDistributerBlock;
 
 		public ProviderManagerFlow(
 			ILogger<ProviderManagerFlow> logger,
@@ -38,7 +39,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 			HttpClientManager httpClientManager,
 			IHttpRequestMessageFactory httpRequestMessageFactory,
-			IHttpResponseMessageParser httpResponseMessageParser
+			IHttpResponseMessageParser httpResponseMessageParser,
+			ITranslationDistributer translationDistributer
 		)
 		{
 			this.logger = logger;
@@ -46,7 +48,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			this.httpClientManager = httpClientManager;
 			this.httpRequestMessageFactory = httpRequestMessageFactory;
 			this.httpResponseMessageParser = httpResponseMessageParser;
-
+			this.translationDistributer = translationDistributer;
 			createHttpRequestBlock
 				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(
 					CreateHttpRequestHandler,
@@ -73,10 +75,15 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
-
 			deserializeResponseBlock
 				= new TransformManyBlock<MessageContext<string>, MessageContext<Translation>>(
 					DeserializeResponseHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
+
+			translationDistributerBlock
+				= new ActionBlock<MessageContext<Translation>>(
+					TranslationDistributerHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
@@ -87,6 +94,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 			broadcastResponseBlock.LinkTo(dumpResponseBlock);
 			broadcastResponseBlock.LinkTo(deserializeResponseBlock);
+			deserializeResponseBlock.LinkTo(translationDistributerBlock);
 		}
 
 		public void Post(MessageContext<TranslationsRequest> messageContext)
@@ -133,23 +141,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 		}
 
-		private IEnumerable<MessageContext<Translation>> DeserializeResponseHandler(MessageContext<string> messageContext)
-		{
-			try
-			{
-				var response = JsonConvert.DeserializeObject<TranslationsResponse>(messageContext.Message);
-
-				return response
-					.Where(t => t.State != "finished" && t.State != "cancelled")
-					.Select(t => messageContext.Next(t));
-			}
-			catch (Exception ex)
-			{
-				logger.LogError(ex, $"Deserializing response error. ContextId: {messageContext.IncomingId}");
-				return Array.Empty<MessageContext<Translation>>();
-			}
-		}
-
 		private void DumpResponseHandler(MessageContext<string> messageContext)
 		{
 			try
@@ -172,15 +163,45 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 		}
 
-		public async IAsyncEnumerator<MessageContext<Translation>> GetAsyncEnumerator(CancellationToken token = default)
+		private IEnumerable<MessageContext<Translation>> DeserializeResponseHandler(MessageContext<string> messageContext)
 		{
-			// Return new elements until cancellationToken is triggered.
-			while (true)
+			try
 			{
-				// Make sure to throw on cancellation so the Task will transfer into a canceled state
-				token.ThrowIfCancellationRequested();
-				yield return await deserializeResponseBlock.ReceiveAsync(token);
+				var response = JsonConvert.DeserializeObject<TranslationsResponse>(messageContext.Message);
+
+				return response
+					.Where(t => t.State != "finished" && t.State != "cancelled")
+					.Select(t => messageContext.Next(t));
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, $"Deserializing response error. ContextId: {messageContext.IncomingId}");
+				return Array.Empty<MessageContext<Translation>>();
 			}
 		}
+
+		private Task TranslationDistributerHandler(MessageContext<Translation> messageContext)
+		{
+			try
+			{
+				return translationDistributer.Distribute(messageContext);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, $"Distributing translation error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
+				return Task.CompletedTask;
+			}
+		}
+
+		//public async IAsyncEnumerator<MessageContext<Translation>> GetAsyncEnumerator(CancellationToken token = default)
+		//{
+		//	// Return new elements until cancellationToken is triggered.
+		//	while (true)
+		//	{
+		//		// Make sure to throw on cancellation so the Task will transfer into a canceled state
+		//		token.ThrowIfCancellationRequested();
+		//		yield return await deserializeResponseBlock.ReceiveAsync(token);
+		//	}
+		//}
 	}
 }

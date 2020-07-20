@@ -29,35 +29,35 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
 			this.options = options.Value;
 		}
 
-		private async Task OnTimerTick(object obj)
-		{
-			try
-			{
-				await foreach(var messageContext in providerManager.WithCancellation(cancellationTokenSource.Token))
-				{
-					try
-					{
-						await GrainFactory.GetGrain<IFeedSubscriberGrain>(messageContext.Message.Id).InitializeAsync();
-					}
-					catch (Exception ex)
-					{
-						logger.LogError(ex, $"Calling ITranslationManagerGrain({messageContext.Message.Id}).");
-						throw;
-					}
-				}
-			}
-			catch (OperationCanceledException) { }
-			catch (Exception ex)
-			{
-				logger.LogError(ex, "EventSubscriberGrain initializing error.");
-			}
-		}
+		//private async Task OnTimerTick(object obj)
+		//{
+		//	try
+		//	{
+		//		await foreach(var messageContext in providerManager.WithCancellation(cancellationTokenSource.Token))
+		//		{
+		//			try
+		//			{
+		//				await GrainFactory.GetGrain<IFeedSubscriberGrain>(messageContext.Message.Id).InitializeAsync();
+		//			}
+		//			catch (Exception ex)
+		//			{
+		//				logger.LogError(ex, $"Calling ITranslationManagerGrain({messageContext.Message.Id}).");
+		//				throw;
+		//			}
+		//		}
+		//	}
+		//	catch (OperationCanceledException) { }
+		//	catch (Exception ex)
+		//	{
+		//		logger.LogError(ex, "EventSubscriberGrain initializing error.");
+		//	}
+		//}
 
 		public override Task OnActivateAsync()
 		{
 			cancellationTokenSource = new CancellationTokenSource();
 
-			RegisterTimer(OnTimerTick, null, options.ActivatingProcessDelay, options.ActivatingProcessPeriod);
+			//RegisterTimer(OnTimerTick, null, options.ActivatingProcessDelay, options.ActivatingProcessPeriod);
 
 			var task = providerManager.StartAsync(CancellationToken.None);
 

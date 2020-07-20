@@ -42,8 +42,8 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 						new MessageContext<TranslationsRequest>(
 							new TranslationsRequest()
 							{
-								Booking = "booked",
-								FromISO8601 = DateTimeOffset.UtcNow.AddHours(-3),
+								//Booking = "booked",
+								//FromISO8601 = DateTimeOffset.UtcNow.AddHours(-3),
 								SportId = 6 // Tennis
 							}
 						)
@@ -74,12 +74,12 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			return Task.CompletedTask;
 		}
 
-		public IAsyncEnumerator<MessageContext<Translation>> GetAsyncEnumerator(CancellationToken token = default)
-		{
-			// Return new elements until cancellationToken is triggered.
-			return providerManagerFlow.GetAsyncEnumerator(token);
+		//public IAsyncEnumerator<MessageContext<Translation>> GetAsyncEnumerator(CancellationToken token = default)
+		//{
+		//	// Return new elements until cancellationToken is triggered.
+		//	return providerManagerFlow.GetAsyncEnumerator(token);
 
-		}
+		//}
 
 		#region IDisposable Support
 		private bool disposedValue = false; // To detect redundant calls
