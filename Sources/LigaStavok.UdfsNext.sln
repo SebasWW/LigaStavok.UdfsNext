@@ -34,6 +34,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Line.Clustering", "LigaStavok.UdfsNext.Line.Clustering\LigaStavok.UdfsNext.Line.Clustering.csproj", "{21CD5A14-94FF-42A0-8886-E7FE66B40A48}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BetRadar", "BetRadar", "{D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}"
+	ProjectSection(SolutionItems) = preProject
+		Documents.txt = Documents.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BetGenius", "BetGenius", "{EC9FD526-B664-444E-A594-41AC653AE1F0}"
 EndProject
@@ -102,6 +105,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Provider.BetRadar.Host", "LigaStavok.UdfsNext.Provider.BetRadar.Host\LigaStavok.UdfsNext.Provider.BetRadar.Host.csproj", "{4903F2C8-42B1-4110-8D8E-7026C78682D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Provider.BetRadar.Orleans.Console", "LigaStavok.UdfsNext.Provider.BetRadar.Orleans.Console\LigaStavok.UdfsNext.Provider.BetRadar.Orleans.Console.csproj", "{65B203DF-290A-413F-8E5A-F354BC6CF7FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.RabbitMQ", "LigaStavok.RabbitMQ\LigaStavok.RabbitMQ.csproj", "{16EB90DC-7095-497E-83A3-D81D584E630B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -350,6 +355,12 @@ Global
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16EB90DC-7095-497E-83A3-D81D584E630B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -399,6 +410,7 @@ Global
 		{F0C109F0-0EDC-41B4-873D-0C2F24CED0DB} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{4903F2C8-42B1-4110-8D8E-7026C78682D2} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
+		{16EB90DC-7095-497E-83A3-D81D584E630B} = {DD1D0D24-C27B-4CB5-9DAA-67688C93E06A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}

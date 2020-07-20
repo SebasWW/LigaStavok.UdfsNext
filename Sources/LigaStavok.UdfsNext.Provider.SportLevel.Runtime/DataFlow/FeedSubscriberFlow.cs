@@ -18,6 +18,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 	public class FeedSubscriberFlow
 	{
 		int maxDegreeOfParallelism = 100;
+		private TranslationsResponse oldTranslations;
 
 		private readonly ILogger<FeedManager> logger;
 		private readonly IMessageDumper messageDumper;
@@ -179,7 +180,19 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, $"HttpRequestMessage execution error. ContextId: {messageContext.IncomingId}");
+				if (oldTranslations != null)
+				{
+					logger.LogWarning(ex, $"Translation list retrieving error. Using cache... ContextId: {messageContext.IncomingId}");
+
+					// sending from cache
+					foreach (var item in oldTranslations)
+					{
+						translationSubscriptionBlock.Post(messageContext.Next(item));
+					}
+				}
+				else
+					logger.LogError(ex, $"Translation list retrieving error. ContextId: {messageContext.IncomingId}");
+
 				return Array.Empty<MessageContext<HttpResponseMessage, TranslationSubscription>>();
 			}
 		}
@@ -212,6 +225,9 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			{
 				var translations = JsonConvert.DeserializeObject<TranslationsResponse>(messageContext.Message);
 				if (translations == null) throw new Exception("Empty response.");
+
+				// Cache for next api errors case
+				oldTranslations = translations;
 
 				return translations
 					//.Where(t => t.State != "finished" && t.State != "cancelled")
@@ -266,6 +282,5 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 				return Task.CompletedTask;
 			}
 		}
-
 	}
 }
