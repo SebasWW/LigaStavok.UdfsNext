@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration
+namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
 {
 	public class AdapterMessages
 	{

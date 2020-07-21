@@ -1,9 +1,7 @@
 ﻿using LigaStavok.UdfsNext.Configuration;
-using LigaStavok.UdfsNext.Dumps.Configuration;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration
+namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
 {
 	public class ServiceConfiguration
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LigaStavok.UdfsNext.Dumps.Configuration;
+using LigaStavok.UdfsNext.Configuration;
 
 namespace LigaStavok.UdfsNext.Dumps.FileSystem
 {

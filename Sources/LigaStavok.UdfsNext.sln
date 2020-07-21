@@ -108,6 +108,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Provide
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.RabbitMQ", "LigaStavok.RabbitMQ\LigaStavok.RabbitMQ.csproj", "{16EB90DC-7095-497E-83A3-D81D584E630B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests", "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests.csproj", "{9200B1E4-EBD2-4277-AC94-7DC289523CEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BetRadar|Any CPU = BetRadar|Any CPU
@@ -361,6 +363,12 @@ Global
 		{16EB90DC-7095-497E-83A3-D81D584E630B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16EB90DC-7095-497E-83A3-D81D584E630B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16EB90DC-7095-497E-83A3-D81D584E630B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -411,6 +419,7 @@ Global
 		{4903F2C8-42B1-4110-8D8E-7026C78682D2} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{16EB90DC-7095-497E-83A3-D81D584E630B} = {DD1D0D24-C27B-4CB5-9DAA-67688C93E06A}
+		{9200B1E4-EBD2-4277-AC94-7DC289523CEC} = {32221FEF-E53D-4BCB-B865-5009F5A6A0E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}

@@ -1,4 +1,4 @@
-﻿namespace LigaStavok.UdfsNext.Dumps.Configuration
+﻿namespace LigaStavok.UdfsNext.Configuration
 {
 	public class SqlServerDumpConfiguration
 	{

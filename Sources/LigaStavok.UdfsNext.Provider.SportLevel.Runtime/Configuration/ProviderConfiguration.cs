@@ -14,5 +14,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
 		public string WebApiUrl { get; set; }
 
 		public TimeSpan MetaRefreshInterval { get;  set; }
+
+		public decimal Margin { get; set; }
 	}
 }

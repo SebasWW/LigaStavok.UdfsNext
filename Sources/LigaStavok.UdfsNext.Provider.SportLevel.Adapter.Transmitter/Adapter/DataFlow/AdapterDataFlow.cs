@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Dumps;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;

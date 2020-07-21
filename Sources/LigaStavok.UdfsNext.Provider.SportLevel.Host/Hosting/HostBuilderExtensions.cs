@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using LigaStavok.UdfsNext.Dumps.DependencyInjection;
+using LigaStavok.UdfsNext.DependencyInjection;
 using LigaStavok.UdfsNext.Dumps.FileSystem;
 using LigaStavok.UdfsNext.Dumps.SqlServer;
 using LigaStavok.UdfsNext.Hosting;
-using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
@@ -60,6 +59,13 @@ namespace Microsoft.Extensions.Hosting
 									{
 										options.UserName = configuration.Provider.UserName;
 										options.Password = configuration.Provider.Password;
+									}
+								);
+
+								builder.ConfigureFeedSubscriber(
+									options =>
+									{
+										options.Margin = configuration.Provider.Margin;
 									}
 								);
 

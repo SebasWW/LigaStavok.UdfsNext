@@ -1,5 +1,5 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Dumps.DependencyInjection;
+using LigaStavok.UdfsNext.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

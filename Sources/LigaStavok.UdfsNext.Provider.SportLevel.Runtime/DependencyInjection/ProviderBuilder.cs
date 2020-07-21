@@ -28,6 +28,11 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			services.Configure<HttpClientManagerOptions>(action);
 		}
 
+		public void ConfigureFeedSubscriber(Action<FeedSubscriberOptions> action)
+		{
+			services.Configure<FeedSubscriberOptions>(action);
+		}
+
 		public void AddWebSocketClient(Action<WebSocketClientOptions> action)
 		{
 			services.AddWebSocketClient(action);

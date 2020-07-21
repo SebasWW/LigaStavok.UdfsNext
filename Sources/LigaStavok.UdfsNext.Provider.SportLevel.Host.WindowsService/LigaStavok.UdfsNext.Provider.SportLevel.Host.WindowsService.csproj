@@ -6,6 +6,7 @@
 
 		<ServerGarbageCollection>true</ServerGarbageCollection>
 		<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+		<AssemblyName>LigaStavok.UdfsNext.Provider.SportLevel.Host.WindowsService</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

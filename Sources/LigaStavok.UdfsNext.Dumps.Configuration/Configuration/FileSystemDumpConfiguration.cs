@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LigaStavok.UdfsNext.Dumps.Configuration
+namespace LigaStavok.UdfsNext.Configuration
 {
 	public class FileSystemDumpConfiguration
 	{ 

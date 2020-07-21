@@ -1,7 +1,6 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Hosting;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
-using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.StartupTasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

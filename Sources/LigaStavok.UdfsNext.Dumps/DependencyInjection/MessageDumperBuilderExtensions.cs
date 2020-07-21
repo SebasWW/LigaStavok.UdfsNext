@@ -4,7 +4,7 @@ using System.Text;
 using LigaStavok.UdfsNext.Dumps.FileSystem;
 using LigaStavok.UdfsNext.Dumps.SqlServer;
 
-namespace LigaStavok.UdfsNext.Dumps.DependencyInjection
+namespace LigaStavok.UdfsNext.DependencyInjection
 {
 	public static class MessageDumperBuilderExtensions
 	{

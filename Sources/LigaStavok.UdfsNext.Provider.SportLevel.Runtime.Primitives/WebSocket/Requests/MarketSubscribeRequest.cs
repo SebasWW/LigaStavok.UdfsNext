@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Requests
 {
@@ -12,5 +13,9 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Requests
 		{
 			Feed = FEED_TYPE;
 		}
+
+		[JsonProperty("params")]
+		public MarketSubscribeRequestParameters Parameters { get; } = new MarketSubscribeRequestParameters();
+
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration
+namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
 {
 	public class MessageConfiguration
 	{

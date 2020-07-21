@@ -11,6 +11,7 @@ using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Responses;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
@@ -21,6 +22,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private TranslationsResponse oldTranslations;
 
 		private readonly ILogger<FeedManager> logger;
+		private readonly FeedSubscriberOptions options;
 		private readonly IMessageDumper messageDumper;
 		private readonly TransformManyBlock<MessageContext<TranslationRequest, TranslationSubscription>,
 			MessageContext<HttpRequestMessage, TranslationSubscription>> translationCreateRequestBlock;
@@ -43,6 +45,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 		public FeedSubscriberFlow(
 			ILogger<FeedManager> logger,
+			IOptions<FeedSubscriberOptions> options,
 			IMessageDumper messageDumper,
 			TranslationSubscriptionCollection subscriptions,
 
@@ -53,6 +56,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		)
 		{
 			this.logger = logger;
+			this.options = options.Value;
 			this.messageDumper = messageDumper;
 			this.subscriptions = subscriptions;
 			this.httpClientManager = httpClientManager;
@@ -260,6 +264,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 					if (state.Booking.BookedMarket)
 						feedManager.SendMarketSubscribeRequestAsync(
 							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.PersistableState }),
+							options,
 							CancellationToken.None
 						);
 				}

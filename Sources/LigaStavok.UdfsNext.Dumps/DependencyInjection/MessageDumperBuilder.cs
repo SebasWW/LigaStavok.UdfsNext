@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using LigaStavok.UdfsNext.Dumps;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LigaStavok.UdfsNext.Dumps.DependencyInjection
+namespace LigaStavok.UdfsNext.DependencyInjection
 {
 	public class MessageDumperBuilder
 	{

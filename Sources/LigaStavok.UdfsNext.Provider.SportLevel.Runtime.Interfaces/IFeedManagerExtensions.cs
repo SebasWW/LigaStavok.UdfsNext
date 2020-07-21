@@ -16,10 +16,17 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
         public static Task SendMarketSubscribeRequestAsync(
             this IFeedManager subscriptionManager,
             MessageContext<TranslationSubscriptionRequest> messageContext,
+            FeedSubscriberOptions options,
             CancellationToken cancellationToken
         )
         {         
-            var request = new MarketSubscribeRequest() { TranslationId = messageContext.Message.Id, LastEventNumber = messageContext.Message.State.LastMarketMessageId };
+            var request = new MarketSubscribeRequest() 
+            { 
+                TranslationId = messageContext.Message.Id, 
+                LastEventNumber = messageContext.Message.State.LastMarketMessageId,
+            };
+            request.Parameters.Margin = options.Margin;
+
             return subscriptionManager.SendAsync(messageContext.Next<IWebSocketRequest>(request), cancellationToken);
         }
 

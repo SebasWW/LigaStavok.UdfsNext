@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
 using Microsoft.Extensions.Logging;

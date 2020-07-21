@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Configuration;
+using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
