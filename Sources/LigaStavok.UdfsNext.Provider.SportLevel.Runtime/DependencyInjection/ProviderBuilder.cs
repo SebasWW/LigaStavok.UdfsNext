@@ -1,41 +1,93 @@
 ﻿using System;
+using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
+using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
+using LigaStavok.UdfsNext.Providers;
 using LigaStavok.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel
+namespace LigaStavok.UdfsNext.Provider.SportLevel.DependencyInjection
 {
-	public class ProviderBuilder
+	public class ProviderBuilder : IProviderBuilder
 	{
-		private readonly IServiceCollection services;
+		public IServiceCollection ServiceCollection { get; }
 
 		public ProviderBuilder(IServiceCollection services)
 		{
-			this.services = services;
+			ServiceCollection = services;
+
+
+			// WebSocket
+			services.AddSingleton<IWebSocketMessageParser, WebSocketMessageParser>();
+
+			// WebApi
+			services.AddSingleton<IHttpResponseMessageParser, HttpResponseMessageParser>();
+			services.AddSingleton<IHttpRequestMessageFactory, HttpRequestMessageFactory>();
+
+			//services.AddSingleton<HttpClientManager>();
+			services.AddHttpClient<HttpClientManager>(
+				(provider, httpClient) =>
+				{
+					// For sample purposes, assume TodoClient is used in the context of an incoming request.
+					//var httpRequest = provider.GetRequiredService<IHttpContextAccessor>().HttpContext.Request;
+
+					//httpClient.BaseAddress = new Uri(UriHelper.BuildAbsolute(httpRequest.Scheme, httpRequest.Host, httpRequest.PathBase));
+					//httpClient.Timeout = TimeSpan.FromSeconds(5);
+				}
+				).AddPolicyHandler(
+					HttpPolicyExtensions
+						.HandleTransientHttpError()
+						.WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(i * 2))
+				);
+
+			// Primitives
+			services.AddSingleton<TranslationSubscriptionCollection>();
+
+			// Flow
+			services.AddSingleton<FeedListenerFlow>();
+			services.AddSingleton<FeedSubscriberFlow>();
+			services.AddSingleton<ProviderManagerFlow>();
+
+			// Runtime
+			services.AddSingleton<IProviderManager, ProviderManager>();
+			services.AddSingleton<IFeedManager, FeedManager>();
+			services.AddSingleton<IFeedListener, FeedListener>();
+			services.AddSingleton<IFeedSubscriber, FeedSubscriber>();
+
+			// Services
+			services.AddHostedService<FeedListenerService>();
+
 		}
 
-		public void ConfigureProviderManager(Action<ProviderManagerOptions> action)
+		public IProviderBuilder ConfigureProviderManager(Action<ProviderManagerOptions> action)
 		{
-			services.Configure<ProviderManagerOptions>(action);
+			ServiceCollection.Configure<ProviderManagerOptions>(action);
+			return this;
 		}
 
-		public void ConfigureFeedListener(Action<FeedListenerOptions> action)
+		public IProviderBuilder ConfigureFeedListener(Action<FeedListenerOptions> action)
 		{
-			services.Configure<FeedListenerOptions>(action);
+			ServiceCollection.Configure<FeedListenerOptions>(action);
+			return this;
 		}
-		public void ConfigureHttpClientManager(Action<HttpClientManagerOptions> action)
+		public IProviderBuilder ConfigureHttpClientManager(Action<HttpClientManagerOptions> action)
 		{
-			services.Configure<HttpClientManagerOptions>(action);
-		}
-
-		public void ConfigureFeedSubscriber(Action<FeedSubscriberOptions> action)
-		{
-			services.Configure<FeedSubscriberOptions>(action);
+			ServiceCollection.Configure<HttpClientManagerOptions>(action);
+			return this;
 		}
 
-		public void AddWebSocketClient(Action<WebSocketClientOptions> action)
+		public IProviderBuilder ConfigureFeedSubscriber(Action<FeedSubscriberOptions> action)
 		{
-			services.AddWebSocketClient(action);
+			ServiceCollection.Configure<FeedSubscriberOptions>(action);
+			return this;
+		}
+
+		public IProviderBuilder AddWebSocketClient(Action<WebSocketClientOptions> action)
+		{
+			ServiceCollection.AddWebSocketClient(action);
+			return this;
 		}
 	}
 }
