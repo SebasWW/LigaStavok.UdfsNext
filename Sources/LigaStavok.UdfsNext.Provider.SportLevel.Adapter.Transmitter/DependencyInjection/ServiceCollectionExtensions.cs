@@ -1,4 +1,5 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel;
+﻿using LigaStavok.UdfsNext.Provider.Adapter;
+using LigaStavok.UdfsNext.Provider.SportLevel;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Adapters;
 using LigaStavok.UdfsNext.Provider.SportLevel.Adapter.DataFlow;
@@ -23,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ITransmitterCommandsFactory, TransmitterCommandsFactory>();
             services.AddSingleton<AdapterDataFlow>();
             services.AddSingleton<IProviderAdapter, TransmitterAdapter>();
-            services.AddSingleton<ITransmitterHost, TransmitterAdapterHost>();
+            services.AddSingleton<ITransmitterAdapterHost, TransmitterAdapterHost>();
 
             // Service
             services.AddHostedService<TransmitterAdapterHostService>();

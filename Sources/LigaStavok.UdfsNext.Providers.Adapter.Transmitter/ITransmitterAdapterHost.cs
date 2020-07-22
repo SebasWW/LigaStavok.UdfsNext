@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Udfs.Transmitter.Messages.Interfaces;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
+namespace LigaStavok.UdfsNext.Provider.Adapter
 {
-	public interface ITransmitterHost
+	public interface ITransmitterAdapterHost
 	{
 		void SendCommand(ITransmitterCommand transmitterCommand);
 		Task StartAsync(CancellationToken cancellationToken);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Dumps;
-using LigaStavok.UdfsNext.Provider.SportLevel.Adapter;
+using LigaStavok.UdfsNext.Provider.Adapter;
 using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
@@ -20,7 +20,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.DataFlow
 
 		private readonly ILogger<AdapterDataFlow> logger;
 		private readonly IMessageDumper messageDumper;
-		private readonly ITransmitterHost transmitterHost;
+		private readonly ITransmitterAdapterHost transmitterHost;
 		private readonly TranslationSubscriptionCollection subscriptions;
 		private readonly ITransmitterCommandsFactory transmitterCommandsFactory;
 		private readonly AdapterConfiguration adapterConfiguration;
@@ -36,7 +36,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter.DataFlow
 		public AdapterDataFlow(
 			ILogger<AdapterDataFlow> logger,
 			IMessageDumper messageDumper,
-			ITransmitterHost transmitterHost,
+			ITransmitterAdapterHost transmitterHost,
 			TranslationSubscriptionCollection subscriptions,
 			ITransmitterCommandsFactory transmitterCommandsFactory,
 			AdapterConfiguration adapterConfiguration

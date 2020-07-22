@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
+namespace LigaStavok.UdfsNext.Provider.Adapter
 {
 	public class TransmitterAdapterHostService : IHostedService
 	{
-		private readonly ITransmitterHost transmitterHost;
+		private readonly ITransmitterAdapterHost transmitterHost;
 
 		public TransmitterAdapterHostService(
-			ITransmitterHost transmitterHost	
+			ITransmitterAdapterHost transmitterHost	
 		)
 		{
 			this.transmitterHost = transmitterHost;

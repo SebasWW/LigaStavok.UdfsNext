@@ -5,9 +5,9 @@ using NLog;
 using Udfs.Transmitter;
 using Udfs.Transmitter.Messages.Interfaces;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Adapter
+namespace LigaStavok.UdfsNext.Provider.Adapter
 {
-	public class TransmitterAdapterHost : ITransmitterHost
+	public class TransmitterAdapterHost : ITransmitterAdapterHost
 	{
 		private readonly TransmitterService transmitterService;
 
