@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi;
-using LigaStavok.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.DependencyInjection
@@ -31,10 +30,10 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DependencyInjection
 			return providerBuilder;
 		}
 
-		public static IProviderBuilder AddWebSocketClient(this IProviderBuilder providerBuilder, Action<WebSocketClientOptions> action)
-		{
-			providerBuilder.ServiceCollection.AddWebSocketClient(action);
-			return providerBuilder;
-		}
+		//public static IProviderBuilder ConfigureRabbitMQ(this IProviderBuilder providerBuilder, Action<WebSocketClientOptions> action)
+		//{
+		//	providerBuilder.ServiceCollection.Configure(action);
+		//	return providerBuilder;
+		//}
 	}
 }
