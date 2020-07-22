@@ -10,6 +10,7 @@ using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Responses;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -17,13 +18,12 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
 	public class ProviderManagerFlow //: IAsyncEnumerable<MessageContext<Translation>>
 	{
-		int maxDegreeOfParallelism = 100;
+		int maxDegreeOfParallelism = 10;
 
 		private readonly ILogger<ProviderManagerFlow> logger;
 		private readonly IMessageDumper messageDumper;
 		private readonly HttpClientManager httpClientManager;
 		private readonly IHttpRequestMessageFactory httpRequestMessageFactory;
-		private readonly IHttpResponseMessageParser httpResponseMessageParser;
 		private readonly ITranslationDistributer translationDistributer;
 		private readonly TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>> createHttpRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>> execHttpRequestBlock;
@@ -39,7 +39,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 			HttpClientManager httpClientManager,
 			IHttpRequestMessageFactory httpRequestMessageFactory,
-			IHttpResponseMessageParser httpResponseMessageParser,
 			ITranslationDistributer translationDistributer
 		)
 		{
@@ -47,7 +46,6 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			this.messageDumper = messageDumper;
 			this.httpClientManager = httpClientManager;
 			this.httpRequestMessageFactory = httpRequestMessageFactory;
-			this.httpResponseMessageParser = httpResponseMessageParser;
 			this.translationDistributer = translationDistributer;
 			createHttpRequestBlock
 				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(
@@ -184,7 +182,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		{
 			try
 			{
-				return translationDistributer.Distribute(messageContext);
+				return translationDistributer.Distribute(messageContext.Message.Id);
 			}
 			catch (Exception ex)
 			{

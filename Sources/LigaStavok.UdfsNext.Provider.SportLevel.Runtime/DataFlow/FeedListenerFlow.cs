@@ -146,11 +146,16 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 						break;
 
 					case SubscribeResponseMessage msg:
+
+						dumpMessage.EventId = msg.TranslationId;
 						messageDumper.Write(messageContext.Next(dumpMessage));
+						
 						if (msg.Status != "success") throw new Exception("Can't subrcribe translation.");
 						break;
 
 					case SubscribeHistorySentMessage msg:
+
+						dumpMessage.EventId = msg.TranslationId;
 						messageDumper.Write(messageContext.Next(dumpMessage));
 						break;
 

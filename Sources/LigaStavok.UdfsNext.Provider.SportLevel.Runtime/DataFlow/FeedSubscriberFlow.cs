@@ -18,7 +18,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 {
 	public class FeedSubscriberFlow
 	{
-		int maxDegreeOfParallelism = 100;
+		int maxDegreeOfParallelism = 10;
 		private TranslationsResponse oldTranslations;
 
 		private readonly ILogger<FeedManager> logger;

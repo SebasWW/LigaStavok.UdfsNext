@@ -1,7 +1,7 @@
 ﻿using Orleans;
 using System.Threading.Tasks;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
+namespace LigaStavok.UdfsNext.Providers.Orleans
 {
 	public interface IProviderManagerGrain : IGrainWithIntegerKey
 	{

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Orleans
+namespace LigaStavok.UdfsNext.Providers.Orleans
 {
 	public interface IFeedSubscriberGrain : IGrainWithIntegerKey
 	{

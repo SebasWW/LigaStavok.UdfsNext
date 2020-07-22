@@ -7,12 +7,16 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="nlog.config" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
@@ -24,12 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Orleans\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="nlog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

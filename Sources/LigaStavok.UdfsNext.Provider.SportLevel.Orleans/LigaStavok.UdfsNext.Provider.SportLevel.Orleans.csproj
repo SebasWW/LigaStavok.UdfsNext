@@ -25,10 +25,11 @@
     <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.csproj" />
-    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Orleans.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Primitives.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Orleans\LigaStavok.UdfsNext.Providers.Orleans.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

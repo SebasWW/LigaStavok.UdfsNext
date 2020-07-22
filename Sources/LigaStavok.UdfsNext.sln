@@ -110,6 +110,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.RabbitMQ", "Liga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests", "LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests\LigaStavok.UdfsNext.Provider.SportLevel.Adapter.Transmitter.Tests.csproj", "{9200B1E4-EBD2-4277-AC94-7DC289523CEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Providers.Orleans", "LigaStavok.UdfsNext.Providers.Orleans\LigaStavok.UdfsNext.Providers.Orleans.csproj", "{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LigaStavok.UdfsNext.Providers.Runtime.Interfaces", "LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj", "{7012C79F-97F1-4C29-A66E-56FCA36479A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BetRadar|Any CPU = BetRadar|Any CPU
@@ -369,6 +373,18 @@ Global
 		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9200B1E4-EBD2-4277-AC94-7DC289523CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.BetRadar|Any CPU.ActiveCfg = Debug|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.BetRadar|Any CPU.Build.0 = Debug|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -420,6 +436,8 @@ Global
 		{65B203DF-290A-413F-8E5A-F354BC6CF7FB} = {D4516FBE-81B6-4D2C-98E5-DBAD9D49D0E0}
 		{16EB90DC-7095-497E-83A3-D81D584E630B} = {DD1D0D24-C27B-4CB5-9DAA-67688C93E06A}
 		{9200B1E4-EBD2-4277-AC94-7DC289523CEC} = {32221FEF-E53D-4BCB-B865-5009F5A6A0E8}
+		{6B647298-E0A1-4A10-BC9F-A5DA2169FFBB} = {4C7AAE14-8173-4191-A2C7-CACADB130ED0}
+		{7012C79F-97F1-4C29-A66E-56FCA36479A1} = {4C7AAE14-8173-4191-A2C7-CACADB130ED0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B97028E8-BC30-4105-87BB-2ED0BB50B276}

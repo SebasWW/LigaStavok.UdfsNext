@@ -1,7 +1,8 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Hosting;
 using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
-using LigaStavok.UdfsNext.Provider.SportLevel.Orleans.StartupTasks;
+using LigaStavok.UdfsNext.Providers.Orleans;
+using LigaStavok.UdfsNext.Providers.Orleans.StartupTasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
@@ -23,17 +24,13 @@ namespace Microsoft.Extensions.Hosting
 					siloBuilder.ConfigureServices(
 						services =>
 						{
-							services.AddSportLevelProviderOrleans(
-								options =>
-								{
-
-								}
-							);
+							services.AddSportLevelProviderOrleans();
 						}
 					);
 
 					// Grains 
 					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(ProviderManagerGrain).Assembly).WithReferences());
+					siloBuilder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(FeedSubscriberGrain).Assembly).WithReferences());
 
 					// Tasks
 					siloBuilder.AddStartupTask<ProviderManagerStartupTask>();

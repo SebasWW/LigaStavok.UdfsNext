@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

@@ -21,6 +21,7 @@
     <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.SportLevel.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj" />
     <ProjectReference Include="..\LigaStavok.WebSocket\LigaStavok.Websocket.csproj" />
   </ItemGroup>
 

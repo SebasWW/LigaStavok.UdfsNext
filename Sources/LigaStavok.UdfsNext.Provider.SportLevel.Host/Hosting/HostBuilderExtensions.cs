@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Orleans.Hosting;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -33,7 +34,8 @@ namespace Microsoft.Extensions.Hosting
 						builder.AddJsonFile("appsettings.json");
 					}
 				)
-				.ConfigureServices((context, services) =>
+				.ConfigureServices(
+					(context, services) =>
 					{
 						configuration = context.Configuration.Get<ServiceConfiguration>();
 
@@ -127,6 +129,21 @@ namespace Microsoft.Extensions.Hosting
 					siloBuilder =>
 					{
 						siloBuilder.Configure(configuration.Cluster);
+						//siloBuilder.ConfigureLogging(configureLogging => { configureLogging.AddNLog(); });
+						//siloBuilder.ConfigureServices(
+						//	(context, services)=>
+						//	{
+						//		services
+						//			// Logging
+						//			.AddLogging(
+						//				configure =>
+						//				{
+						//					configure.AddProvider(new NLogLoggerProvider());
+						//				}
+						//			);
+						//	}
+						//)
+						;
 					}
 				);
 			//.ConfigureWebHostDefaults
