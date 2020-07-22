@@ -5,4 +5,8 @@
     <RootNamespace>LigaStavok.UdfsNext.Provider.BetRadar</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
+  </ItemGroup>
+
 </Project>

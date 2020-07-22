@@ -4,8 +4,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Requests;
+using LigaStavok.UdfsNext.Providers;
 using Newtonsoft.Json;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
@@ -15,7 +17,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
         public static Task SendMarketSubscribeRequestAsync(
             this IFeedManager subscriptionManager,
-            MessageContext<TranslationSubscriptionRequest> messageContext,
+            MessageContext<TranslationSubscriptionRequest<TranslationState>> messageContext,
             FeedSubscriberOptions options,
             CancellationToken cancellationToken
         )
@@ -32,7 +34,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 
         public static Task SendDataSubscribeRequestAsync(
             this IFeedManager subscriptionManager,
-            MessageContext<TranslationSubscriptionRequest> messageContext,
+            MessageContext<TranslationSubscriptionRequest<TranslationState>> messageContext,
             CancellationToken cancellationToken
         )
         {

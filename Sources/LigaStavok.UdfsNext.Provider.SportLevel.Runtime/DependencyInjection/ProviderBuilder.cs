@@ -1,5 +1,6 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Providers;
@@ -54,7 +55,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DependencyInjection
 			services.AddSingleton<IProviderManager, ProviderManager>();
 			services.AddSingleton<IFeedManager, FeedManager>();
 			services.AddSingleton<IFeedListener, FeedListener>();
-			services.AddSingleton<IFeedSubscriber, FeedSubscriber>();
+			services.AddSingleton<IFeedSubscriber<TranslationState>, FeedSubscriber>();
 
 			// Services
 			services.AddHostedService<FeedListenerService>();

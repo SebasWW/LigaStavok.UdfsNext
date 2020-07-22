@@ -1,6 +1,6 @@
-﻿using LigaStavok.UdfsNext.Provider.SportLevel.State;
+﻿using LigaStavok.UdfsNext.Provider.BetRadar.State;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel
+namespace LigaStavok.UdfsNext.Provider.BetRadar
 {
 	public class TranslationSubscriptionRequest
 	{

@@ -5,4 +5,28 @@
     <RootNamespace>LigaStavok.UdfsNext.Provider.BetRadar</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps.Configuration\LigaStavok.UdfsNext.Dumps.Configuration.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
+  </ItemGroup>
+
 </Project>

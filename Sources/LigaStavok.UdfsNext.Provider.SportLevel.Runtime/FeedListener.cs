@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
+using LigaStavok.UdfsNext.Providers;
 using LigaStavok.WebSocket;
 using Microsoft.Extensions.Options;
 
@@ -12,14 +14,14 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 		private readonly FeedListenerFlow feedListenerFlow;
 		private readonly IWebSocketClient webSocketClient;
 		private readonly IFeedManager feedManager;
-		private readonly IFeedSubscriber feedSubscriber;
+		private readonly IFeedSubscriber<TranslationState> feedSubscriber;
 		private readonly FeedListenerOptions options;
 
 		public FeedListener(
 			FeedListenerFlow feedListenerFlow,
 			IWebSocketClient webSocketClient,
 			IFeedManager feedManager,
-			IFeedSubscriber feedSubscriber,
+			IFeedSubscriber<TranslationState> feedSubscriber,
 			IOptions<FeedListenerOptions> options
 		)
 		{

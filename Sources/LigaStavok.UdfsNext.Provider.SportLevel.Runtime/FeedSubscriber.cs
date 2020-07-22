@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.SportLevel.DataFlow;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
-using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages.Data;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 
 namespace LigaStavok.UdfsNext.Provider.SportLevel
 {
-	public class FeedSubscriber : IFeedSubscriber
+	public class FeedSubscriber : IFeedSubscriber<TranslationState>
 	{
 		private readonly ILogger<FeedSubscriber> logger;
 		private readonly FeedSubscriberFlow feedSubscriptionFlow;
@@ -109,7 +107,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel
 			}
 		}
 
-		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, Action saveStateAction, CancellationToken cancellationToken)
+		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest<TranslationState>> messageContext, Action saveStateAction, CancellationToken cancellationToken)
 		{
 			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription(saveStateAction) { PersistableState = messageContext.Message.State });
 			return Task.CompletedTask;

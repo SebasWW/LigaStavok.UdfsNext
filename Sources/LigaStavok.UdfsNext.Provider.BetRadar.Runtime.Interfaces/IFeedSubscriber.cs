@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel
+namespace LigaStavok.UdfsNext.Provider.BetRadar
 {
 	public interface IFeedSubscriber
 	{

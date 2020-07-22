@@ -6,10 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Dumps;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Requests;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Responses;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -257,13 +259,13 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 
 					if (state.Booking.BookedData)
 						feedManager.SendDataSubscribeRequestAsync(
-							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.PersistableState }),
+							messageContext.Next(new TranslationSubscriptionRequest<TranslationState>() { Id = translation.Id, State = state.PersistableState }),
 							CancellationToken.None
 						);
 
 					if (state.Booking.BookedMarket)
 						feedManager.SendMarketSubscribeRequestAsync(
-							messageContext.Next(new TranslationSubscriptionRequest() { Id = translation.Id, State = state.PersistableState }),
+							messageContext.Next(new TranslationSubscriptionRequest<TranslationState>() { Id = translation.Id, State = state.PersistableState }),
 							options,
 							CancellationToken.None
 						);

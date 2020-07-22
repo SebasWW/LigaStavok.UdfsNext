@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LigaStavok.UdfsNext.Provider.SportLevel.State;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel
+namespace LigaStavok.UdfsNext.Providers
 {
 	public class TranslationUnsubscriptionRequest
 	{

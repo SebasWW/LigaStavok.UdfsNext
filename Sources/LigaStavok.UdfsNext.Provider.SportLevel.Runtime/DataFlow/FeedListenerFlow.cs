@@ -5,9 +5,11 @@ using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks.Dataflow;
 using LigaStavok.UdfsNext.Dumps;
+using LigaStavok.UdfsNext.Provider.SportLevel.State;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebApi.Messages;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket;
 using LigaStavok.UdfsNext.Provider.SportLevel.WebSocket.Messages;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -19,7 +21,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 		private readonly IMessageDumper messageDumper;
 		private readonly IWebSocketMessageParser webSocketMessageParser;
 		private readonly IProviderAdapter providerAdapter;
-		private readonly IFeedSubscriber feedSubscriber;
+		private readonly IFeedSubscriber<TranslationState> feedSubscriber;
 		private readonly TranslationSubscriptionCollection subscriptions;
 		private readonly TransformManyBlock<MessageContext<string>, MessageContext<object, string>> parseFeedMessageTransformManyBlock;
 		private readonly ActionBlock<MessageContext<object, string>> messageRouterBlock;
@@ -33,7 +35,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DataFlow
 			IMessageDumper messageDumper,
 			IWebSocketMessageParser webSocketMessageParser,
 			IProviderAdapter providerAdapter,
-			IFeedSubscriber feedSubscriber,
+			IFeedSubscriber<TranslationState> feedSubscriber,
 			TranslationSubscriptionCollection subscriptions
 		)
 		{

@@ -32,4 +32,8 @@
     <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StartupTasks\" />
+  </ItemGroup>
+
 </Project>
