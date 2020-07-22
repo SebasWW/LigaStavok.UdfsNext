@@ -60,34 +60,5 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.DependencyInjection
 			services.AddHostedService<FeedListenerService>();
 
 		}
-
-		public IProviderBuilder ConfigureProviderManager(Action<ProviderManagerOptions> action)
-		{
-			ServiceCollection.Configure<ProviderManagerOptions>(action);
-			return this;
-		}
-
-		public IProviderBuilder ConfigureFeedListener(Action<FeedListenerOptions> action)
-		{
-			ServiceCollection.Configure<FeedListenerOptions>(action);
-			return this;
-		}
-		public IProviderBuilder ConfigureHttpClientManager(Action<HttpClientManagerOptions> action)
-		{
-			ServiceCollection.Configure<HttpClientManagerOptions>(action);
-			return this;
-		}
-
-		public IProviderBuilder ConfigureFeedSubscriber(Action<FeedSubscriberOptions> action)
-		{
-			ServiceCollection.Configure<FeedSubscriberOptions>(action);
-			return this;
-		}
-
-		public IProviderBuilder AddWebSocketClient(Action<WebSocketClientOptions> action)
-		{
-			ServiceCollection.AddWebSocketClient(action);
-			return this;
-		}
 	}
 }
