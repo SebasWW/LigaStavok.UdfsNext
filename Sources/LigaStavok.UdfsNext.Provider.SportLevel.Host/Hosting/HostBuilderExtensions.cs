@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Orleans.Hosting;
+using LigaStavok.UdfsNext.Provider.SportLevel.Hosting;
 
 namespace Microsoft.Extensions.Hosting
 {
@@ -35,6 +36,8 @@ namespace Microsoft.Extensions.Hosting
 						builder.AddJsonFile("appsettings.json");
 					}
 				)
+
+				// Infrastructure
 				.ConfigureServices(
 					(context, services) =>
 					{
@@ -77,6 +80,8 @@ namespace Microsoft.Extensions.Hosting
 						;
 					}
 				)
+
+				// Provider
 				.UseSportLevel(
 					providerHostBuilder =>
 					{
@@ -129,29 +134,16 @@ namespace Microsoft.Extensions.Hosting
 								;
 							}
 						);
-					}
-				)
-				.UseSportLevelProviderOrleans(
-					siloBuilder =>
-					{
-						siloBuilder.Configure(configuration.Cluster);
-						//siloBuilder.ConfigureLogging(configureLogging => { configureLogging.AddNLog(); });
-						//siloBuilder.ConfigureServices(
-						//	(context, services)=>
-						//	{
-						//		services
-						//			// Logging
-						//			.AddLogging(
-						//				configure =>
-						//				{
-						//					configure.AddProvider(new NLogLoggerProvider());
-						//				}
-						//			);
-						//	}
-						//)
-						;
+
+						providerHostBuilder.UseOrleans(
+							siloBuilder =>
+							{
+								siloBuilder.Configure(configuration.Cluster);
+							}
+						);
 					}
 				);
+
 			//.ConfigureWebHostDefaults
 			//.UseContentRoot(pathToContentRoot)
 			//.UseKestrel()
