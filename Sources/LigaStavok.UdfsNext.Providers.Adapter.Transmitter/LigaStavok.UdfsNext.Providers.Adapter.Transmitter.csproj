@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.6" />
     <PackageReference Include="NLog" Version="4.7.2" />
-    <PackageReference Include="Udfs.Transmitter" Version="20.7.17-76" />
+    <PackageReference Include="Udfs.Transmitter" Version="20.7.23-78" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 {
 	public sealed class RequestTournamentSchedule : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public string TournamentId { get; set; }
     }

@@ -2,7 +2,7 @@
 {
 	public sealed class RequestPlayerProfileRequest : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public string PlayerId { get; set; }
     }

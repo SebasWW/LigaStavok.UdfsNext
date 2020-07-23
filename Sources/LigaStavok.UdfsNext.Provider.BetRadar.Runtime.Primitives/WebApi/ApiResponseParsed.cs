@@ -7,7 +7,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
     {
 		public string EventId { get; set; }
 
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public object Response { get; set; }
 

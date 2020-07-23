@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
-using LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Configuration.Messages;
 using LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Converters;
 using LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Extensions;
+using LigaStavok.UdfsNext.Provider.BetRadar.Configuration.Messages;
 using LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ.Messages;
 using Microsoft.Extensions.Logging;
 using Udfs.Transmitter.DSL.GameEventStateDescription;
@@ -18,22 +18,26 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Adapters
 	public class OddsChangeAdapter : IOddsChangeAdapter
 	{
 		private readonly ILogger<OddsChangeAdapter> logger;
+		private readonly OddsChangeConfiguration oddsChangeConfiguration;
 
-		public OddsChangeAdapter(ILogger<OddsChangeAdapter> logger)
+		public OddsChangeAdapter(
+			ILogger<OddsChangeAdapter> logger,
+			OddsChangeConfiguration oddsChangeConfiguration
+		)
 		{
 			this.logger = logger;
+			this.oddsChangeConfiguration = oddsChangeConfiguration;
 		}
 
 		public IEnumerable<ITransmitterCommand> Adapt(
 			MessageContext<OddsChange> messageContext,
-			LineService lineService,
-			OddsChangeConfiguration config
+			LineService lineService 
 		)
 		{
 			var message = messageContext.Message;
 
 			// Ttl check
-			if (config.TtlEnabled && config.Ttl < TimeSpan.FromMilliseconds(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - message.Timestamp))
+			if (oddsChangeConfiguration.TtlEnabled && oddsChangeConfiguration.Ttl < TimeSpan.FromMilliseconds(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - message.Timestamp))
 			{
 				logger.LogWarning($"OddsChangeMessageExpired EventId={message.EventId} Pooduct={message.Product} IncomingId={messageContext.IncomingId}. StopGameEventBetsCommand command is executed.");
 
@@ -49,7 +53,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Adapters
 			}
 
 			// Adapt to CreateUpdateMarketsCommand
-			foreach (var item in ConstructCreateUpdateMarketsCommand(messageContext, config))
+			foreach (var item in ConstructCreateUpdateMarketsCommand(messageContext, oddsChangeConfiguration))
 			{
 				yield return item;
 			}

@@ -2,6 +2,6 @@
 {
 	public sealed class RequestTournaments : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
     }
 }

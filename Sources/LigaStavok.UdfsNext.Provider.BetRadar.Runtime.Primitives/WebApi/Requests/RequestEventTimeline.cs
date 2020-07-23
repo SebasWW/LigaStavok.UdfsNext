@@ -2,6 +2,6 @@
 {
 	public sealed class RequestEventTimeline : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
     }
 }

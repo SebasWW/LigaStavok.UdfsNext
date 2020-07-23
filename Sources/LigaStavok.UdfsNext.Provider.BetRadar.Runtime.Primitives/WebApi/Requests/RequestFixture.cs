@@ -2,6 +2,6 @@
 {
 	public sealed class RequestFixture : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 	}
 }

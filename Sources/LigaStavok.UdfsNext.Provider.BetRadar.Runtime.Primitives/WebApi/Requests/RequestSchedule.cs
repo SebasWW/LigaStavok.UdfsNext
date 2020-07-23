@@ -7,7 +7,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Requests
     {
         public DateTimeOffset Date  { get; set; }
 
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public ProductType ProductType { get; set; }
     }

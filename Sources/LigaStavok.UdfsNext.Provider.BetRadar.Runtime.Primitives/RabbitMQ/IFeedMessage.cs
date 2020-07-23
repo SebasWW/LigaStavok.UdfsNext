@@ -1,4 +1,4 @@
-﻿namespace Udfs.BetradarUnifiedFeed.Plugin.Abstractions
+﻿namespace LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ
 {
     public interface IFeedMessage
     {

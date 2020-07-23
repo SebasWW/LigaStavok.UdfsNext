@@ -2,6 +2,6 @@
 {
 	public sealed class RequestLiveSchedule : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
     }
 }

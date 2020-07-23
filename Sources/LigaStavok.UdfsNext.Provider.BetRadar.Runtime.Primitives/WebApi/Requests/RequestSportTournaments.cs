@@ -2,7 +2,7 @@
 {
 	public sealed class RequestSportTournaments : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public string SportId { get; set; }
     }

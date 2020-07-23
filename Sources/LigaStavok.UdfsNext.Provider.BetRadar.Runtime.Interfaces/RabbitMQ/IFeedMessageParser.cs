@@ -1,10 +1,9 @@
-﻿using LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ.Messages;
-using Udfs.Common.Messages;
+﻿using LigaStavok.UdfsNext;
 
-namespace Udfs.BetradarUnifiedFeed.Plugin.Abstractions
+namespace LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ
 {
-    public interface IFeedMessageParser
+	public interface IFeedMessageParser
     {
-        IFeedMessageParsingResult ParseFeedMessageText(IHaveHeader sourceMessage,string decodedText);
+        IFeedMessageParsingResult ParseFeedMessageText(MessageContext messageContext,string decodedText);
     }
 }

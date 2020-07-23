@@ -9,6 +9,7 @@ using LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ.Messages;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Udfs.Common.Primitives;
 using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter.DataFlow
@@ -125,7 +126,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter.DataFlow
 					messageContext.Next(
 						new AdaptMessage
 						{
-							Language = messageContext.Message.Language,
+							Language = messageContext.Message.Language.Code == "ru" ? Language.Russian : Language.English,
 							Message = messageContext.Message.Response,
 							LineService = messageContext.Message.ProductType.ToLineService()
 						}

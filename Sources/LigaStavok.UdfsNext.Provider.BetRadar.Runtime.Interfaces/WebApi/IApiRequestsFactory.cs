@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Messages;
 
-namespace Udfs.BetradarUnifiedFeed.Plugin.Abstractions
+namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Messages
 {
     public interface IApiRequestsFactory 
     {

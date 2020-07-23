@@ -1,7 +1,4 @@
-﻿using System;
-using LigaStavok.UdfsNext.Provider.BetRadar.WebApi;
-using LigaStavok.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.DependencyInjection
 {

@@ -2,7 +2,7 @@
 {
 	public sealed class RequestVariantMarketDescription : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public int MarketId { get; set; }
         

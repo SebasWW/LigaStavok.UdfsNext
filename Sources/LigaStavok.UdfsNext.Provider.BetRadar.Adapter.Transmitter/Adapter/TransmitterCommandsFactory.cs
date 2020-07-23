@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using Udfs.BetradarUnifiedFeed.Plugin.Abstractions;
+﻿using System;
+using System.Collections.Generic;
 using LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Adapters;
-using LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Configuration;
-using Udfs.Transmitter.Messages.Interfaces;
 using LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ.Messages;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Responses;
-using System;
+using Udfs.Transmitter.Messages.Interfaces;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter
 {
-    public sealed class TransmitterCommandsFactory : ITransmitterCommandsFactory
+	public sealed class TransmitterCommandsFactory : ITransmitterCommandsFactory
     {
-        private readonly AdapterConfiguration _adapterConfiguration;
+
 		private readonly IAliveAdapter aliveAdapter;
 		private readonly IBetCancelAdapter betCancelAdapter;
 		private readonly IBetCancelRollbackAdapter betCancelRollbackAdapter;
@@ -26,7 +24,6 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter
 		private readonly IScheduleAdapter scheduleAdapter;
 
 		public TransmitterCommandsFactory(
-            AdapterConfiguration adapterConfiguration,
 
             IAliveAdapter aliveAdapter,
             IBetCancelAdapter betCancelAdapter,
@@ -43,7 +40,6 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter
             IScheduleAdapter scheduleAdapter
         )
         {
-            _adapterConfiguration = adapterConfiguration;
 			this.aliveAdapter = aliveAdapter;
 			this.betCancelAdapter = betCancelAdapter;
 			this.betCancelRollbackAdapter = betCancelRollbackAdapter;
@@ -76,7 +72,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter
                 case BetStop betStop:
                     return betStopAdapter.Adapt(messageContext.Next(betStop));
                 case OddsChange oddsChange:
-                    return oddsChangeAdapter.Adapt(messageContext.Next(oddsChange), messageContext.Message.LineService, _adapterConfiguration.Messages.OddsChange);
+                    return oddsChangeAdapter.Adapt(messageContext.Next(oddsChange), messageContext.Message.LineService);
                 //case FixtureChange fixtureChange:
                 //        return new ITransmitterCommand[0];
 

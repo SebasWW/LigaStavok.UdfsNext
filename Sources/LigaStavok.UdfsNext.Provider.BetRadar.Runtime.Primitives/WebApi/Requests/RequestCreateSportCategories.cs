@@ -6,7 +6,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Requests
     public sealed class RequestCreateSportCategories : ApiCommandRequest
     {
 
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public string SportId { get; set; }
     }

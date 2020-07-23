@@ -2,7 +2,7 @@
 {
 	public sealed class RequestDirectVariantMarketDescription : ApiCommandRequest
     {
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
 
         public int MarketId { get; set; }
 

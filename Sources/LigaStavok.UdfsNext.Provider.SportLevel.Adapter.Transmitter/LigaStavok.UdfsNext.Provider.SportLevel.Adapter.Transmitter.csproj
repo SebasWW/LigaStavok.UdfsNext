@@ -14,7 +14,7 @@
     <PackageReference Include="NLog" Version="4.7.2" />
     <PackageReference Include="SimpleInjector" Version="4.7.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
-    <PackageReference Include="Udfs.Transmitter" Version="20.7.17-76" />
+    <PackageReference Include="Udfs.Transmitter" Version="20.7.23-78" />
   </ItemGroup>
 
   <ItemGroup>

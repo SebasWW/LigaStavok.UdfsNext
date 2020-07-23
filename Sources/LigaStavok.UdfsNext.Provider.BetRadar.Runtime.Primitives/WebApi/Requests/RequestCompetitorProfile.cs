@@ -4,6 +4,6 @@
     {
         public string CompetitorId { get; set; }
 
-        public Language Language { get; set; }
+        public Lang Language { get; set; }
     }
 }
