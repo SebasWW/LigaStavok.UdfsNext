@@ -2,6 +2,6 @@
 {
     public interface IApiResponseParsingResult
     {
-        DumpMeta GetDumpMeta();
+        //DumpMeta GetDumpMeta();
     }
 }

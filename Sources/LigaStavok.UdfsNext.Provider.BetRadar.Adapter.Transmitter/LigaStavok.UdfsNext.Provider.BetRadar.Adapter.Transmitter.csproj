@@ -2,7 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>LigaStavok.UdfsNext.Provider.BetRadar.Adapter</RootNamespace>
+    <RootNamespace>LigaStavok.UdfsNext.Provider.BetRadar</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+    <PackageReference Include="Udfs.Transmitter" Version="20.7.17-76" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps\LigaStavok.UdfsNext.Dumps.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Primitives\LigaStavok.UdfsNext.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Interfaces\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Interfaces.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Adapter.Transmitter\LigaStavok.UdfsNext.Providers.Adapter.Transmitter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Adapter\Messages\" />
+  </ItemGroup>
 
 </Project>

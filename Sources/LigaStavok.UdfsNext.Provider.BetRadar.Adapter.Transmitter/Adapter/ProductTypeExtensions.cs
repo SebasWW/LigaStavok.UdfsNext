@@ -1,8 +1,7 @@
 ﻿using System;
-using Udfs.BetradarUnifiedFeed.Plugin.Abstractions;
 using Udfs.Transmitter.Messages.Identifiers;
 
-namespace Udfs.BetradarUnifiedFeed.Plugin.Adapter.Extensions
+namespace LigaStavok.UdfsNext.Provider.BetRadar.Adapter
 {
     public static class ProductTypeExtensions
     {

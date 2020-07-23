@@ -7,7 +7,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Responses
 {
     public partial class SportEvent
     {
-        public IEnumerable<Team> Competitors { get; set; }
+        public List<Team> Competitors { get; set; }
 
         public string Id { get; set; }
 

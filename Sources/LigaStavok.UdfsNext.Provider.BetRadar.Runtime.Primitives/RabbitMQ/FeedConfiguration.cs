@@ -5,59 +5,36 @@ using Microsoft.Extensions.Configuration;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.RabbitMQ
 {
-    public class FeedConfiguration : BetRadarBaseConfig
+    public class FeedConfiguration 
     {
-        public FeedConfiguration(IConfigurationRoot configurationRoot) 
-            : base(configurationRoot, "feed")
-        {
+        public string Host { get; set; }
 
-        }
+        public string VirtualHost { get; set; }
 
-        public string Host
-            => GetConfigurationValue<string>();
+		public int Port { get; set; }
 
-        public string VirtualHost
-			=> GetConfigurationValue<string>();
+		public bool Ssl { get; set; }
 
-        public int Port
-            => GetConfigurationValue<int>();
+		public string UserName { get; set; }
 
-		public bool Ssl
-			=> GetConfigurationValue<bool>();
+		public string Password { get; set; }
 
-		public string UserName
-            => GetConfigurationValue<string>();
+		public bool AllowMessagesFromApi { get; set; }
 
-		public string Password
-			=> GetConfigurationValue<string>();
+		public string Queue { get; set; }
 
-		public bool AllowMessagesFromApi
-			=> GetConfigurationValue<bool>();
+		public string Exchange { get; set; }
 
-		public string Queue
-			=> GetConfigurationValue<string>();
+		public IEnumerable<string> RoutingKeys { get; set; }
 
-		public string Exchange
-			=> GetConfigurationValue<string>();
+		public bool Durable { get; set; }
 
-		public ImmutableHashSet<string> RoutingKeys => ConfigSection.GetSection("routing-keys")
-			.GetChildren().Select(x => x.Value).ToImmutableHashSet();
+		public bool Exclusive { get; set; }
 
-		public bool Durable 
-			=> GetConfigurationValue<bool>();
+		public bool AutoDelete { get; set; }
 
-		public bool Exclusive
-			=> GetConfigurationValue<bool>();
+		public int ReconnectionTimeoutSeconds { get; set; }
 
-		public bool AutoDelete
-			=> GetConfigurationValue<bool>();
-
-
-		public int ReconnectionTimeoutSeconds
-			=> GetConfigurationValue<int>();
-
-
-		public int AfterConnectionDownTimeoutSeconds
-			=> GetConfigurationValue<int>();
+		public int AfterConnectionDownTimeoutSeconds { get; set; }
 	}
 }
