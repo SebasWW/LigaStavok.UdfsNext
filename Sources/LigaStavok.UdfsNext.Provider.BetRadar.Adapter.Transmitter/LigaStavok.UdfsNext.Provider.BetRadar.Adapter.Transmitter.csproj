@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Akka" Version="1.3.10" />
+    <PackageReference Include="Akka.DI.Core" Version="1.3.10" />
+    <PackageReference Include="Akka.DI.SimpleInjector" Version="1.3.0" />
+    <PackageReference Include="SimpleInjector" Version="4.7.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
     <PackageReference Include="Udfs.Transmitter" Version="20.7.23-78" />
   </ItemGroup>

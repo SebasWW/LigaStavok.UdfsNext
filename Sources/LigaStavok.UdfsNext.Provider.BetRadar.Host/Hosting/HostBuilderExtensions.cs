@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.Hosting
 {
 	public static class HostBuilderExtensions
 	{
-		public static IHostBuilder UseSportLevelProviderHost(this IHostBuilder hostBuilder)
+		public static IHostBuilder UseBetRadarProviderHost(this IHostBuilder hostBuilder)
 		{
 			// получаем путь к файлу 
 			var pathToExe = Process.GetCurrentProcess().MainModule.FileName;
@@ -102,34 +102,34 @@ namespace Microsoft.Extensions.Hosting
 									.ConfigureFeedListener(
 										options =>
 										{
-											options.UserName = configuration.Provider.UserName;
-											options.Password = configuration.Provider.Password;
+											//options.UserName = configuration.Provider.UserName;
+											//options.Password = configuration.Provider.Password;
 										}
 									)
 
 									.ConfigureFeedSubscriber(
 										options =>
 										{
-											options.Margin = configuration.Provider.Margin;
+											//options.Margin = configuration.Provider.Margin;
 										}
 									)
 
 									.ConfigureHttpClientManager(
 										options =>
 										{
-											options.UserName = configuration.Provider.UserName;
-											options.Password = configuration.Provider.Password;
-											options.Uri = new Uri(configuration.Provider.WebApiUrl);
+											options.UserName = configuration.Provider.WebApi.UserName;
+											options.Password = configuration.Provider.WebApi.Password;
+											options.Uri = new Uri(configuration.Provider.WebApi.Url);
 										}
 									)
 
-									.AddWebSocketClient(
-										options =>
-										{
-											options.UseDefaultCredentials = true;
-											options.Uri = new Uri(configuration.Provider.WebSocketUrl);
-										}
-									)
+									//.AddWebSocketClient(
+									//	options =>
+									//	{
+									//		options.UseDefaultCredentials = true;
+									//		options.Uri = new Uri(configuration.Provider.WebSocketUrl);
+									//	}
+									//)
 
 									.AddTransmitterAdapter(configuration.Adapter)
 								;

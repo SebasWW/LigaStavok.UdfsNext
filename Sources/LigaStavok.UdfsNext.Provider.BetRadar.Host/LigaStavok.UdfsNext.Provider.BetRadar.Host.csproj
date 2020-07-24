@@ -21,12 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.6" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LigaStavok.UdfsNext.Dumps.Configuration\LigaStavok.UdfsNext.Dumps.Configuration.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Orleans.Configuration\LigaStavok.UdfsNext.Orleans.Configuration.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Transmitter\LigaStavok.UdfsNext.Provider.BetRadar.Adapter.Transmitter.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Orleans\LigaStavok.UdfsNext.Provider.BetRadar.Orleans.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.RunTime\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.csproj" />
   </ItemGroup>
 
 </Project>

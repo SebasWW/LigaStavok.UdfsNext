@@ -5,6 +5,6 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
 {
 	public interface IHttpRequestMessageFactory
 	{
-		HttpRequestMessage Create(WebApiRequest requestCommand);
+		HttpRequestMessage Create(IApiCommandCreateRequest requestCommand);
 	}
 }

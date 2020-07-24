@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Host\LigaStavok.UdfsNext.Provider.BetRadar.Host.csproj" />
+  </ItemGroup>
+
 </Project>

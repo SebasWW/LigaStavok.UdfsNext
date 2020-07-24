@@ -2,38 +2,23 @@
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
 {
-    public sealed class ApiConfiguration : BetRadarBaseConfig
+    public sealed class ApiConfiguration 
     {
-        public ApiConfiguration(IConfigurationRoot configurationRoot)
-            : base(configurationRoot, "api")
-        {
+        
 
-        }
+        public string Host { get; set; }
 
-        public string Host
-            => GetConfigurationValue<string>();
+        public string Key { get; set; }
 
-        public string Key
-            => GetConfigurationValue<string>();
+        
+        public bool UseHttps { get; set; }
 
-        public int MaxDegreeOfParallelism
-            => GetConfigurationValue<int>();
+        public int RetryDelayIntervalMin { get; set; }
 
-        public bool UseHttps
-            => GetConfigurationValue<bool>();
+        public int RetryCountPerInterval { get; set; }
 
-        public int RetryDelayIntervalMin
-            => GetConfigurationValue<int>();
+        public int RecoveryIntervalMinutesMax { get; set; }
 
-        public int RetryCountPerInterval
-            => GetConfigurationValue<int>();
-
-		public int RecoveryIntervalMinutesMax
-            => GetConfigurationValue<int>();
-
-        public bool DisableRemoteRequests
-            => GetConfigurationValue<bool>();
-
-        public int NodeId => GetConfigurationValue<int>();
+        public bool DisableRemoteRequests { get; set; }
     }
 }

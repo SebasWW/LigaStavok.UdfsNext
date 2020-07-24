@@ -1,68 +1,56 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using LigaStavok.UdfsNext.Provider.BetRadar.DataFlow;
-using LigaStavok.WebSocket;
-using Microsoft.Extensions.Options;
+﻿//using System;
+//using System.Threading;
+//using System.Threading.Tasks;
+//using LigaStavok.UdfsNext.Provider.BetRadar.DataFlow;
+//using LigaStavok.UdfsNext.Provider.BetRadar.State;
+//using LigaStavok.UdfsNext.Providers;
+//using Microsoft.Extensions.Options;
 
-namespace LigaStavok.UdfsNext.Provider.BetRadar
-{
-	public class FeedListener : IFeedListener
-	{
-		private readonly FeedListenerFlow feedListenerFlow;
-		private readonly IWebSocketClient webSocketClient;
-		private readonly IFeedManager feedManager;
-		private readonly IFeedSubscriber feedSubscriber;
-		private readonly FeedListenerOptions options;
+//namespace LigaStavok.UdfsNext.Provider.BetRadar
+//{
+//	public class FeedListener : IFeedListener
+//	{
+//		private readonly FeedListenerFlow feedListenerFlow;
+//		private readonly IFeedManager feedManager;
+//		private readonly IFeedSubscriber<TranslationState> feedSubscriber;
+//		private readonly FeedListenerOptions options;
 
-		public FeedListener(
-			FeedListenerFlow feedListenerFlow,
-			IWebSocketClient webSocketClient,
-			IFeedManager feedManager,
-			IFeedSubscriber feedSubscriber,
-			IOptions<FeedListenerOptions> options
-		)
-		{
-			this.feedListenerFlow = feedListenerFlow;
-			this.webSocketClient = webSocketClient;
-			this.feedManager = feedManager;
-			this.feedSubscriber = feedSubscriber;
-			this.options = options.Value;
-		}
+//		public FeedListener(
+//			FeedListenerFlow feedListenerFlow,
+//			IFeedManager feedManager,
+//			IFeedSubscriber<TranslationState> feedSubscriber,
+//			IOptions<FeedListenerOptions> options
+//		)
+//		{
+//			this.feedListenerFlow = feedListenerFlow;
+//			this.feedManager = feedManager;
+//			this.feedSubscriber = feedSubscriber;
+//			this.options = options.Value;
+//		}
 
-		public Task StartAsync(CancellationToken cancellationToken)
-		{
-			webSocketClient.OnConnected += WebSocketClient_OnConnected;
-			webSocketClient.OnDisconnected += WebSocketClient_OnDisconnected;
-			webSocketClient.OnMessage += WebSocketClient_OnMessage;
+//		public Task StartAsync(CancellationToken cancellationToken)
+//		{
 
-			return Task.CompletedTask;
-		}
+//			return Task.CompletedTask;
+//		}
 
-		public Task StopAsync(CancellationToken cancellationToken)
-		{
-			webSocketClient.OnMessage -= WebSocketClient_OnMessage;
-			webSocketClient.OnDisconnected -= WebSocketClient_OnDisconnected;
-			webSocketClient.OnConnected -= WebSocketClient_OnConnected;
+//		public Task StopAsync(CancellationToken cancellationToken)
+//		{
 
-			feedSubscriber.StopAsync(CancellationToken.None);
+//			feedSubscriber.StopAsync(CancellationToken.None);
 
-			return Task.CompletedTask;
-		}
+//			return Task.CompletedTask;
+//		}
 
-		private void WebSocketClient_OnConnected(object sender, EventArgs e)
-		{
-			Task.Run(() => feedManager.LoginAsync(options.UserName, options.Password));
-		}
 
-		private void WebSocketClient_OnDisconnected(object sender, EventArgs e)
-		{
-			feedSubscriber.StopAsync(CancellationToken.None);
-		}
+//		private void WebSocketClient_OnDisconnected(object sender, EventArgs e)
+//		{
+//			feedSubscriber.StopAsync(CancellationToken.None);
+//		}
 
-		private void WebSocketClient_OnMessage(object sender, TextMessageReceivedEventArgs e)
-		{
-			feedListenerFlow.Post(new MessageContext<string>(e.MessageText));
-		}
-	}
-}
+//		//private void WebSocketClient_OnMessage(object sender, TextMessageReceivedEventArgs e)
+//		//{
+//		//	feedListenerFlow.Post(new MessageContext<string>(e.MessageText));
+//		//}
+//	}
+//}

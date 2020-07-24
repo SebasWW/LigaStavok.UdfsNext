@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.BetRadar.State;
+using LigaStavok.UdfsNext.Providers;
 using LigaStavok.UdfsNext.Providers.Orleans;
 using Orleans;
 using Orleans.Runtime;
@@ -11,14 +12,14 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Orleans
 	public class FeedSubscriberGrain : Grain,  IFeedSubscriberGrain
 	{
 		private readonly IPersistentState<FeedSubscriberGrainState> state;
-		private readonly IFeedSubscriber feedSubscriber;
+		private readonly IFeedSubscriber<TranslationState> feedSubscriber;
 		private bool needSaveState;
 
 		public const string STORAGE_NAME = "stateStore";
 
 		public FeedSubscriberGrain(
 			[PersistentState("translationGrainState", STORAGE_NAME)] IPersistentState<FeedSubscriberGrainState> state,
-			IFeedSubscriber feedSubscriber
+			IFeedSubscriber<TranslationState> feedSubscriber
 		)
 		{
 			this.state = state;
@@ -38,8 +39,6 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Orleans
 			if (state.State.Translation == null) state.State.Translation
 					= new TranslationState()
 					{
-						MatchScore = new System.Collections.Concurrent.ConcurrentDictionary<int, Score>(),
-						Markets = new System.Collections.Concurrent.ConcurrentDictionary<string, TranslationMarket>()
 					};
 
 			// Save state timer
@@ -47,8 +46,8 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.Orleans
 
 			// Subscribe translation
 			await feedSubscriber.SubscribeAsync(
-				new MessageContext<TranslationSubscriptionRequest>(
-					new TranslationSubscriptionRequest() 
+				new MessageContext<TranslationSubscriptionRequest<TranslationState>>(
+					new TranslationSubscriptionRequest<TranslationState>() 
 					{
 						Id = GrainReference.GrainIdentity.PrimaryKeyLong,
 						State = state.State.Translation

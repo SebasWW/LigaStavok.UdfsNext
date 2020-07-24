@@ -1,9 +1,7 @@
 ﻿using System;
-using LigaStavok.UdfsNext.Hosting;
-using LigaStavok.UdfsNext.Provider.SportLevel.Orleans;
+using LigaStavok.UdfsNext.Provider.BetRadar.Orleans;
 using LigaStavok.UdfsNext.Providers.Orleans;
 using LigaStavok.UdfsNext.Providers.Orleans.StartupTasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
 using Orleans.Hosting;

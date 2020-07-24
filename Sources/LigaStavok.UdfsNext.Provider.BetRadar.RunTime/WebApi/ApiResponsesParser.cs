@@ -1,17 +1,14 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Udfs.BetradarUnifiedFeed.Plugin.Abstractions;
-using Udfs.BetradarUnifiedFeed.Plugin.Adapter.Messages;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Requests;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Responses;
-using Udfs.BetradarUnifiedFeed.Plugin.FailureSupervisor.Messages;
-using Udfs.Common.Helpers;
+using LigaStavok.UdfsNext.Provider.BetRadar.Xml;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
 {
     public class ApiResponsesParser : IApiResponsesParser
     {
-        
         public IApiResponseParsingResult ParseResponse(ParseApiResponse message)
         {
             var responseType = ApiResponseType.Unknown;
@@ -21,7 +18,6 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
                 object response;
 
                 var responseXml = DynamicXml.Parse(message.Data);
-
                 responseType = responseXml.GetName();
 
                 switch (responseType)
@@ -79,26 +75,25 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi
                             $"Message of specified type ['{responseType}'] can not be parsed.");
                 }
 
-                return new ApiResponseParsed(
-                    incomingId: message.IncomingId,
-                    receivedOn: message.ReceivedOn,
-                    language: message.Language,
-                    response: response,
-                    requestId: message.RequestId,
-					eventId: message.EventId,
-					lineService: message.LineService
-                );
+                return new ApiResponseParsed
+                {
+                    Language = message.Language,
+                    Response = response,
+                    RequestId = message.RequestId,
+                    EventId = message.EventId,
+                    ProductType = message.ProductType
+                };
             }
             catch (Exception e)
-            {
-                return new ApiResponseParsingFailed(
-                    incomingId: message.IncomingId,
-                    receivedOn: message.ReceivedOn,
-                    failureReason: e,
-                    requestId: message.RequestId,
-                    responseData: message.Data,
-                    responseType: responseType
-                );
+            { 
+
+                throw;
+                //return new ApiResponseParsingFailed(
+                //    failureReason: e,
+                //    requestId: message.RequestId,
+                //    responseData: message.Data,
+                //    responseType: responseType
+                //);
             }
         }
     }

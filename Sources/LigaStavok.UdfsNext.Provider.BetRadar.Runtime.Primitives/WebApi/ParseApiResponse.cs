@@ -13,5 +13,8 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Requests
 
         public Guid RequestId { get; set; }
 
+
+		public ProductType ProductType { get; set; }
+
 	}
 }

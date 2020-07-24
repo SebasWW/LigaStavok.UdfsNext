@@ -3,15 +3,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LigaStavok.UdfsNext.Provider.BetRadar.DataFlow;
+using LigaStavok.UdfsNext.Provider.BetRadar.State;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Requests;
-using LigaStavok.UdfsNext.Provider.BetRadar.WebSocket;
-using LigaStavok.UdfsNext.Provider.BetRadar.WebSocket.Messages;
-using LigaStavok.UdfsNext.Provider.BetRadar.WebSocket.Messages.Data;
+using LigaStavok.UdfsNext.Providers;
 using Microsoft.Extensions.Logging;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar
 {
-	public class FeedSubscriber : IFeedSubscriber
+	public class FeedSubscriber : IFeedSubscriber<TranslationState>
 	{
 		private readonly ILogger<FeedSubscriber> logger;
 		private readonly FeedSubscriberFlow feedSubscriptionFlow;
@@ -88,10 +87,10 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar
 					try
 					{
 						feedSubscriptionFlow.Post(
-							new MessageContext<TranslationRequest, TranslationSubscription>(
-								new TranslationRequest()
+							new MessageContext<RequestFixture, TranslationSubscription>(
+								new RequestFixture()
 								{
-									Id = subscription.Key
+									 EventId = "sr:match:" + subscription.Key
 								},
 								subscription.Value
 							)
@@ -109,7 +108,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar
 			}
 		}
 
-		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest> messageContext, Action saveStateAction, CancellationToken cancellationToken)
+		public Task SubscribeAsync(MessageContext<TranslationSubscriptionRequest<TranslationState>> messageContext, Action saveStateAction, CancellationToken cancellationToken)
 		{
 			subscriptions.TryAdd(messageContext.Message.Id, new TranslationSubscription(saveStateAction) { PersistableState = messageContext.Message.State });
 			return Task.CompletedTask;
@@ -117,21 +116,20 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar
 
 		public Task UnsubscribeAsync(MessageContext<TranslationUnsubscriptionRequest> messageContext, CancellationToken cancellationToken)
 		{
-			Task marketTask, dataTask;
-
+			
 			if (subscriptions.TryRemove(messageContext.Message.Id, out var subscription))
 			{
-				if (subscription.Booking.BookedMarket)
-					marketTask = feedManager.SendMarketUnsubscribeRequestAsync(messageContext, cancellationToken);
-				else
-					marketTask = Task.CompletedTask;
+				//if (subscription.Booking.BookedMarket)
+				//	marketTask = feedManager.SendMarketUnsubscribeRequestAsync(messageContext, cancellationToken);
+				//else
+				//	marketTask = Task.CompletedTask;
 
-				if (subscription.Booking.BookedData)
-					dataTask = feedManager.SendDataUnsubscribeRequestAsync(messageContext, cancellationToken);
-				else
-					dataTask = Task.CompletedTask;
+				//if (subscription.Booking.BookedData)
+				//	dataTask = feedManager.SendDataUnsubscribeRequestAsync(messageContext, cancellationToken);
+				//else
+				//	dataTask = Task.CompletedTask;
 
-				return Task.WhenAll(dataTask, marketTask);
+				return Task.CompletedTask;
 			}
 
 			return Task.CompletedTask;

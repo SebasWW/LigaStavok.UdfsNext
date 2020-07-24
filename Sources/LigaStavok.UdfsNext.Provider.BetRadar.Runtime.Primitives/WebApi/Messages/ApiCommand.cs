@@ -24,5 +24,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.WebApi.Messages
         public HttpMethod Method { get; set; }
 
         public bool IsRecovery { get; set; }
-	}
+
+        public ProductType ProductType { get; set; }
+    }
 }

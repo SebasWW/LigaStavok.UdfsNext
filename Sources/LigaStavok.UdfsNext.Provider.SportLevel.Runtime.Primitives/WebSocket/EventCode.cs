@@ -30,6 +30,7 @@ namespace LigaStavok.UdfsNext.Provider.SportLevel.WebSocket
 		public const string SET = "SET";
 		public const string TIMEOUT = "TIMEOUT";
 		public const string WARM_UP = "WARM_UP";
+		public const string CALCULATION_RESULT = "CALCULATION_RESULT";
 
 	}
 }

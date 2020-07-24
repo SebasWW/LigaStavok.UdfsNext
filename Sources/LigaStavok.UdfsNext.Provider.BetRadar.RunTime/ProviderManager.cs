@@ -14,17 +14,20 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar
 		private readonly ProviderManagerOptions options;
 		private readonly ILogger<ProviderManager> logger;
 		private readonly ProviderManagerFlow providerManagerFlow;
+		private readonly ProviderManagerState providerManagerState;
 		private CancellationTokenSource cancellationTokenSource;
 
 		public ProviderManager(
 			ILogger<ProviderManager> logger,
 			IOptions<ProviderManagerOptions> options,
-			ProviderManagerFlow providerManagerFlow
+			ProviderManagerFlow providerManagerFlow,
+			ProviderManagerState providerManagerState
 		)
 		{
 			this.options = options.Value;
 			this.logger = logger;
 			this.providerManagerFlow = providerManagerFlow;
+			this.providerManagerState = providerManagerState;
 		}
 
 		private async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,15 +41,13 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar
 				{
 					// Renewing translations metas
 					providerManagerFlow.Post(
-						new MessageContext<TranslationsRequest>(
-							new TranslationsRequest()
+						new MessageContext<RequestFixtureChanges>(
+							new RequestFixtureChanges()
 							{
-								//Booking = "booked",
-								//FromISO8601 = DateTimeOffset.UtcNow.AddHours(-3),
-								SportId = 6 // Tennis
+								AfterDateTime = providerManagerState.LastTranslationList
 							}
 						)
-					);
+					); ;
 					//subscriptionDetails = translations.ToDictionary(key => key.Id, value => new TranslationSubscription() { BookedData = value.BookedData.Value == true, BookedMarket = value.BookedMarket });
 				}
 				catch (Exception ex)

@@ -25,13 +25,15 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 		private readonly HttpClientManager httpClientManager;
 		private readonly IHttpRequestMessageFactory httpRequestMessageFactory;
 		private readonly ITranslationDistributer translationDistributer;
-		private readonly TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>> createHttpRequestBlock;
+
+		private readonly TransformManyBlock<MessageContext<RequestFixtureChanges>, MessageContext<HttpRequestMessage>> createHttpRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpRequestMessage>, MessageContext<HttpResponseMessage>> execHttpRequestBlock;
 		private readonly TransformManyBlock<MessageContext<HttpResponseMessage>, MessageContext<string>> parseHttpResponseBlock;
 		private readonly BroadcastBlock<MessageContext<string>> broadcastResponseBlock;
 		private readonly ActionBlock<MessageContext<string>> dumpResponseBlock;
-		private readonly TransformManyBlock<MessageContext<string>, MessageContext<Translation>> deserializeResponseBlock;
-		private readonly ActionBlock<MessageContext<Translation>> translationDistributerBlock;
+		private readonly TransformManyBlock<MessageContext<string>, MessageContext<FixtureChangeList>> deserializeResponseBlock;
+		private readonly TransformManyBlock<MessageContext<FixtureChangeList>, MessageContext<long>> parsingIdBlock;
+		private readonly ActionBlock<MessageContext<long>> translationDistributerBlock;
 
 		public ProviderManagerFlow(
 			ILogger<ProviderManagerFlow> logger,
@@ -39,7 +41,8 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 
 			HttpClientManager httpClientManager,
 			IHttpRequestMessageFactory httpRequestMessageFactory,
-			ITranslationDistributer translationDistributer
+			ITranslationDistributer translationDistributer,
+			ProviderManagerState providerManagerState
 		)
 		{
 			this.logger = logger;
@@ -47,8 +50,9 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 			this.httpClientManager = httpClientManager;
 			this.httpRequestMessageFactory = httpRequestMessageFactory;
 			this.translationDistributer = translationDistributer;
+
 			createHttpRequestBlock
-				= new TransformManyBlock<MessageContext<TranslationsRequest>, MessageContext<HttpRequestMessage>>(
+				= new TransformManyBlock<MessageContext<RequestFixtureChanges>, MessageContext<HttpRequestMessage>>(
 					CreateHttpRequestHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
@@ -74,33 +78,40 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 				);
 
 			deserializeResponseBlock
-				= new TransformManyBlock<MessageContext<string>, MessageContext<Translation>>(
+				= new TransformManyBlock<MessageContext<string>, MessageContext<FixtureChangeList>>(
 					DeserializeResponseHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
+			parsingIdBlock
+				= new TransformManyBlock<MessageContext<FixtureChangeList>, MessageContext<long>>(
+					ParsingIdHandler,
+					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
+				);
+
 			translationDistributerBlock
-				= new ActionBlock<MessageContext<Translation>>(
+				= new ActionBlock<MessageContext<long>>(
 					TranslationDistributerHandler,
 					new ExecutionDataflowBlockOptions() { MaxDegreeOfParallelism = maxDegreeOfParallelism }
 				);
 
 			createHttpRequestBlock.LinkTo(execHttpRequestBlock);
 			execHttpRequestBlock.LinkTo(parseHttpResponseBlock);
-
 			parseHttpResponseBlock.LinkTo(broadcastResponseBlock);
 
 			broadcastResponseBlock.LinkTo(dumpResponseBlock);
 			broadcastResponseBlock.LinkTo(deserializeResponseBlock);
-			deserializeResponseBlock.LinkTo(translationDistributerBlock);
+
+			deserializeResponseBlock.LinkTo(parsingIdBlock);
+			parsingIdBlock.LinkTo(translationDistributerBlock);
 		}
 
-		public void Post(MessageContext<TranslationsRequest> messageContext)
+		public void Post(MessageContext<RequestFixtureChanges> messageContext)
 		{
 			createHttpRequestBlock.Post(messageContext);
 		}
 
-		IEnumerable<MessageContext<HttpRequestMessage>> CreateHttpRequestHandler(MessageContext<TranslationsRequest> messageContext)
+		IEnumerable<MessageContext<HttpRequestMessage>> CreateHttpRequestHandler(MessageContext<RequestFixtureChanges> messageContext)
 		{
 			try
 			{
@@ -149,7 +160,7 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 						{
 							EventId = "Line",
 							Source = DumpSource.FROM_API,
-							MessageType = "TranslationsList",
+							MessageType = "FixtureChangeList",
 							MessageBody = messageContext.Message
 						}
 					)
@@ -161,32 +172,64 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DataFlow
 			}
 		}
 
-		private IEnumerable<MessageContext<Translation>> DeserializeResponseHandler(MessageContext<string> messageContext)
+		private IEnumerable<MessageContext<FixtureChangeList>> DeserializeResponseHandler(MessageContext<string> messageContext)
 		{
 			try
 			{
-				var response = JsonConvert.DeserializeObject<TranslationsResponse>(messageContext.Message);
-
-				return response
-					.Where(t => t.State != "finished" && t.State != "cancelled")
-					.Select(t => messageContext.Next(t));
+				return Enumerable.Repeat(messageContext.Next(FixtureChangeList.Parse(messageContext.Message)), 1);
 			}
 			catch (Exception ex)
 			{
 				logger.LogError(ex, $"Deserializing response error. ContextId: {messageContext.IncomingId}");
-				return Array.Empty<MessageContext<Translation>>();
+				return Array.Empty<MessageContext<FixtureChangeList>>();
 			}
 		}
 
-		private Task TranslationDistributerHandler(MessageContext<Translation> messageContext)
+		private IEnumerable<MessageContext<long>> ParsingIdHandler(MessageContext<FixtureChangeList> messageContext)
 		{
 			try
 			{
-				return translationDistributer.Distribute(messageContext.Message.Id);
+
+				return messageContext.Message.FixtureChanges
+					.Select(t => t.SportEventId)
+					.SelectMany(
+						t =>
+						{
+							try
+							{
+								var arr = t.Split(':');
+								if (arr.Length == 3)
+								{
+									if (long.TryParse(arr[2], out var id)) return Enumerable.Repeat( messageContext.Next(id), 1);
+								}
+
+								logger.LogError( $"Can't parse translation id. ContextId: {messageContext.IncomingId}, SportEventId: {t}");
+								return Array.Empty<MessageContext<long>>();
+							}
+							catch (Exception ex)
+							{
+								logger.LogError(ex, $"Parsing translation id error. ContextId: {messageContext.IncomingId}, SportEventId: {t}");
+								return Array.Empty<MessageContext<long>>();
+							}
+						}
+					);
 			}
 			catch (Exception ex)
 			{
-				logger.LogError(ex, $"Distributing translation error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message.Id}");
+				logger.LogError(ex, $"Parsing translation ids. ContextId: {messageContext.IncomingId}");
+				return Array.Empty<MessageContext<long>>();
+			}
+		}
+
+		private Task TranslationDistributerHandler(MessageContext<long> messageContext)
+		{
+			try
+			{
+				return translationDistributer.Distribute(messageContext.Message);
+			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex, $"Distributing translation error. ContextId: {messageContext.IncomingId}, TranslationId: {messageContext.Message}");
 				return Task.CompletedTask;
 			}
 		}

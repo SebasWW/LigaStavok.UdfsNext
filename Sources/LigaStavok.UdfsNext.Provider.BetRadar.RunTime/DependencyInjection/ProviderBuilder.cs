@@ -1,5 +1,6 @@
 ﻿using System;
 using LigaStavok.UdfsNext.Provider.BetRadar.DataFlow;
+using LigaStavok.UdfsNext.Provider.BetRadar.State;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebApi;
 using LigaStavok.UdfsNext.Provider.BetRadar.WebSocket;
 using LigaStavok.UdfsNext.Providers;
@@ -18,11 +19,10 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DependencyInjection
 			ServiceCollection = services;
 
 
-			// WebSocket
-			services.AddSingleton<IWebSocketMessageParser, WebSocketMessageParser>();
-
+			// Rabbit
+			
 			// WebApi
-			services.AddSingleton<IHttpResponseMessageParser, HttpResponseMessageParser>();
+			//services.AddSingleton<IHttpResponseMessageParser, HttpResponseMessageParser>();
 			services.AddSingleton<IHttpRequestMessageFactory, HttpRequestMessageFactory>();
 
 			//services.AddSingleton<HttpClientManager>();
@@ -51,12 +51,12 @@ namespace LigaStavok.UdfsNext.Provider.BetRadar.DependencyInjection
 
 			// Runtime
 			services.AddSingleton<IProviderManager, ProviderManager>();
-			services.AddSingleton<IFeedManager, FeedManager>();
-			services.AddSingleton<IFeedListener, FeedListener>();
-			services.AddSingleton<IFeedSubscriber, FeedSubscriber>();
+			//services.AddSingleton<IFeedManager, FeedManager>();
+			//services.AddSingleton<IFeedListener, FeedListener>();
+			services.AddSingleton<IFeedSubscriber<TranslationState>, FeedSubscriber>();
 
 			// Services
-			services.AddHostedService<FeedListenerService>();
+			//services.AddHostedService<FeedListenerService>();
 
 		}
 	}

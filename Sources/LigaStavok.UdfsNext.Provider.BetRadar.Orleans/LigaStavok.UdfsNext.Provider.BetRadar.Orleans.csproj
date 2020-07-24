@@ -6,9 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="3.2.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.Primitives.csproj" />
+    <ProjectReference Include="..\LigaStavok.UdfsNext.Provider.BetRadar.RunTime\LigaStavok.UdfsNext.Provider.BetRadar.Runtime.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Orleans\LigaStavok.UdfsNext.Providers.Orleans.csproj" />
     <ProjectReference Include="..\LigaStavok.UdfsNext.Providers.Runtime.Interfaces\LigaStavok.UdfsNext.Providers.Runtime.Interfaces.csproj" />
   </ItemGroup>

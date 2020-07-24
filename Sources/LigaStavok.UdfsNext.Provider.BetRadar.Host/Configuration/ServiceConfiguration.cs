@@ -1,7 +1,6 @@
 ﻿using LigaStavok.UdfsNext.Configuration;
-using LigaStavok.UdfsNext.Provider.SportLevel.Configuration;
 
-namespace LigaStavok.UdfsNext.Provider.SportLevel.Configuration
+namespace LigaStavok.UdfsNext.Provider.BetRadar.Configuration
 {
 	public class ServiceConfiguration
 	{

@@ -4,15 +4,17 @@ using Microsoft.Extensions.Hosting;
 
 namespace LigaStavok.UdfsNext.Provider.BetRadar.Console
 {
-
-	static Task Main(string[] args)
+	class Program
 	{
-		return CreateHostBuilder(args).Build().RunAsync();
-	}
+		static Task Main(string[] args)
+		{
+			return CreateHostBuilder(args).Build().RunAsync();
+		}
 
-	public static IHostBuilder CreateHostBuilder(string[] args)
-	{
-		return Host.CreateDefaultBuilder(args)
-			.UseBetRadarProviderHost();
+		public static IHostBuilder CreateHostBuilder(string[] args)
+		{
+			return Host.CreateDefaultBuilder(args)
+				.UseBetRadarProviderHost();
+		}
 	}
 }
